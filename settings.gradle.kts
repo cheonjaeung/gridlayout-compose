@@ -13,3 +13,4 @@ pluginManagement {
 rootProject.name = "compose-grid"
 
 include(":grid")
+include(":sample-android", ":sample-desktop")
