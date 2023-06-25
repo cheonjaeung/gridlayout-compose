@@ -60,9 +60,12 @@ internal class GridMeasureHelper(
         val measurableCount = measurables.size
         val mainAxisCount = measurableCount / crossAxisCount
 
+        // Measure grid layout size and children's constraints.
         var i = 0
         var mainAxisPlacedSpace = 0
         var mainAxisSpaceAfterLast: Int
+        var mainAxisTotalSize = 0
+        var crossAxisTotalSize = 0
         for (m in 0 until mainAxisCount) {
             val mainAxisMax = constraints.mainAxisMaxSize
             var placeableMainAxisSizeMax = 0
@@ -72,7 +75,7 @@ internal class GridMeasureHelper(
                 val measurable = measurables[i]
                 val crossAxisMax = constraints.crossAxisMaxSize
                 val placeable = measurable.measure(
-                    constraints = constraints.copy(
+                    constraints = OrientationIndependentConstraints(
                         mainAxisMinSize = 0,
                         mainAxisMaxSize = if (mainAxisMax == Constraints.Infinity) {
                             Constraints.Infinity
@@ -93,6 +96,7 @@ internal class GridMeasureHelper(
                 )
                 crossAxisPlacedSpace += placeable.crossAxisSize() + crossAxisSpaceAfterLast
                 placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, placeable.mainAxisSize())
+                crossAxisTotalSize = max(crossAxisTotalSize, crossAxisPlacedSpace)
                 placeables[i] = placeable
                 i++
             }
@@ -101,14 +105,16 @@ internal class GridMeasureHelper(
                 mainAxisMax - mainAxisPlacedSpace - placeableMainAxisSizeMax
             )
             mainAxisPlacedSpace += placeableMainAxisSizeMax + mainAxisSpaceAfterLast
+            mainAxisTotalSize = max(mainAxisTotalSize, mainAxisPlacedSpace)
         }
+        val mainAxisLayoutSize = max(mainAxisTotalSize, constraints.mainAxisMinSize)
+        val crossAxisLayoutSize = max(crossAxisTotalSize, constraints.crossAxisMinSize)
 
-        val mainAxisLayoutSize = constraints.mainAxisMaxSize
-        val crossAxisLayoutSize = constraints.crossAxisMaxSize
-
+        // Measure children composable x, y positions.
         val mainAxisPositions = IntArray(mainAxisCount) { 0 }
         val mainAxisChildrenSizes = IntArray(mainAxisCount) { index ->
-            placeables[index]!!.mainAxisSize() // Placeable must not null on this time.
+            // Placeable must not null on this time
+            placeables[index]!!.mainAxisSize()
         }
         mainAxisArrangement(
             mainAxisLayoutSize,
@@ -117,10 +123,10 @@ internal class GridMeasureHelper(
             this,
             mainAxisPositions,
         )
-
         val crossAxisPositions = IntArray(crossAxisCount) { 0 }
         val crossAxisChildrenSizes = IntArray(crossAxisCount) { index ->
-            placeables[index]!!.crossAxisSize() // Placeable must not null on this time.
+            // Placeable must not null on this time.
+            placeables[index]!!.crossAxisSize()
         }
         crossAxisArrangement(
             crossAxisLayoutSize,
@@ -148,7 +154,8 @@ internal class GridMeasureHelper(
         for (m in 0 until measureResult.mainAxisCount) {
             for (c in 0 until measureResult.crossAxisCount) {
                 val placeable = placeables[i]
-                placeable!! // Placeable must not null on this time.
+                // Placeable must not null on this time.
+                placeable!!
 
                 if (orientation == LayoutOrientation.Horizontal) {
                     placeable.place(
