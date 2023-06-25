@@ -9,9 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.*
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
+import androidx.compose.ui.window.WindowPosition
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
+import io.woong.compose.grid.ExperimentalGridLayoutApi
 import io.woong.compose.grid.VerticalGrid
 
+@OptIn(ExperimentalGridLayoutApi::class)
 fun main() = application {
     val colors = arrayOf(
         Color.Red, Color.Green, Color.Blue,
