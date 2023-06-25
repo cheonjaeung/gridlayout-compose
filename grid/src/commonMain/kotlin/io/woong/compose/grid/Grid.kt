@@ -90,7 +90,7 @@ internal fun horizontalGridMeasurePolicy(
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
 ): MeasurePolicy {
-    return remember(rowCount) {
+    return remember(rowCount, horizontalArrangement, verticalArrangement) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Horizontal,
             crossAxisCount = rowCount,
@@ -117,7 +117,7 @@ internal fun verticalGridMeasurePolicy(
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
 ): MeasurePolicy {
-    return remember(columnCount) {
+    return remember(columnCount, horizontalArrangement, verticalArrangement) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Vertical,
             crossAxisCount = columnCount,
