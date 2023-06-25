@@ -42,9 +42,19 @@ internal data class OrientationIndependentConstraints(
      */
     fun toConstraints(orientation: LayoutOrientation): Constraints {
         return if (orientation == LayoutOrientation.Horizontal) {
-            Constraints(mainAxisMinSize, mainAxisMaxSize, crossAxisMinSize, crossAxisMaxSize)
+            Constraints(
+                minWidth = mainAxisMinSize,
+                maxWidth = mainAxisMaxSize,
+                minHeight = crossAxisMinSize,
+                maxHeight = crossAxisMaxSize
+            )
         } else {
-            Constraints(crossAxisMinSize, crossAxisMaxSize, mainAxisMinSize, mainAxisMaxSize)
+            Constraints(
+                minWidth = crossAxisMinSize,
+                maxWidth = crossAxisMaxSize,
+                minHeight = mainAxisMinSize,
+                maxHeight = mainAxisMaxSize
+            )
         }
     }
 }
