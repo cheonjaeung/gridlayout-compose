@@ -91,7 +91,7 @@ internal fun horizontalGridMeasurePolicy(
     return remember(rowCount) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Horizontal,
-            mainAxisCount = rowCount,
+            crossAxisCount = rowCount,
             mainAxisArrangement = { totalSize, sizes, layoutDirection, density, outPosition ->
                 with(horizontalArrangement) {
                     density.arrange(totalSize, sizes, layoutDirection, outPosition)
@@ -118,7 +118,7 @@ internal fun verticalGridMeasurePolicy(
     return remember(columnCount) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Vertical,
-            mainAxisCount = columnCount,
+            crossAxisCount = columnCount,
             mainAxisArrangement = { totalSize, sizes, _, density, outPosition ->
                 with(verticalArrangement) {
                     density.arrange(totalSize, sizes, outPosition)

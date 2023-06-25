@@ -31,8 +31,8 @@ internal class GridMeasureResult(
     val crossAxisCount: Int,
     val mainAxisSize: Int,
     val crossAxisSize: Int,
-    val mainAxisPositions: Array<IntArray>,
-    val crossAxisPositions: Array<IntArray>,
+    val mainAxisPositions: IntArray,
+    val crossAxisPositions: IntArray,
 )
 
 /**
@@ -42,7 +42,7 @@ internal class GridMeasureHelper(
     val orientation: LayoutOrientation,
     val measurables: List<Measurable>,
     val placeables: Array<Placeable?>,
-    val mainAxisCount: Int,
+    val crossAxisCount: Int,
     val mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     val mainAxisSpacing: Dp,
     val crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
@@ -58,7 +58,7 @@ internal class GridMeasureHelper(
         val crossAxisSpacingPx = crossAxisSpacing.roundToPx()
 
         val measurableCount = measurables.size
-        val crossAxisCount = measurableCount / mainAxisCount
+        val mainAxisCount = measurableCount / crossAxisCount
 
         var i = 0
         var mainAxisPlacedSpace = 0
@@ -105,34 +105,30 @@ internal class GridMeasureHelper(
 
         val mainAxisLayoutSize = constraints.mainAxisMaxSize
         val crossAxisLayoutSize = constraints.crossAxisMaxSize
-        val mainAxisPositions = Array(mainAxisCount) { IntArray(crossAxisCount) }
-        val crossAxisPositions = Array(mainAxisCount) { IntArray(crossAxisCount) }
-        val childrenMainAxisPositions = IntArray(mainAxisCount) { index ->
-            placeables[index]!!.mainAxisSize()
+
+        val mainAxisPositions = IntArray(mainAxisCount) { 0 }
+        val mainAxisChildrenSizes = IntArray(mainAxisCount) { index ->
+            placeables[index]!!.mainAxisSize() // Placeable must not null on this time.
         }
-        val mainAxisLinePositions = IntArray(mainAxisCount) { 0 }
         mainAxisArrangement(
             mainAxisLayoutSize,
-            childrenMainAxisPositions,
+            mainAxisChildrenSizes,
             this.layoutDirection,
             this,
-            mainAxisLinePositions,
+            mainAxisPositions,
         )
-        for (m in 0 until mainAxisCount) {
-            val childrenCrossAxisPositions = IntArray(crossAxisCount) { index ->
-                placeables[index]!!.mainAxisSize()
-            }
-            val crossAxisLinePositions = IntArray(crossAxisCount) { 0 }
-            crossAxisArrangement(
-                crossAxisLayoutSize,
-                childrenCrossAxisPositions,
-                this.layoutDirection,
-                this,
-                crossAxisLinePositions,
-            )
-            mainAxisPositions[m] = IntArray(mainAxisCount) { mainAxisLinePositions[m] }
-            crossAxisPositions[m] = crossAxisLinePositions
+
+        val crossAxisPositions = IntArray(crossAxisCount) { 0 }
+        val crossAxisChildrenSizes = IntArray(crossAxisCount) { index ->
+            placeables[index]!!.crossAxisSize() // Placeable must not null on this time.
         }
+        crossAxisArrangement(
+            crossAxisLayoutSize,
+            crossAxisChildrenSizes,
+            this.layoutDirection,
+            this,
+            crossAxisPositions,
+        )
 
         GridMeasureResult(
             mainAxisSize = mainAxisLayoutSize,
@@ -156,13 +152,13 @@ internal class GridMeasureHelper(
 
                 if (orientation == LayoutOrientation.Horizontal) {
                     placeable.place(
-                        x = measureResult.mainAxisPositions[m][c],
-                        y = measureResult.crossAxisPositions[m][c],
+                        x = measureResult.mainAxisPositions[m],
+                        y = measureResult.crossAxisPositions[c],
                     )
                 } else {
                     placeable.place(
-                        x = measureResult.crossAxisPositions[m][c],
-                        y = measureResult.mainAxisPositions[m][c],
+                        x = measureResult.crossAxisPositions[c],
+                        y = measureResult.mainAxisPositions[m],
                     )
                 }
                 i++

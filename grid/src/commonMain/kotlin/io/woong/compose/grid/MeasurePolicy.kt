@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.LayoutDirection
 
 internal fun gridMeasurePolicy(
     orientation: LayoutOrientation,
-    mainAxisCount: Int,
+    crossAxisCount: Int,
     mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     mainAxisSpacing: Dp,
     crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
@@ -42,7 +42,7 @@ internal fun gridMeasurePolicy(
                 orientation = orientation,
                 measurables = measurables,
                 placeables = placeables,
-                mainAxisCount = mainAxisCount,
+                crossAxisCount = crossAxisCount,
                 mainAxisArrangement = mainAxisArrangement,
                 mainAxisSpacing = mainAxisSpacing,
                 crossAxisArrangement = crossAxisArrangement,
