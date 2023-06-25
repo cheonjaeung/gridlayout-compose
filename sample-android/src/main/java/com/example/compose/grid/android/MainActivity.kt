@@ -26,19 +26,40 @@ class MainActivity : ComponentActivity() {
             Color.Red, Color.Green, Color.Blue,
             Color.Cyan, Color.Magenta, Color.Yellow,
             Color.White, Color.Gray, Color.Black,
+            Color.Red, Color.Green, Color.Blue,
+            Color.Cyan, Color.Magenta, Color.Yellow,
         )
+
+        var i = 0
 
         setContent {
             VerticalGrid(
                 columnCount = 3,
                 modifier = Modifier.fillMaxSize(),
             ) {
-                for ((i, color) in colors.withIndex()) {
+                for (n in 0 until 3) {
                     ColorBox(
                         modifier = Modifier.size(100.dp),
                         text = i.toString(),
-                        color = color,
+                        color = colors[i],
                     )
+                    i++
+                }
+                for (n in 0 until 3) {
+                    ColorBox(
+                        modifier = Modifier.size(100.dp, 200.dp),
+                        text = i.toString(),
+                        color = colors[i],
+                    )
+                    i++
+                }
+                for (n in 0 until 3) {
+                    ColorBox(
+                        modifier = Modifier.size(100.dp),
+                        text = i.toString(),
+                        color = colors[i],
+                    )
+                    i++
                 }
             }
         }
