@@ -1,19 +1,15 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowPlacement
-import androidx.compose.ui.window.WindowPosition
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
+import androidx.compose.ui.window.*
 import io.woong.compose.grid.ExperimentalGridLayoutApi
 import io.woong.compose.grid.VerticalGrid
 
@@ -26,8 +22,6 @@ fun main() = application {
         Color.Red, Color.Green, Color.Blue,
         Color.Cyan, Color.Magenta, Color.Yellow,
     )
-
-    var i = 0
 
     Window(
         onCloseRequest = ::exitApplication,
@@ -42,49 +36,92 @@ fun main() = application {
             columnCount = 3,
             modifier = Modifier.fillMaxSize(),
         ) {
-            for (n in 0 until 3) {
-                ColorBox(
-                    modifier = Modifier.size(100.dp),
-                    text = i.toString(),
-                    color = colors[i],
-                )
-                i++
-            }
-            for (n in 0 until 3) {
-                ColorBox(
-                    modifier = Modifier.size(100.dp, 200.dp),
-                    text = i.toString(),
-                    color = colors[i],
-                )
-                i++
-            }
-            for (n in 0 until 3) {
-                ColorBox(
-                    modifier = Modifier.size(100.dp),
-                    text = i.toString(),
-                    color = colors[i],
-                )
-                i++
-            }
+            ColorBox(
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(width = 1.dp, color = colors[1]),
+                color = colors[0],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(110.dp)
+                    .border(width = 1.dp, color = colors[2]),
+                color = colors[1],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(120.dp)
+                    .border(width = 1.dp, color = colors[3]),
+                color = colors[2],
+            )
+
+            ColorBox(
+                modifier = Modifier
+                    .size(120.dp)
+                    .border(width = 1.dp, color = colors[4]),
+                color = colors[3],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(110.dp)
+                    .border(width = 1.dp, color = colors[5]),
+                color = colors[4],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(width = 1.dp, color = colors[6]),
+                color = colors[5],
+            )
+
+            ColorBox(
+                modifier = Modifier
+                    .size(80.dp)
+                    .border(width = 1.dp, color = colors[7]),
+                color = colors[6],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(90.dp)
+                    .border(width = 1.dp, color = colors[8]),
+                color = colors[7],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(width = 1.dp, color = colors[9]),
+                color = colors[8],
+            )
+
+            ColorBox(
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(width = 1.dp, color = colors[10]),
+                color = colors[9],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(90.dp)
+                    .border(width = 1.dp, color = colors[11]),
+                color = colors[10],
+            )
+            ColorBox(
+                modifier = Modifier
+                    .size(80.dp)
+                    .border(width = 1.dp, color = colors[0]),
+                color = colors[11],
+            )
         }
     }
 }
 
 @Composable
 private fun ColorBox(
-    text: String,
     color: Color,
     modifier: Modifier = Modifier,
 ) {
     val coloredModifier = modifier.then(
         Modifier.background(color = color)
     )
-    Box(modifier = coloredModifier) {
-        BasicText(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .background(color = Color.White),
-            text = text,
-        )
-    }
+    Box(modifier = coloredModifier)
 }
