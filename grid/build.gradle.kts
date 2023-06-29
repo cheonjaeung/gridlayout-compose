@@ -21,14 +21,21 @@ kotlin {
         val commonTest by getting
 
         val androidMain by getting {
-            dependsOn(commonMain)
             dependencies {
                 implementation(libs.androidx.core)
                 implementation(libs.compose.android.runtime)
                 implementation(libs.compose.android.foundation)
             }
         }
-        val androidTest by getting
+        val androidTest by getting {
+            dependsOn(commonTest)
+            dependencies {
+                implementation(libs.junit4)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.compose.android.ui.test.junit4)
+                implementation(libs.compose.android.ui.test.manifest)
+            }
+        }
 
         val desktopMain by getting {
             dependsOn(commonMain)
@@ -37,7 +44,6 @@ kotlin {
                 implementation(libs.compose.multiplatform.foundation)
             }
         }
-        val desktopTest by getting
     }
 }
 
@@ -50,6 +56,7 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 33
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
