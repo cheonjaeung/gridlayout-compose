@@ -92,7 +92,7 @@ internal class GridMeasureHelper(
                     ).toConstraints(orientation)
                 )
                 crossAxisSpaceAfterLast = min(
-                    crossAxisSpacingPx,
+                    if (c == crossAxisCount - 1) 0 else crossAxisSpacingPx,
                     crossAxisMax - crossAxisPlacedSpace - placeable.crossAxisSize()
                 )
                 crossAxisPlacedSpace += placeable.crossAxisSize() + crossAxisSpaceAfterLast
@@ -102,7 +102,7 @@ internal class GridMeasureHelper(
                 i++
             }
             mainAxisSpaceAfterLast = min(
-                mainAxisSpacingPx,
+                if (m == mainAxisCount - 1) 0 else mainAxisSpacingPx,
                 mainAxisMax - mainAxisPlacedSpace - placeableMainAxisSizeMax
             )
             mainAxisPlacedSpace += placeableMainAxisSizeMax + mainAxisSpaceAfterLast
