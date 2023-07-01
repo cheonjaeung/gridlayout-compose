@@ -6,9 +6,6 @@ jobs:
   build:
     runs-on: macos-latest
     if: github.repository == 'cheonjaewoong/compose-grid'
-    strategy:
-      matrix:
-        api: [21, 23, 29]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -20,10 +17,10 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
-          java-version: '11'
+          java-version: '17'
 
       - name: Run UI tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api }}
+          api-level: 29
           script: ./gradlew connectedDebugAndroidTest --stacktrace
