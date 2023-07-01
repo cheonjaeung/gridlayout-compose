@@ -3,8 +3,9 @@ name: ci
 on: push
 
 jobs:
-  build:
-    runs-on: macos-latest
+  validate-gradle-wrapper:
+    name: Validate Gradle Wrapper
+    runs-on: ubuntu-latest
     if: github.repository == 'cheonjaewoong/compose-grid'
     steps:
       - name: Checkout
@@ -12,6 +13,15 @@ jobs:
 
       - name: Validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
+
+  test:
+    name: Test
+    runs-on: macos-latest
+    if: github.repository == 'cheonjaewoong/compose-grid'
+    needs: validate-gradle-wrapper
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Setup jdk
         uses: actions/setup-java@v3
