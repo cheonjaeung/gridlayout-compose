@@ -31,6 +31,9 @@ internal class GridMeasureResult(
     val crossAxisCount: Int,
     val mainAxisSize: Int,
     val crossAxisSize: Int,
+)
+
+internal class GridPositionResult(
     val mainAxisPositions: IntArray,
     val crossAxisPositions: IntArray,
 )
@@ -48,7 +51,9 @@ internal class GridMeasureHelper(
     val crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     val crossAxisSpacing: Dp,
 ) {
-    @Suppress("IfThenToElvis")
+    /**
+     * Measures required grid layout size and children composable constraints.
+     */
     fun measure(
         measureScope: MeasureScope,
         constraints: Constraints,
@@ -111,13 +116,33 @@ internal class GridMeasureHelper(
         val mainAxisLayoutSize = max(mainAxisTotalSize, constraints.mainAxisMinSize)
         val crossAxisLayoutSize = max(crossAxisTotalSize, constraints.crossAxisMinSize)
 
-        // Measure children composable x, y positions.
+        GridMeasureResult(
+            mainAxisSize = mainAxisLayoutSize,
+            crossAxisSize = crossAxisLayoutSize,
+            mainAxisCount = mainAxisCount,
+            crossAxisCount = crossAxisCount,
+        )
+    }
+
+    /**
+     * Calculates positions where the children composable should be placed.
+     */
+    fun position(
+        measureScope: MeasureScope,
+        measureResult: GridMeasureResult,
+    ): GridPositionResult = with(measureScope) {
+        val mainAxisCount = measureResult.mainAxisCount
+        val crossAxisCount = measureResult.crossAxisCount
+        val mainAxisLayoutSize = measureResult.mainAxisSize
+        val crossAxisLayoutSize = measureResult.crossAxisSize
+
         var mainAxisMaxPositions = IntArray(mainAxisCount) { 0 }
         var mainAxisMinPositions = IntArray(mainAxisCount) { 0 }
         for (c in 0 until crossAxisCount) {
             val mainAxisPositions = IntArray(mainAxisCount) { 0 }
             val mainAxisChildrenSizes = IntArray(mainAxisCount) { index ->
                 val placeable = placeables.getOrNull(index * crossAxisCount + c)
+                @Suppress("IfThenToElvis")
                 if (placeable != null) {
                     placeable.mainAxisSize()
                 } else {
@@ -153,6 +178,7 @@ internal class GridMeasureHelper(
             val crossAxisPositions = IntArray(crossAxisCount) { 0 }
             val crossAxisChildrenSizes = IntArray(crossAxisCount) { index ->
                 val placeable = placeables.getOrNull(index * mainAxisCount + m)
+                @Suppress("IfThenToElvis")
                 if (placeable != null) {
                     placeable.crossAxisSize()
                 } else {
@@ -182,19 +208,19 @@ internal class GridMeasureHelper(
             )
         }
 
-        GridMeasureResult(
-            mainAxisSize = mainAxisLayoutSize,
-            crossAxisSize = crossAxisLayoutSize,
-            mainAxisCount = mainAxisCount,
-            crossAxisCount = crossAxisCount,
+        GridPositionResult(
             mainAxisPositions = mainAxisMaxPositions,
             crossAxisPositions = crossAxisMaxPositions,
         )
     }
 
+    /**
+     * Places children composable at the correct position.
+     */
     fun place(
         placeableScope: Placeable.PlacementScope,
         measureResult: GridMeasureResult,
+        positionResult: GridPositionResult,
     ) = with(placeableScope) {
         var i = 0
         for (m in 0 until measureResult.mainAxisCount) {
@@ -205,13 +231,13 @@ internal class GridMeasureHelper(
 
                 if (orientation == LayoutOrientation.Horizontal) {
                     placeable.place(
-                        x = measureResult.mainAxisPositions[m],
-                        y = measureResult.crossAxisPositions[c],
+                        x = positionResult.mainAxisPositions[m],
+                        y = positionResult.crossAxisPositions[c],
                     )
                 } else {
                     placeable.place(
-                        x = measureResult.crossAxisPositions[c],
-                        y = measureResult.mainAxisPositions[m],
+                        x = positionResult.crossAxisPositions[c],
+                        y = positionResult.mainAxisPositions[m],
                     )
                 }
                 i++
