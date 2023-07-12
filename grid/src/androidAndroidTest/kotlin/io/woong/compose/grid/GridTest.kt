@@ -47,6 +47,110 @@ class GridTest {
     val composeRule: ComposeContentTestRule = createComposeRule()
 
     @Test
+    fun testHorizontalGrid_noChild() {
+        composeRule.setContent {
+            HorizontalGrid(
+                rowCount = 3,
+                modifier = Modifier.testTag("grid"),
+                content = {}
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(0.dp)
+            .assertHeightIsEqualTo(0.dp)
+    }
+
+    @Test
+    fun testVerticalGrid_noChild() {
+        composeRule.setContent {
+            VerticalGrid(
+                columnCount = 3,
+                modifier = Modifier.testTag("grid"),
+                content = {}
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(0.dp)
+            .assertHeightIsEqualTo(0.dp)
+    }
+
+    @Test
+    fun testHorizontalGrid_withSingleLineChildren() {
+        val rowCount = 3
+        val testTags = arrayOf("1", "2", "3")
+        val childSize = 30.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rowCount = rowCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (tag in testTags) {
+                    Box(
+                        modifier = Modifier
+                            .size(childSize)
+                            .testTag(tag)
+                    )
+                }
+            }
+        }
+
+        for ((i, tag) in testTags.withIndex()) {
+            composeRule
+                .onNode(hasTestTag(tag))
+                .assertPositionInRootIsEqualTo(
+                    expectedLeft = 0.dp,
+                    expectedTop = childSize * i
+                )
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(childSize)
+            .assertHeightIsEqualTo(childSize * rowCount)
+    }
+
+    @Test
+    fun testVerticalGrid_withSingleLineChildren() {
+        val columnCount = 3
+        val testTags = arrayOf("1", "2", "3")
+        val childSize = 30.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columnCount = columnCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (tag in testTags) {
+                    Box(
+                        modifier = Modifier
+                            .size(childSize)
+                            .testTag(tag)
+                    )
+                }
+            }
+        }
+
+        for ((i, tag) in testTags.withIndex()) {
+            composeRule
+                .onNode(hasTestTag(tag))
+                .assertPositionInRootIsEqualTo(
+                    expectedLeft = childSize * i,
+                    expectedTop = 0.dp
+                )
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(childSize * columnCount)
+            .assertHeightIsEqualTo(childSize)
+    }
+
+    @Test
     fun testHorizontalGrid_withSameChildrenSizes() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val childSize = 30.dp
