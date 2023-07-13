@@ -10,7 +10,7 @@ to create issue or pull request.
 There are 2 layout composable called `HorizontalGrid` and `VerticalGrid`. You can just place
 children composables in the grid layout.
 
-For instance, you write code like below for grid of color boxes:
+For instance, you can write code like below for grid of color boxes:
 
 ```kotlin
 @Composable
