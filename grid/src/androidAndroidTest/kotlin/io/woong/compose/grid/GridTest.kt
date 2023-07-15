@@ -462,11 +462,7 @@ class GridTest {
         }
 
         var i = 0
-        var expectedGridWidth = 0.dp
-        var expectedGridHeight = 0.dp
         for (column in 0 until columnCount) {
-            var lineWidthMax = 0.dp
-            var lineHeightSum = 0.dp
             for (row in 0 until rowCount) {
                 if (i < testTags.size) {
                     composeRule
@@ -477,19 +473,14 @@ class GridTest {
                             expectedLeft = 50.dp * column,
                             expectedTop = 50.dp * row
                         )
-
-                    lineWidthMax = max(lineWidthMax, childrenSize[i])
-                    lineHeightSum += childrenSize[i]
                     i++
                 }
             }
-            expectedGridWidth += lineWidthMax
-            expectedGridHeight = max(expectedGridHeight, lineHeightSum)
         }
         composeRule
             .onNode(hasTestTag("grid"))
-            .assertWidthIsEqualTo(expectedGridWidth)
-            .assertHeightIsEqualTo(expectedGridHeight)
+            .assertWidthIsEqualTo(150.dp)
+            .assertHeightIsEqualTo(150.dp)
     }
 
     @Test
@@ -519,11 +510,7 @@ class GridTest {
         }
 
         var i = 0
-        var expectedGridWidth = 0.dp
-        var expectedGridHeight = 0.dp
         for (row in 0 until rowCount) {
-            var lineWidthSum = 0.dp
-            var lineHeightMax = 0.dp
             for (column in 0 until columnCount) {
                 if (i < testTags.size) {
                     composeRule
@@ -534,20 +521,15 @@ class GridTest {
                             expectedLeft = 50.dp * column,
                             expectedTop = 50.dp * row
                         )
-
-                    lineWidthSum += childrenSize[i]
-                    lineHeightMax = max(lineHeightMax, childrenSize[i])
                     i++
                 }
             }
-            expectedGridWidth = max(expectedGridWidth, lineWidthSum)
-            expectedGridHeight += lineHeightMax
         }
 
         composeRule
             .onNode(hasTestTag("grid"))
-            .assertWidthIsEqualTo(expectedGridWidth)
-            .assertHeightIsEqualTo(expectedGridHeight)
+            .assertWidthIsEqualTo(150.dp)
+            .assertHeightIsEqualTo(150.dp)
     }
 
     @Test
