@@ -62,11 +62,9 @@ internal class GridMeasureHelper(
         val constraints = OrientationIndependentConstraints(orientation, constraints)
         val mainAxisSpacingPx = mainAxisSpacing.roundToPx()
         val crossAxisSpacingPx = crossAxisSpacing.roundToPx()
-
         val measurableCount = measurables.size
         val mainAxisCount = measurableCount / crossAxisCount
 
-        // Measure grid layout size and children's constraints.
         var i = 0
         var mainAxisPlacedSpace = 0
         var mainAxisSpaceAfterLast: Int
@@ -135,82 +133,44 @@ internal class GridMeasureHelper(
         val crossAxisCount = measureResult.crossAxisCount
         val mainAxisLayoutSize = measureResult.mainAxisSize
         val crossAxisLayoutSize = measureResult.crossAxisSize
+        val mainAxisPositions = IntArray(mainAxisCount) { 0 }
+        val crossAxisPositions = IntArray(crossAxisCount) { 0 }
 
-        var mainAxisMaxPositions = IntArray(mainAxisCount) { 0 }
-        var mainAxisMinPositions = IntArray(mainAxisCount) { 0 }
-        for (c in 0 until crossAxisCount) {
-            val mainAxisPositions = IntArray(mainAxisCount) { 0 }
-            val mainAxisChildrenSizes = IntArray(mainAxisCount) { index ->
-                val placeable = placeables.getOrNull(index * crossAxisCount + c)
-                @Suppress("IfThenToElvis")
-                if (placeable != null) {
-                    placeable.mainAxisSize()
-                } else {
-                    0
-                }
-            }
-            mainAxisArrangement(
-                mainAxisLayoutSize,
-                mainAxisChildrenSizes,
-                this.layoutDirection,
-                this,
-                mainAxisPositions,
-            )
-            if (c == 0) {
-                mainAxisMinPositions = mainAxisPositions
-            }
-            mainAxisMaxPositions = arrayOfMax(mainAxisMaxPositions, mainAxisPositions)
-            mainAxisMinPositions = arrayOfMin(mainAxisMinPositions, mainAxisPositions)
-        }
-        val mainAxisMaxPositionsCopy = mainAxisMaxPositions.copyOf()
-        var mainAxisOffset = 0
+        val mainAxisBiggestChildrenSizes = IntArray(mainAxisCount) { 0 }
         for (m in 0 until mainAxisCount) {
-            mainAxisMaxPositions[m] += mainAxisOffset
-            mainAxisOffset = max(
-                mainAxisOffset,
-                mainAxisMaxPositionsCopy[m] - mainAxisMinPositions[m]
-            )
+            val currentLineChildrenSizes = IntArray(crossAxisCount) { index ->
+                val placeable = placeables.getAt(m, index)
+                placeable.crossAxisSize()
+            }
+            mainAxisBiggestChildrenSizes[m] = currentLineChildrenSizes.maxOrZero()
         }
+        mainAxisArrangement(
+            mainAxisLayoutSize,
+            mainAxisBiggestChildrenSizes,
+            this.layoutDirection,
+            this,
+            mainAxisPositions,
+        )
 
-        var crossAxisMaxPositions = IntArray(crossAxisCount) { 0 }
-        var crossAxisMinPositions = IntArray(crossAxisCount) { 0 }
-        for (m in 0 until mainAxisCount) {
-            val crossAxisPositions = IntArray(crossAxisCount) { 0 }
-            val crossAxisChildrenSizes = IntArray(crossAxisCount) { index ->
-                val placeable = placeables.getOrNull(index * mainAxisCount + m)
-                @Suppress("IfThenToElvis")
-                if (placeable != null) {
-                    placeable.crossAxisSize()
-                } else {
-                    0
-                }
-            }
-            crossAxisArrangement(
-                crossAxisLayoutSize,
-                crossAxisChildrenSizes,
-                this.layoutDirection,
-                this,
-                crossAxisPositions,
-            )
-            if (m == 0) {
-                crossAxisMinPositions = crossAxisPositions
-            }
-            crossAxisMaxPositions = arrayOfMax(crossAxisMaxPositions, crossAxisPositions)
-            crossAxisMinPositions = arrayOfMin(crossAxisMinPositions, crossAxisPositions)
-        }
-        val crossAxisMaxPositionsCopy = crossAxisMaxPositions.copyOf()
-        var crossAxisOffset = 0
+        val crossAxisBiggestChildrenSizes = IntArray(crossAxisCount) { 0 }
         for (c in 0 until crossAxisCount) {
-            crossAxisMaxPositions[c] += crossAxisOffset
-            crossAxisOffset = max(
-                crossAxisOffset,
-                crossAxisMaxPositionsCopy[c] - crossAxisMinPositions[c]
-            )
+            val currentLineChildrenSizes = IntArray(mainAxisCount) { index ->
+                val placeable = placeables.getAt(index, c)
+                placeable.mainAxisSize()
+            }
+            crossAxisBiggestChildrenSizes[c] = currentLineChildrenSizes.maxOrZero()
         }
+        crossAxisArrangement(
+            crossAxisLayoutSize,
+            crossAxisBiggestChildrenSizes,
+            this.layoutDirection,
+            this,
+            crossAxisPositions,
+        )
 
         GridPositionResult(
-            mainAxisPositions = mainAxisMaxPositions,
-            crossAxisPositions = crossAxisMaxPositions,
+            mainAxisPositions = mainAxisPositions,
+            crossAxisPositions = crossAxisPositions,
         )
     }
 
@@ -262,36 +222,26 @@ internal class GridMeasureHelper(
     }
 
     /**
-     * Returns a new array that contains max values of each index.
+     * Get a null-safe [Placeable] by main-axis index and cross-axis index.
      *
-     * For instance, when the first array is `[0, 3, 5]` and the second array is `[4, 1, 2]`.
-     * The result is `[4, 3, 5]`.
+     * This function must be called only where [Placeable]s null-safety is guaranteed.
      */
-    @Suppress("NOTHING_TO_INLINE")
-    private inline fun arrayOfMax(a: IntArray, b: IntArray): IntArray {
-        if (a.size != b.size) throw IndexOutOfBoundsException("Two array's size must equal")
-        val size = a.size
-        val new = IntArray(size) { 0 }
-        for (i in 0 until size) {
-            new[i] = max(a[i], b[i])
-        }
-        return new
+    private fun Array<Placeable?>.getAt(mainAxisIndex: Int, crossAxisIndex: Int): Placeable {
+        val mainAxisMaxIndex = (this.size / crossAxisCount) - 1
+        return this[(mainAxisMaxIndex * mainAxisIndex) + crossAxisIndex]!!
     }
 
     /**
-     * Returns a new array that contains minimum values of each index.
-     *
-     * For instance, when the first array is `[0, 3, 5]` and the second array is `[4, 1, 2]`.
-     * The result is `[0, 1, 2]`.
+     * Returns the largest element or 0 if there are no elements.
      */
-    @Suppress("NOTHING_TO_INLINE")
-    private inline fun arrayOfMin(a: IntArray, b: IntArray): IntArray {
-        if (a.size != b.size) throw IndexOutOfBoundsException("Two array's size must equal")
-        val size = a.size
-        val new = IntArray(size) { 0 }
-        for (i in 0 until size) {
-            new[i] = min(a[i], b[i])
+    private fun IntArray.maxOrZero(): Int {
+        if (this.isEmpty()) {
+            return 0
         }
-        return new
+        var maxValue = this[0]
+        for (i in 1 until this.size) {
+            maxValue = max(maxValue, this[i])
+        }
+        return maxValue
     }
 }
