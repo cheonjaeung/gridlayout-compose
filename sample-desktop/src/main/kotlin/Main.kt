@@ -1,7 +1,6 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +33,7 @@ fun main() = application {
     ) {
         VerticalGrid(
             columnCount = 3,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.border(width = 2.dp, color = Color.Red),
         ) {
             ColorBox(
                 modifier = Modifier

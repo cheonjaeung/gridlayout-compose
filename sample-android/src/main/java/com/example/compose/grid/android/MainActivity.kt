@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             VerticalGrid(
                 columnCount = 3,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.border(width = 2.dp, color = Color.Red),
             ) {
                 ColorBox(
                     modifier = Modifier
