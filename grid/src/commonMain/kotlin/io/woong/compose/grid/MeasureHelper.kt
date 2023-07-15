@@ -63,7 +63,11 @@ internal class GridMeasureHelper(
         val mainAxisSpacingPx = mainAxisSpacing.roundToPx()
         val crossAxisSpacingPx = crossAxisSpacing.roundToPx()
         val measurableCount = measurables.size
-        val mainAxisCount = measurableCount / crossAxisCount
+        val mainAxisCount = if (measurableCount % crossAxisCount == 0) {
+            measurableCount / crossAxisCount
+        } else {
+            measurableCount / crossAxisCount + 1
+        }
 
         var i = 0
         var mainAxisPlacedSpace = 0
