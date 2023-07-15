@@ -16,14 +16,11 @@
 
 package io.woong.compose.grid
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsDisplayed
@@ -33,8 +30,8 @@ import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
@@ -79,7 +76,7 @@ class GridTest {
     }
 
     @Test
-    fun testHorizontalGrid_withSingleLineChildren() {
+    fun testHorizontalGrid_singleLine() {
         val rowCount = 3
         val testTags = arrayOf("1", "2", "3")
         val childSize = 30.dp
@@ -115,7 +112,7 @@ class GridTest {
     }
 
     @Test
-    fun testVerticalGrid_withSingleLineChildren() {
+    fun testVerticalGrid_singleLine() {
         val columnCount = 3
         val testTags = arrayOf("1", "2", "3")
         val childSize = 30.dp
@@ -151,11 +148,215 @@ class GridTest {
     }
 
     @Test
-    fun testHorizontalGrid_withSameChildrenSizes() {
+    fun testHorizontalGrid_breakDownToNextLine() {
+        val rowCount = 3
+        val testTags = arrayOf("1", "2", "3", "4")
+        val childSize = 30.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rowCount = rowCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (tag in testTags) {
+                    Box(
+                        modifier = Modifier
+                            .size(childSize)
+                            .testTag(tag)
+                    )
+                }
+            }
+        }
+
+        for ((i, tag) in testTags.withIndex()) {
+            if (i < 3) {
+                // First line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = 0.dp,
+                        expectedTop = childSize * i
+                    )
+            } else {
+                // Next line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize,
+                        expectedTop = childSize * (i - 3)
+                    )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(childSize * 2)
+            .assertHeightIsEqualTo(childSize * rowCount)
+    }
+
+    @Test
+    fun testVerticalGrid_breakDownToNextLine() {
+        val columnCount = 3
+        val testTags = arrayOf("1", "2", "3", "4", "5")
+        val childSize = 30.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columnCount = columnCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (tag in testTags) {
+                    Box(
+                        modifier = Modifier
+                            .size(childSize)
+                            .testTag(tag)
+                    )
+                }
+            }
+        }
+
+        for ((i, tag) in testTags.withIndex()) {
+            if (i < 3) {
+                // First line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize * i,
+                        expectedTop = 0.dp
+                    )
+            } else {
+                // Next line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize * (i - 3),
+                        expectedTop = childSize
+                    )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(childSize * columnCount)
+            .assertHeightIsEqualTo(childSize * 2)
+    }
+
+    @Test
+    fun testHorizontalGrid_breakDownMultipleTimes() {
+        val rowCount = 3
+        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7")
+        val childSize = 30.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rowCount = rowCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (tag in testTags) {
+                    Box(
+                        modifier = Modifier
+                            .size(childSize)
+                            .testTag(tag)
+                    )
+                }
+            }
+        }
+
+        for ((i, tag) in testTags.withIndex()) {
+            if (i < 3) {
+                // First line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = 0.dp,
+                        expectedTop = childSize * i
+                    )
+            } else if (i < 6) {
+                // Second line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize,
+                        expectedTop = childSize * (i - 3)
+                    )
+            } else {
+                // Last line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize * 2,
+                        expectedTop = childSize * (i - 6)
+                    )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(childSize * 3)
+            .assertHeightIsEqualTo(childSize * rowCount)
+    }
+
+    @Test
+    fun testVerticalGrid_breakDownMultipleTimes() {
+        val columnCount = 3
+        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7")
+        val childSize = 30.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columnCount = columnCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (tag in testTags) {
+                    Box(
+                        modifier = Modifier
+                            .size(childSize)
+                            .testTag(tag)
+                    )
+                }
+            }
+        }
+
+        for ((i, tag) in testTags.withIndex()) {
+            if (i < 3) {
+                // First line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize * i,
+                        expectedTop = 0.dp
+                    )
+            } else if (i < 6) {
+                // Second line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize * (i - 3),
+                        expectedTop = childSize
+                    )
+            } else {
+                // Last line
+                composeRule
+                    .onNode(hasTestTag(tag))
+                    .assertPositionInRootIsEqualTo(
+                        expectedLeft = childSize * (i - 6),
+                        expectedTop = childSize * 2
+                    )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(childSize * columnCount)
+            .assertHeightIsEqualTo(childSize * 3)
+    }
+
+    @Test
+    fun testHorizontalGrid_sameChildrenSizes() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val childSize = 30.dp
         val rowCount = 3
-        val columnCount = testTags.size / rowCount
+        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -173,17 +374,17 @@ class GridTest {
         }
 
         var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertWidthIsEqualTo(childSize)
-                    .assertHeightIsEqualTo(childSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
+        for (column in 0 until columnCount) {
+            for (row in 0 until rowCount) {
+                if (i < testTags.size) {
+                    composeRule
+                        .onNode(hasTestTag(testTags[i]))
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = childSize * column,
+                            expectedTop = childSize * row
+                        )
+                    i++
+                }
             }
         }
         composeRule
@@ -193,11 +394,11 @@ class GridTest {
     }
 
     @Test
-    fun testVerticalGrid_withSameChildrenSizes() {
+    fun testVerticalGrid_sameChildrenSizes() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val childSize = 30.dp
         val columnCount = 3
-        val rowCount = testTags.size / columnCount
+        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -215,17 +416,17 @@ class GridTest {
         }
 
         var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertWidthIsEqualTo(childSize)
-                    .assertHeightIsEqualTo(childSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
+        for (row in 0 until rowCount) {
+            for (column in 0 until columnCount) {
+                if (i < testTags.size) {
+                    composeRule
+                        .onNode(hasTestTag(testTags[i]))
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = childSize * column,
+                            expectedTop = childSize * row
+                        )
+                    i++
+                }
             }
         }
         composeRule
@@ -235,12 +436,127 @@ class GridTest {
     }
 
     @Test
-    fun testHorizontalGrid_withFixedHeight() {
+    fun testHorizontalGrid_variousChildrenSizes() {
+        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
+        val childrenSize = arrayOf(
+            30.dp, 40.dp, 50.dp,
+            50.dp, 30.dp, 40.dp,
+            40.dp, 50.dp, 30.dp,
+        )
+        val rowCount = 3
+        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rowCount = rowCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (index in testTags.indices) {
+                    Box(
+                        modifier = Modifier
+                            .size(childrenSize[index])
+                            .testTag(testTags[index])
+                    )
+                }
+            }
+        }
+
+        var i = 0
+        var expectedGridWidth = 0.dp
+        var expectedGridHeight = 0.dp
+        for (column in 0 until columnCount) {
+            var lineWidthMax = 0.dp
+            var lineHeightSum = 0.dp
+            for (row in 0 until rowCount) {
+                if (i < testTags.size) {
+                    composeRule
+                        .onNode(hasTestTag(testTags[i]))
+                        .assertWidthIsEqualTo(childrenSize[i])
+                        .assertHeightIsEqualTo(childrenSize[i])
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = 50.dp * column,
+                            expectedTop = 50.dp * row
+                        )
+
+                    lineWidthMax = max(lineWidthMax, childrenSize[i])
+                    lineHeightSum += childrenSize[i]
+                    i++
+                }
+            }
+            expectedGridWidth += lineWidthMax
+            expectedGridHeight = max(expectedGridHeight, lineHeightSum)
+        }
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(expectedGridWidth)
+            .assertHeightIsEqualTo(expectedGridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_variousChildrenSizes() {
+        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
+        val childrenSize = arrayOf(
+            30.dp, 40.dp, 50.dp,
+            50.dp, 30.dp, 40.dp,
+            40.dp, 50.dp, 30.dp,
+        )
+        val columnCount = 3
+        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+
+        composeRule.setContent {
+            VerticalGrid(
+                columnCount = columnCount,
+                modifier = Modifier.testTag("grid")
+            ) {
+                for (index in testTags.indices) {
+                    Box(
+                        modifier = Modifier
+                            .size(childrenSize[index])
+                            .testTag(testTags[index])
+                    )
+                }
+            }
+        }
+
+        var i = 0
+        var expectedGridWidth = 0.dp
+        var expectedGridHeight = 0.dp
+        for (row in 0 until rowCount) {
+            var lineWidthSum = 0.dp
+            var lineHeightMax = 0.dp
+            for (column in 0 until columnCount) {
+                if (i < testTags.size) {
+                    composeRule
+                        .onNode(hasTestTag(testTags[i]))
+                        .assertWidthIsEqualTo(childrenSize[i])
+                        .assertHeightIsEqualTo(childrenSize[i])
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = 50.dp * column,
+                            expectedTop = 50.dp * row
+                        )
+
+                    lineWidthSum += childrenSize[i]
+                    lineHeightMax = max(lineHeightMax, childrenSize[i])
+                    i++
+                }
+            }
+            expectedGridWidth = max(expectedGridWidth, lineWidthSum)
+            expectedGridHeight += lineHeightMax
+        }
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertWidthIsEqualTo(expectedGridWidth)
+            .assertHeightIsEqualTo(expectedGridHeight)
+    }
+
+    @Test
+    fun testHorizontalGrid_fixedHeight() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val gridHeight = 100.dp
         val childSize = 30.dp
         val rowCount = 3
-        val columnCount = testTags.size / rowCount
+        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -260,17 +576,17 @@ class GridTest {
         }
 
         var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertWidthIsEqualTo(childSize)
-                    .assertHeightIsEqualTo(childSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
+        for (column in 0 until columnCount) {
+            for (row in 0 until rowCount) {
+                if (i < testTags.size) {
+                    composeRule
+                        .onNode(hasTestTag(testTags[i]))
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = childSize * column,
+                            expectedTop = childSize * row
+                        )
+                    i++
+                }
             }
         }
         composeRule
@@ -280,16 +596,16 @@ class GridTest {
     }
 
     @Test
-    fun testVerticalGrid_withFixedWidth() {
+    fun testVerticalGrid_fixedWidth() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val gridWidth = 100.dp
         val childSize = 30.dp
         val columnCount = 3
-        val rowCount = testTags.size / columnCount
+        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
-                columnCount = rowCount,
+                columnCount = columnCount,
                 modifier = Modifier
                     .width(gridWidth)
                     .testTag("grid")
@@ -305,17 +621,17 @@ class GridTest {
         }
 
         var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertWidthIsEqualTo(childSize)
-                    .assertHeightIsEqualTo(childSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
+        for (row in 0 until rowCount) {
+            for (column in 0 until columnCount) {
+                if (i < testTags.size) {
+                    composeRule
+                        .onNode(hasTestTag(testTags[i]))
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = childSize * column,
+                            expectedTop = childSize * row
+                        )
+                    i++
+                }
             }
         }
         composeRule
@@ -325,12 +641,12 @@ class GridTest {
     }
 
     @Test
-    fun testHorizontalGrid_withNotEnoughHeight() {
+    fun testHorizontalGrid_notEnoughHeight() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        val gridHeight = 45.dp
-        val childSize = 30.dp
+        val gridHeight = 15.dp
+        val childSize = 10.dp
         val rowCount = 3
-        val columnCount = testTags.size / rowCount
+        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -350,40 +666,42 @@ class GridTest {
         }
 
         var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                when (column) {
-                    0 -> {
-                        composeRule
-                            .onNode(hasTestTag(testTags[i]))
-                            .assertIsDisplayed()
-                            .assertWidthIsEqualTo(childSize)
-                            .assertHeightIsEqualTo(childSize)
-                            .assertPositionInRootIsEqualTo(
-                                expectedLeft = childSize * row,
-                                expectedTop = 0.dp
-                            )
-                    }
+        for (column in 0 until columnCount) {
+            for (row in 0 until rowCount) {
+                if (i < testTags.size) {
+                    when (row) {
+                        0 -> {
+                            composeRule
+                                .onNode(hasTestTag(testTags[i]))
+                                .assertIsDisplayed()
+                                .assertWidthIsEqualTo(childSize)
+                                .assertHeightIsEqualTo(childSize)
+                                .assertPositionInRootIsEqualTo(
+                                    expectedLeft = childSize * column,
+                                    expectedTop = 0.dp
+                                )
+                        }
 
-                    1 -> {
-                        composeRule
-                            .onNode(hasTestTag(testTags[i]))
-                            .assertIsDisplayed()
-                            .assertWidthIsEqualTo(childSize)
-                            .assertHeightIsEqualTo(gridHeight - childSize)
-                            .assertPositionInRootIsEqualTo(
-                                expectedLeft = childSize * row,
-                                expectedTop = childSize * column
-                            )
-                    }
+                        1 -> {
+                            composeRule
+                                .onNode(hasTestTag(testTags[i]))
+                                .assertIsDisplayed()
+                                .assertWidthIsEqualTo(childSize)
+                                .assertHeightIsEqualTo(gridHeight - childSize)
+                                .assertPositionInRootIsEqualTo(
+                                    expectedLeft = childSize * column,
+                                    expectedTop = childSize * row
+                                )
+                        }
 
-                    else -> {
-                        composeRule
-                            .onNode(hasTestTag(testTags[i]))
-                            .assertIsNotDisplayed()
+                        else -> {
+                            composeRule
+                                .onNode(hasTestTag(testTags[i]))
+                                .assertIsNotDisplayed()
+                        }
                     }
+                    i++
                 }
-                i++
             }
         }
         composeRule
@@ -393,16 +711,16 @@ class GridTest {
     }
 
     @Test
-    fun testVerticalGrid_withNotEnoughWidth() {
+    fun testVerticalGrid_notEnoughWidth() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        val gridWidth = 45.dp
-        val childSize = 30.dp
+        val gridWidth = 15.dp
+        val childSize = 10.dp
         val columnCount = 3
-        val rowCount = testTags.size / columnCount
+        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
-                columnCount = rowCount,
+                columnCount = columnCount,
                 modifier = Modifier
                     .width(gridWidth)
                     .testTag("grid")
@@ -418,881 +736,47 @@ class GridTest {
         }
 
         var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                when (row) {
-                    0 -> {
-                        composeRule
-                            .onNode(hasTestTag(testTags[i]))
-                            .assertIsDisplayed()
-                            .assertWidthIsEqualTo(childSize)
-                            .assertHeightIsEqualTo(childSize)
-                            .assertPositionInRootIsEqualTo(
-                                expectedLeft = 0.dp,
-                                expectedTop = childSize * column
-                            )
-                    }
+        for (row in 0 until rowCount) {
+            for (column in 0 until columnCount) {
+                if (i < testTags.size) {
+                    when (column) {
+                        0 -> {
+                            composeRule
+                                .onNode(hasTestTag(testTags[i]))
+                                .assertIsDisplayed()
+                                .assertWidthIsEqualTo(childSize)
+                                .assertHeightIsEqualTo(childSize)
+                                .assertPositionInRootIsEqualTo(
+                                    expectedLeft = 0.dp,
+                                    expectedTop = childSize * row
+                                )
+                        }
 
-                    1 -> {
-                        composeRule
-                            .onNode(hasTestTag(testTags[i]))
-                            .assertIsDisplayed()
-                            .assertWidthIsEqualTo(gridWidth - childSize)
-                            .assertHeightIsEqualTo(childSize)
-                            .assertPositionInRootIsEqualTo(
-                                expectedLeft = childSize * row,
-                                expectedTop = childSize * column
-                            )
-                    }
+                        1 -> {
+                            composeRule
+                                .onNode(hasTestTag(testTags[i]))
+                                .assertIsDisplayed()
+                                .assertWidthIsEqualTo(gridWidth - childSize)
+                                .assertHeightIsEqualTo(childSize)
+                                .assertPositionInRootIsEqualTo(
+                                    expectedLeft = childSize * column,
+                                    expectedTop = childSize * row
+                                )
+                        }
 
-                    else -> {
-                        composeRule
-                            .onNode(hasTestTag(testTags[i]))
-                            .assertIsNotDisplayed()
+                        else -> {
+                            composeRule
+                                .onNode(hasTestTag(testTags[i]))
+                                .assertIsNotDisplayed()
+                        }
                     }
+                    i++
                 }
-                i++
             }
         }
         composeRule
             .onNode(hasTestTag("grid"))
             .assertWidthIsEqualTo(gridWidth)
             .assertHeightIsEqualTo(childSize * rowCount)
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementStart_whenLtr() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                HorizontalGrid(
-                    rowCount = rowCount,
-                    modifier = Modifier.testTag("grid"),
-                    horizontalArrangement = Arrangement.Start,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementStart_whenLtr() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                VerticalGrid(
-                    columnCount = columnCount,
-                    modifier = Modifier.testTag("grid"),
-                    horizontalArrangement = Arrangement.Start,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementStart_whenRtl() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                HorizontalGrid(
-                    rowCount = rowCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.Start,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = gridWidth - (childSize * (row + 1)),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementStart_whenRtl() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                VerticalGrid(
-                    columnCount = columnCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.Start,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = gridWidth - (childSize * (row + 1)),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementEnd_whenLtr() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                HorizontalGrid(
-                    rowCount = rowCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = gridWidth - (childSize * (rowCount - row)),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementEnd_whenLtr() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                VerticalGrid(
-                    columnCount = columnCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = gridWidth - (childSize * (rowCount - row)),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementEnd_whenRtl() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                HorizontalGrid(
-                    rowCount = rowCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * (rowCount - (row + 1)),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementEnd_whenRtl() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                VerticalGrid(
-                    columnCount = columnCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * (rowCount - (row + 1)),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withHorizontalArrangementCenter_whenLtr() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                HorizontalGrid(
-                    rowCount = rowCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        val centerLeft = (gridWidth - (childSize * rowCount)) / 2
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = centerLeft + (childSize * row),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withHorizontalArrangementCenter_whenLtr() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                VerticalGrid(
-                    columnCount = columnCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        val centerLeft = (gridWidth - (childSize * rowCount)) / 2
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = centerLeft + (childSize * row),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withHorizontalArrangementCenter_whenRtl() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                HorizontalGrid(
-                    rowCount = rowCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        val centerLeft = (gridWidth - (childSize * rowCount)) / 2
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = centerLeft + (childSize * (rowCount - (row + 1))),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withHorizontalArrangementCenter_whenRtl() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridWidth = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                VerticalGrid(
-                    columnCount = columnCount,
-                    modifier = Modifier
-                        .width(gridWidth)
-                        .testTag("grid"),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    for (tag in testTags) {
-                        Box(
-                            modifier = Modifier
-                                .size(childSize)
-                                .testTag(tag)
-                        )
-                    }
-                }
-            }
-        }
-
-        val centerLeft = (gridWidth - (childSize * rowCount)) / 2
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = centerLeft + (childSize * (rowCount - (row + 1))),
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementTop() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridHeight = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            HorizontalGrid(
-                rowCount = rowCount,
-                modifier = Modifier
-                    .height(gridHeight)
-                    .testTag("grid"),
-                verticalArrangement = Arrangement.Top,
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementTop() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridHeight = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            VerticalGrid(
-                columnCount = columnCount,
-                modifier = Modifier
-                    .height(gridHeight)
-                    .testTag("grid"),
-                verticalArrangement = Arrangement.Top,
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = childSize * column
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementBottom() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridHeight = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            HorizontalGrid(
-                rowCount = rowCount,
-                modifier = Modifier
-                    .height(gridHeight)
-                    .testTag("grid"),
-                verticalArrangement = Arrangement.Bottom,
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = gridHeight - (childSize * (columnCount - column))
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementBottom() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridHeight = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            VerticalGrid(
-                columnCount = columnCount,
-                modifier = Modifier
-                    .height(gridHeight)
-                    .testTag("grid"),
-                verticalArrangement = Arrangement.Bottom,
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = gridHeight - (childSize * (columnCount - column))
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withVerticalArrangementCenter() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridHeight = 100.dp
-        val childSize = 20.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            HorizontalGrid(
-                rowCount = rowCount,
-                modifier = Modifier
-                    .height(gridHeight)
-                    .testTag("grid"),
-                verticalArrangement = Arrangement.Center,
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        val centerTop = (gridHeight - (childSize * columnCount)) / 2
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = centerTop + (childSize * column)
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testVerticalGrid_withVerticalArrangementCenter() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val gridHeight = 100.dp
-        val childSize = 20.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            VerticalGrid(
-                columnCount = columnCount,
-                modifier = Modifier
-                    .height(gridHeight)
-                    .testTag("grid"),
-                verticalArrangement = Arrangement.Center,
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        val centerTop = (gridHeight - (childSize * columnCount)) / 2
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row,
-                        expectedTop = centerTop + (childSize * column)
-                    )
-                i++
-            }
-        }
-    }
-
-    @Test
-    fun testHorizontalGrid_withArrangementSpaceBy() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val childSize = 20.dp
-        val horizontalSpacing = 5.dp
-        val verticalSpacing = 10.dp
-        val rowCount = 3
-        val columnCount = testTags.size / rowCount
-
-        composeRule.setContent {
-            HorizontalGrid(
-                rowCount = rowCount,
-                modifier = Modifier.testTag("grid"),
-                horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
-                verticalArrangement = Arrangement.spacedBy(verticalSpacing)
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        var i = 0
-        for (row in 0 until rowCount) {
-            for (column in 0 until columnCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertWidthIsEqualTo(childSize)
-                    .assertHeightIsEqualTo(childSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row + (horizontalSpacing * row),
-                        expectedTop = childSize * column + (verticalSpacing * column)
-                    )
-                i++
-            }
-        }
-        composeRule
-            .onNode(hasTestTag("grid"))
-            .assertWidthIsEqualTo((childSize * columnCount) + (horizontalSpacing * (columnCount - 1)))
-            .assertHeightIsEqualTo((childSize * rowCount) + (verticalSpacing * (rowCount - 1)))
-    }
-
-    @Test
-    fun testVerticalGrid_withArrangementSpaceBy() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        val childSize = 20.dp
-        val horizontalSpacing = 5.dp
-        val verticalSpacing = 10.dp
-        val columnCount = 3
-        val rowCount = testTags.size / columnCount
-
-        composeRule.setContent {
-            VerticalGrid(
-                columnCount = columnCount,
-                modifier = Modifier.testTag("grid"),
-                horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
-                verticalArrangement = Arrangement.spacedBy(verticalSpacing)
-            ) {
-                for (tag in testTags) {
-                    Box(
-                        modifier = Modifier
-                            .size(childSize)
-                            .testTag(tag)
-                    )
-                }
-            }
-        }
-
-        var i = 0
-        for (column in 0 until columnCount) {
-            for (row in 0 until rowCount) {
-                composeRule
-                    .onNode(hasTestTag(testTags[i]))
-                    .assertWidthIsEqualTo(childSize)
-                    .assertHeightIsEqualTo(childSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = childSize * row + (horizontalSpacing * row),
-                        expectedTop = childSize * column + (verticalSpacing * column)
-                    )
-                i++
-            }
-        }
-        composeRule
-            .onNode(hasTestTag("grid"))
-            .assertWidthIsEqualTo((childSize * columnCount) + (horizontalSpacing * (columnCount - 1)))
-            .assertHeightIsEqualTo((childSize * rowCount) + (verticalSpacing * (rowCount - 1)))
     }
 }
