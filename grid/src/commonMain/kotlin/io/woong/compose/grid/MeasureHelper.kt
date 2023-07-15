@@ -80,33 +80,36 @@ internal class GridMeasureHelper(
             var crossAxisPlacedSpace = 0
             var crossAxisSpaceAfterLast: Int
             for (c in 0 until crossAxisCount) {
-                val measurable = measurables[i]
-                val crossAxisMax = constraints.crossAxisMaxSize
-                val placeable = measurable.measure(
-                    constraints = OrientationIndependentConstraints(
-                        mainAxisMinSize = 0,
-                        mainAxisMaxSize = if (mainAxisMax == Constraints.Infinity) {
-                            Constraints.Infinity
-                        } else {
-                            mainAxisMax - mainAxisPlacedSpace
-                        },
-                        crossAxisMinSize = 0,
-                        crossAxisMaxSize = if (crossAxisMax == Constraints.Infinity) {
-                            Constraints.Infinity
-                        } else {
-                            crossAxisMax - crossAxisPlacedSpace
-                        }
-                    ).toConstraints(orientation)
-                )
-                crossAxisSpaceAfterLast = min(
-                    if (c == crossAxisCount - 1) 0 else crossAxisSpacingPx,
-                    crossAxisMax - crossAxisPlacedSpace - placeable.crossAxisSize()
-                )
-                crossAxisPlacedSpace += placeable.crossAxisSize() + crossAxisSpaceAfterLast
-                placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, placeable.mainAxisSize())
-                crossAxisTotalSize = max(crossAxisTotalSize, crossAxisPlacedSpace)
-                placeables[i] = placeable
-                i++
+                if (i < measurableCount) {
+                    val measurable = measurables[i]
+                    val crossAxisMax = constraints.crossAxisMaxSize
+                    val placeable = measurable.measure(
+                        constraints = OrientationIndependentConstraints(
+                            mainAxisMinSize = 0,
+                            mainAxisMaxSize = if (mainAxisMax == Constraints.Infinity) {
+                                Constraints.Infinity
+                            } else {
+                                mainAxisMax - mainAxisPlacedSpace
+                            },
+                            crossAxisMinSize = 0,
+                            crossAxisMaxSize = if (crossAxisMax == Constraints.Infinity) {
+                                Constraints.Infinity
+                            } else {
+                                crossAxisMax - crossAxisPlacedSpace
+                            },
+                        ).toConstraints(orientation)
+                    )
+                    crossAxisSpaceAfterLast = min(
+                        if (c == crossAxisCount - 1) 0 else crossAxisSpacingPx,
+                        crossAxisMax - crossAxisPlacedSpace - placeable.crossAxisSize()
+                    )
+                    crossAxisPlacedSpace += placeable.crossAxisSize() + crossAxisSpaceAfterLast
+                    placeableMainAxisSizeMax =
+                        max(placeableMainAxisSizeMax, placeable.mainAxisSize())
+                    crossAxisTotalSize = max(crossAxisTotalSize, crossAxisPlacedSpace)
+                    placeables[i] = placeable
+                    i++
+                }
             }
             mainAxisSpaceAfterLast = min(
                 if (m == mainAxisCount - 1) 0 else mainAxisSpacingPx,
@@ -189,22 +192,24 @@ internal class GridMeasureHelper(
         var i = 0
         for (m in 0 until measureResult.mainAxisCount) {
             for (c in 0 until measureResult.crossAxisCount) {
-                val placeable = placeables[i]
-                // Placeable must not null on this time.
-                placeable!!
+                if (i < placeables.size) {
+                    val placeable = placeables[i]
+                    // Placeable must not null on this time.
+                    placeable!!
 
-                if (orientation == LayoutOrientation.Horizontal) {
-                    placeable.place(
-                        x = positionResult.mainAxisPositions[m],
-                        y = positionResult.crossAxisPositions[c],
-                    )
-                } else {
-                    placeable.place(
-                        x = positionResult.crossAxisPositions[c],
-                        y = positionResult.mainAxisPositions[m],
-                    )
+                    if (orientation == LayoutOrientation.Horizontal) {
+                        placeable.place(
+                            x = positionResult.mainAxisPositions[m],
+                            y = positionResult.crossAxisPositions[c],
+                        )
+                    } else {
+                        placeable.place(
+                            x = positionResult.crossAxisPositions[c],
+                            y = positionResult.mainAxisPositions[m],
+                        )
+                    }
+                    i++
                 }
-                i++
             }
         }
     }
