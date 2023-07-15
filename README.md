@@ -1,6 +1,6 @@
 <p align="center"><img alt="logo" src="images/compose-grid-logo.png" width="200"></p>
-<h1 align="center">Compose Grid</h1>
-<p align="center"><i>Missing grid layout for Jetpack Compose.</i></p>
+<h1 align="center">Grid Layout for Compose</h1>
+<p align="center"><i>Missing grid layout for Jetpack Compose and Compose Multiplatform</i></p>
 
 **This project is under development.** But if you have a great idea for implementing grid, feel free
 to create issue or pull request.

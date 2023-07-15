@@ -10,7 +10,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "compose-grid"
+rootProject.name = "gridlayout-compose"
 
 include(":grid")
 include(":sample-android", ":sample-desktop")
