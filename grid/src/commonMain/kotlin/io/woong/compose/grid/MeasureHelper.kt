@@ -29,13 +29,15 @@ import kotlin.math.min
 internal class GridMeasureResult(
     val mainAxisCount: Int,
     val crossAxisCount: Int,
-    val mainAxisSize: Int,
-    val crossAxisSize: Int,
+    val mainAxisLayoutSizeBeforeArrange: Int,
+    val crossAxisLayoutSizeBeforeArrange: Int,
 )
 
-internal class GridPositionResult(
+internal class GridArrangeResult(
     val mainAxisPositions: IntArray,
     val crossAxisPositions: IntArray,
+    val mainAxisLayoutSize: Int,
+    val crossAxisLayoutSize: Int,
 )
 
 /**
@@ -52,7 +54,12 @@ internal class GridMeasureHelper(
     val crossAxisSpacing: Dp,
 ) {
     /**
-     * Measures required grid layout size and children composable constraints.
+     * Measures children composable constraints.
+     *
+     * This method calculates children constraints (minimum and maximum size) using layout
+     * constrains and arrangement spacing. After measuring step, the placeables array elements
+     * null safety is guaranteed. The result layout size of this method may be incorrect because
+     * it is before the arrangement step.
      */
     fun measure(
         measureScope: MeasureScope,
@@ -118,28 +125,30 @@ internal class GridMeasureHelper(
             mainAxisPlacedSpace += placeableMainAxisSizeMax + mainAxisSpaceAfterLast
             mainAxisTotalSize = max(mainAxisTotalSize, mainAxisPlacedSpace)
         }
-        val mainAxisLayoutSize = max(mainAxisTotalSize, constraints.mainAxisMinSize)
-        val crossAxisLayoutSize = max(crossAxisTotalSize, constraints.crossAxisMinSize)
+        val mainAxisLayoutSizeBeforeArrange = max(mainAxisTotalSize, constraints.mainAxisMinSize)
+        val crossAxisLayoutSizeBeforeArrange = max(crossAxisTotalSize, constraints.crossAxisMinSize)
 
         GridMeasureResult(
-            mainAxisSize = mainAxisLayoutSize,
-            crossAxisSize = crossAxisLayoutSize,
+            mainAxisLayoutSizeBeforeArrange = mainAxisLayoutSizeBeforeArrange,
+            crossAxisLayoutSizeBeforeArrange = crossAxisLayoutSizeBeforeArrange,
             mainAxisCount = mainAxisCount,
             crossAxisCount = crossAxisCount,
         )
     }
 
     /**
-     * Calculates positions where the children composable should be placed.
+     * Arranges children composable and remeasures grid layout size.
+     *
+     * The arrangement step calculates children composable's position in the grid layout.
+     * After the arrangement, this method recalculates grid layout size and the result size is
+     * actual layout size.
      */
-    fun position(
+    fun arrange(
         measureScope: MeasureScope,
         measureResult: GridMeasureResult,
-    ): GridPositionResult = with(measureScope) {
+    ): GridArrangeResult = with(measureScope) {
         val mainAxisCount = measureResult.mainAxisCount
         val crossAxisCount = measureResult.crossAxisCount
-        val mainAxisLayoutSize = measureResult.mainAxisSize
-        val crossAxisLayoutSize = measureResult.crossAxisSize
         val mainAxisPositions = IntArray(mainAxisCount) { 0 }
         val crossAxisPositions = IntArray(crossAxisCount) { 0 }
 
@@ -151,6 +160,10 @@ internal class GridMeasureHelper(
             }
             mainAxisBiggestChildrenSizes[m] = currentLineChildrenSizes.maxOrZero()
         }
+        val mainAxisLayoutSize = max(
+            mainAxisBiggestChildrenSizes.sum(),
+            measureResult.mainAxisLayoutSizeBeforeArrange
+        )
         mainAxisArrangement(
             mainAxisLayoutSize,
             mainAxisBiggestChildrenSizes,
@@ -167,6 +180,10 @@ internal class GridMeasureHelper(
             }
             crossAxisBiggestChildrenSizes[c] = currentLineChildrenSizes.maxOrZero()
         }
+        val crossAxisLayoutSize = max(
+            crossAxisBiggestChildrenSizes.sum(),
+            measureResult.crossAxisLayoutSizeBeforeArrange
+        )
         crossAxisArrangement(
             crossAxisLayoutSize,
             crossAxisBiggestChildrenSizes,
@@ -175,19 +192,21 @@ internal class GridMeasureHelper(
             crossAxisPositions,
         )
 
-        GridPositionResult(
+        GridArrangeResult(
             mainAxisPositions = mainAxisPositions,
             crossAxisPositions = crossAxisPositions,
+            mainAxisLayoutSize = mainAxisLayoutSize,
+            crossAxisLayoutSize = crossAxisLayoutSize,
         )
     }
 
     /**
-     * Places children composable at the correct position.
+     * Places the layout children composable using measuring and arrangement results.
      */
     fun place(
         placeableScope: Placeable.PlacementScope,
         measureResult: GridMeasureResult,
-        positionResult: GridPositionResult,
+        arrangeResult: GridArrangeResult,
     ) = with(placeableScope) {
         var i = 0
         for (m in 0 until measureResult.mainAxisCount) {
@@ -199,13 +218,13 @@ internal class GridMeasureHelper(
 
                     if (orientation == LayoutOrientation.Horizontal) {
                         placeable.place(
-                            x = positionResult.mainAxisPositions[m],
-                            y = positionResult.crossAxisPositions[c],
+                            x = arrangeResult.mainAxisPositions[m],
+                            y = arrangeResult.crossAxisPositions[c],
                         )
                     } else {
                         placeable.place(
-                            x = positionResult.crossAxisPositions[c],
-                            y = positionResult.mainAxisPositions[m],
+                            x = arrangeResult.crossAxisPositions[c],
+                            y = arrangeResult.mainAxisPositions[m],
                         )
                     }
                     i++
@@ -214,6 +233,9 @@ internal class GridMeasureHelper(
         }
     }
 
+    /**
+     * Returns main axis size of this [Placeable] by current orientation.
+     */
     private fun Placeable.mainAxisSize(): Int {
         return if (orientation == LayoutOrientation.Horizontal) {
             width
@@ -222,6 +244,9 @@ internal class GridMeasureHelper(
         }
     }
 
+    /**
+     * Returns cross axis size of this [Placeable] by current orientation.
+     */
     private fun Placeable.crossAxisSize(): Int {
         return if (orientation == LayoutOrientation.Horizontal) {
             height

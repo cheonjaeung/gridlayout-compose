@@ -52,8 +52,7 @@ internal fun gridMeasurePolicy(
                 measureScope = this,
                 constraints = constraints,
             )
-
-            val positionResult = measureHelper.position(
+            val arrangeResult = measureHelper.arrange(
                 measureScope = this,
                 measureResult = measureResult,
             )
@@ -62,12 +61,12 @@ internal fun gridMeasurePolicy(
             val layoutHeight: Int
             when (orientation) {
                 LayoutOrientation.Horizontal -> {
-                    layoutWidth = measureResult.mainAxisSize
-                    layoutHeight = measureResult.crossAxisSize
+                    layoutWidth = arrangeResult.mainAxisLayoutSize
+                    layoutHeight = arrangeResult.crossAxisLayoutSize
                 }
                 LayoutOrientation.Vertical -> {
-                    layoutWidth = measureResult.crossAxisSize
-                    layoutHeight = measureResult.mainAxisSize
+                    layoutWidth = arrangeResult.crossAxisLayoutSize
+                    layoutHeight = arrangeResult.mainAxisLayoutSize
                 }
             }
 
@@ -75,7 +74,7 @@ internal fun gridMeasurePolicy(
                 measureHelper.place(
                     placeableScope = this,
                     measureResult = measureResult,
-                    positionResult = positionResult,
+                    arrangeResult = arrangeResult,
                 )
             }
         }
