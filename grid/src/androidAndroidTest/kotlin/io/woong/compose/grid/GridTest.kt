@@ -31,7 +31,6 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
@@ -624,9 +623,9 @@ class GridTest {
 
     @Test
     fun testHorizontalGrid_notEnoughHeight() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        val gridHeight = 15.dp
-        val childSize = 10.dp
+        val testTags = arrayOf("1", "2", "3", "4", "5", "6")
+        val gridHeight = 35.dp
+        val childSize = 20.dp
         val rowCount = 3
         val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
 
@@ -694,9 +693,9 @@ class GridTest {
 
     @Test
     fun testVerticalGrid_notEnoughWidth() {
-        val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        val gridWidth = 15.dp
-        val childSize = 10.dp
+        val testTags = arrayOf("1", "2", "3", "4", "5", "6")
+        val gridWidth = 35.dp
+        val childSize = 20.dp
         val columnCount = 3
         val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
 
