@@ -44,5 +44,6 @@ dependencies {
     implementation(libs.compose.android.runtime)
     implementation(libs.compose.android.foundation)
     implementation(libs.compose.android.ui)
+    implementation(libs.compose.android.material3)
     implementation(project(":grid"))
 }

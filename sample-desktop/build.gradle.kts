@@ -10,7 +10,7 @@ group = "com.example.compose.grid.desktop"
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "com.example.compose.grid.desktop.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
@@ -26,5 +26,6 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation(libs.compose.multiplatform.material3)
     implementation(project(":grid"))
 }

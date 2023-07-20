@@ -3,123 +3,134 @@ package com.example.compose.grid.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
-
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val colors = arrayOf(
-            Color.Red, Color.Green, Color.Blue,
-            Color.Cyan, Color.Magenta, Color.Yellow,
-            Color.White, Color.Gray, Color.Black,
-            Color.Red, Color.Green, Color.Blue,
-            Color.Cyan, Color.Magenta, Color.Yellow,
-        )
-
         setContent {
-            VerticalGrid(
-                columnCount = 3,
-                modifier = Modifier.border(width = 2.dp, color = Color.Red),
-            ) {
-                ColorBox(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .border(width = 1.dp, color = colors[1]),
-                    color = colors[0],
+            val coroutineScope = rememberCoroutineScope()
+            val scaffoldState = rememberBottomSheetScaffoldState(
+                bottomSheetState = rememberStandardBottomSheetState(
+                    initialValue = SheetValue.Hidden,
+                    skipHiddenState = false,
                 )
-                ColorBox(
-                    modifier = Modifier
-                        .size(110.dp)
-                        .border(width = 1.dp, color = colors[2]),
-                    color = colors[1],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .border(width = 1.dp, color = colors[3]),
-                    color = colors[2],
-                )
+            )
 
-                ColorBox(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .border(width = 1.dp, color = colors[4]),
-                    color = colors[3],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(110.dp)
-                        .border(width = 1.dp, color = colors[5]),
-                    color = colors[4],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .border(width = 1.dp, color = colors[6]),
-                    color = colors[5],
-                )
+            val itemCount by remember { mutableStateOf(12) }
+            var useRandomSize by remember { mutableStateOf(true) }
+            var layoutDirection: LayoutDirection by remember { mutableStateOf(LayoutDirection.Ltr) }
+            var orientation: Orientation by remember { mutableStateOf(Orientation.Vertical) }
+            var horizontalArrangement: Arrangement.Horizontal by remember {
+                mutableStateOf(Arrangement.Start)
+            }
+            var verticalArrangement: Arrangement.Vertical by remember {
+                mutableStateOf(Arrangement.Top)
+            }
 
-                ColorBox(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .border(width = 1.dp, color = colors[7]),
-                    color = colors[6],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(90.dp)
-                        .border(width = 1.dp, color = colors[8]),
-                    color = colors[7],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .border(width = 1.dp, color = colors[9]),
-                    color = colors[8],
-                )
+            val items by remember(itemCount, useRandomSize) {
+                mutableStateOf(createGridItems(count = itemCount, useRandomSize = useRandomSize))
+            }
 
-                ColorBox(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .border(width = 1.dp, color = colors[10]),
-                    color = colors[9],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(90.dp)
-                        .border(width = 1.dp, color = colors[11]),
-                    color = colors[10],
-                )
-                ColorBox(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .border(width = 1.dp, color = colors[0]),
-                    color = colors[11],
+            MaterialTheme {
+                BottomSheetScaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    scaffoldState = scaffoldState,
+                    content = {
+                        SampleScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            items = items,
+                            layoutDirection = layoutDirection,
+                            gridHorizontalArrangement = horizontalArrangement,
+                            gridVerticalArrangement = verticalArrangement,
+                            isVertical = orientation == Orientation.Vertical,
+                            onButtonClick = {
+                                coroutineScope.launch {
+                                    if (scaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                                        scaffoldState.bottomSheetState.hide()
+                                    } else {
+                                        scaffoldState.bottomSheetState.expand()
+                                    }
+                                }
+                            }
+                        )
+                    },
+                    sheetContent = {
+                        OptionsSheet(
+                            useRandomSize = useRandomSize,
+                            onUseRandomSizeChange = { useRandomSize = it },
+                            layoutDirection = layoutDirection,
+                            onLayoutDirectionChange = { layoutDirection = it },
+                            orientation = orientation,
+                            onOrientationChange = { orientation = it },
+                            horizontalArrangement = horizontalArrangement,
+                            onHorizontalArrangementChange = { horizontalArrangement = it },
+                            verticalArrangement = verticalArrangement,
+                            onVerticalArrangementChange = { verticalArrangement = it },
+                            onButtonClick = {
+                                coroutineScope.launch {
+                                    if (scaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                                        scaffoldState.bottomSheetState.hide()
+                                    } else {
+                                        scaffoldState.bottomSheetState.expand()
+                                    }
+                                }
+                            }
+                        )
+                    },
                 )
             }
         }
     }
 }
 
-@Composable
-private fun ColorBox(
-    color: Color,
-    modifier: Modifier = Modifier,
-) {
-    val coloredModifier = modifier.then(
-        Modifier.background(color = color)
-    )
-    Box(modifier = coloredModifier)
+private fun createGridItems(
+    count: Int,
+    useRandomSize: Boolean = false,
+): List<GridItemInfo> {
+    val items = mutableListOf<GridItemInfo>()
+    val fixedSize = 80.dp
+    for (i in 0 until count) {
+        items.add(
+            GridItemInfo(
+                color = randomColor(),
+                width = if (useRandomSize) randomSize() else fixedSize,
+                height = if (useRandomSize) randomSize() else fixedSize,
+            )
+        )
+    }
+    return items
+}
+
+private fun randomColor(): Color {
+    val randomRed = Random.nextInt(150, 220)
+    val randomGreen = Random.nextInt(150, 220)
+    val randomBlue = Random.nextInt(150, 220)
+    return Color(red = randomRed, green = randomGreen, blue = randomBlue, alpha = 127)
+}
+
+private fun randomSize(): Dp {
+    return Dp(Random.nextInt(60, 100).toFloat())
 }
