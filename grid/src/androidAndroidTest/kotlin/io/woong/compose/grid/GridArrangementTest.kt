@@ -38,7 +38,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@OptIn(ExperimentalGridLayoutApi::class)
 @RunWith(AndroidJUnit4::class)
 class GridArrangementTest {
     @get:Rule

@@ -33,7 +33,6 @@ import androidx.compose.ui.layout.MeasurePolicy
  * @param content The children composables of this layout.
  */
 @Composable
-@ExperimentalGridLayoutApi
 inline fun HorizontalGrid(
     rowCount: Int,
     modifier: Modifier = Modifier,
@@ -63,7 +62,6 @@ inline fun HorizontalGrid(
  * @param content The children composables of this layout.
  */
 @Composable
-@ExperimentalGridLayoutApi
 inline fun VerticalGrid(
     columnCount: Int,
     modifier: Modifier = Modifier,
