@@ -18,13 +18,17 @@ compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-m
 
 [libraries]
 androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 compose-multiplatform-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 compose-multiplatform-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
 compose-android-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose-android" }
 compose-android-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-android" }
-compose-android-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-android" }
+
+# Test libraries
+junit4 = { module = "junit:junit", version = "4.13.2" }
 compose-android-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-android" }
 compose-android-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-android" }
-junit4 = { module = "junit:junit", version = "4.13.2" }
+
+# Sample libraries
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+compose-android-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-android" }
