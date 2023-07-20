@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.LayoutDirection
 import kotlin.math.max
 import kotlin.math.min
 
-internal class GridMeasureResult(
+internal data class GridMeasureResult(
     val constraints: OrientationIndependentConstraints,
     val mainAxisCount: Int,
     val crossAxisCount: Int,
-    val mainAxisLayoutSizeBeforeArrange: Int,
-    val crossAxisLayoutSizeBeforeArrange: Int,
+    val mainAxisLayoutSize: Int,
+    val crossAxisLayoutSize: Int,
 )
 
 internal class GridArrangeResult(
@@ -71,11 +71,7 @@ internal class GridMeasureHelper(
         val mainAxisSpacingPx = mainAxisSpacing.roundToPx()
         val crossAxisSpacingPx = crossAxisSpacing.roundToPx()
         val measurableCount = measurables.size
-        val mainAxisCount = if (measurableCount % crossAxisCount == 0) {
-            measurableCount / crossAxisCount
-        } else {
-            measurableCount / crossAxisCount + 1
-        }
+        val mainAxisCount = mainAxisCountByCrossAxisCount(measurableCount, crossAxisCount)
 
         var i = 0
         var mainAxisPlacedSpace = 0
@@ -139,8 +135,8 @@ internal class GridMeasureHelper(
             constraints = constraints,
             mainAxisCount = mainAxisCount,
             crossAxisCount = crossAxisCount,
-            mainAxisLayoutSizeBeforeArrange = mainAxisLayoutSizeBeforeArrange,
-            crossAxisLayoutSizeBeforeArrange = crossAxisLayoutSizeBeforeArrange,
+            mainAxisLayoutSize = mainAxisLayoutSizeBeforeArrange,
+            crossAxisLayoutSize = crossAxisLayoutSizeBeforeArrange,
         )
     }
 
@@ -158,6 +154,8 @@ internal class GridMeasureHelper(
         val constraints = measureResult.constraints
         val mainAxisCount = measureResult.mainAxisCount
         val crossAxisCount = measureResult.crossAxisCount
+        val mainAxisLayoutSizeBeforeArrange = measureResult.mainAxisLayoutSize
+        val crossAxisLayoutSizeBeforeArrange = measureResult.crossAxisLayoutSize
         val mainAxisPositions = IntArray(mainAxisCount) { 0 }
         val crossAxisPositions = IntArray(crossAxisCount) { 0 }
 
@@ -171,7 +169,7 @@ internal class GridMeasureHelper(
         }
         val mainAxisLayoutSize = max(
             mainAxisBiggestChildrenSizes.sum(),
-            measureResult.mainAxisLayoutSizeBeforeArrange
+            mainAxisLayoutSizeBeforeArrange
         ).coerceIn(
             constraints.mainAxisMinSize,
             constraints.mainAxisMaxSize
@@ -194,7 +192,7 @@ internal class GridMeasureHelper(
         }
         val crossAxisLayoutSize = max(
             crossAxisBiggestChildrenSizes.sum(),
-            measureResult.crossAxisLayoutSizeBeforeArrange
+            crossAxisLayoutSizeBeforeArrange
         ).coerceIn(
             constraints.crossAxisMinSize,
             constraints.crossAxisMaxSize
@@ -245,6 +243,14 @@ internal class GridMeasureHelper(
                     i++
                 }
             }
+        }
+    }
+
+    private fun mainAxisCountByCrossAxisCount(totalCount: Int, crossAxisCount: Int): Int {
+        return if (totalCount % crossAxisCount == 0) {
+            totalCount / crossAxisCount
+        } else {
+            totalCount / crossAxisCount + 1
         }
     }
 
