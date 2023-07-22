@@ -2,11 +2,6 @@
 <h1 align="center">Grid Layout for Compose</h1>
 <p align="center"><i>Missing grid layout for Jetpack Compose and Compose Multiplatform</i></p>
 
-**This project is under development.** But if you have a great idea for implementing grid, feel free
-to create issue or pull request.
-
-## Usage
-
 This library contains 2 layout composable called `HorizontalGrid` and `VerticalGrid`. Both layout
 creates multiple rows and columns, but `HorizontalGrid` has fixed rows and `VerticalGrid`has fixed
 columns. The grid layout places children as a line until the number of children is smaller than
@@ -27,6 +22,23 @@ fun ExampleGrid(colors: List<Color>) {
 ```
 
 ![horizontal-grid-example](./images/horizontal-grid-example.png)
+
+## Installation
+
+This library depends on Compose. It is recommended to use grid layout version that matches with your
+project's compose version.
+
+| GridLayout | Jetpack Compose (Android) | Compose Multiplatform |
+|------------|---------------------------|-----------------------|
+| 0.1.x      | 1.4.3                     | 1.4.1                 |
+
+To download `gridlayout-compose`, add this library to your project's dependency:
+
+```groovy
+dependencies {
+    implementation("io.woong.compose.grid:grid:${version}")
+}
+```
 
 ## Features
 
