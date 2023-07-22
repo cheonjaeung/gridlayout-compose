@@ -46,7 +46,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/*') && (github.repository == 'cheonjaewoong/buildconfig-gradle-plugin') }}
+    if: ${{ startsWith(github.ref, 'refs/tags/*') && (github.repository == 'cheonjaewoong/gridlayout-compose') }}
     needs: [validate-gradle-wrapper, test]
     steps:
       - name: Checkout
