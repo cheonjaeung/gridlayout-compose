@@ -1,7 +1,10 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.maven.publish)
 }
 
 kotlin {
@@ -68,5 +71,38 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01)
+    signAllPublications()
+    coordinates("${project.group}", "grid", "${project.version}")
+
+    pom {
+        name.set("grid")
+        description.set("Missing grid layout for Jetpack Compose and Compose Multiplatform.")
+        url.set("https://github.com/cheonjaewoong/gridlayout-compose")
+
+        licenses {
+            license {
+                name.set("Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("cheonjaewoong")
+                name.set("Jaewoong Cheon")
+                email.set("cheonjaewoong@gmail.com")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/cheonjaewoong/gridlayout-compose")
+            connection.set("scm:git:git://github.com/cheonjaewoong/gridlayout-compose.git")
+            developerConnection.set("scm:git:ssh://git@github.com/cheonjaewoong/gridlayout-compose.git")
+        }
     }
 }

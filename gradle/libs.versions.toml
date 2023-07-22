@@ -8,6 +8,7 @@ compose-multiplatform = "1.4.1"
 compose-android = "1.4.3"
 compose-android-compiler-plugin = "1.4.6"
 compose-material3 = "1.1.1"
+maven-publish-plugin = "0.25.3"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -16,6 +17,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish-plugin" }
 
 [libraries]
 androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
