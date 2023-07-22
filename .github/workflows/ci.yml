@@ -1,6 +1,14 @@
 name: ci
 
-on: push
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
   validate-gradle-wrapper:
@@ -34,3 +42,26 @@ jobs:
         with:
           api-level: 29
           script: ./gradlew connectedDebugAndroidTest --stacktrace
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/*') && (github.repository == 'cheonjaewoong/buildconfig-gradle-plugin') }}
+    needs: [validate-gradle-wrapper, test]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: 8
+
+      - name: Publish to Maven Central
+        run: ./gradlew publish --no-daemon --no-parallel --stacktrace
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
