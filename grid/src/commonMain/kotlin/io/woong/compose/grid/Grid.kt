@@ -40,7 +40,7 @@ inline fun HorizontalGrid(
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     content: @Composable () -> Unit,
 ) {
-    val measurePolicy = horizontalGridMeasurePolicy(
+    val measurePolicy = rememberHorizontalGridMeasurePolicy(
         rowCount,
         horizontalArrangement,
         verticalArrangement
@@ -69,7 +69,7 @@ inline fun VerticalGrid(
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     content: @Composable () -> Unit,
 ) {
-    val measurePolicy = verticalGridMeasurePolicy(
+    val measurePolicy = rememberVerticalGridMeasurePolicy(
         columnCount,
         horizontalArrangement,
         verticalArrangement
@@ -83,7 +83,7 @@ inline fun VerticalGrid(
 
 @PublishedApi
 @Composable
-internal fun horizontalGridMeasurePolicy(
+internal fun rememberHorizontalGridMeasurePolicy(
     rowCount: Int,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
@@ -110,7 +110,7 @@ internal fun horizontalGridMeasurePolicy(
 
 @PublishedApi
 @Composable
-internal fun verticalGridMeasurePolicy(
+internal fun rememberVerticalGridMeasurePolicy(
     columnCount: Int,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
