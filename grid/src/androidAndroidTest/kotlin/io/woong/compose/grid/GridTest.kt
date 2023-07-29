@@ -41,18 +41,20 @@ class GridTest {
     @get:Rule
     val composeRule: ComposeContentTestRule = createComposeRule()
 
+    private val gridTag: String = "grid"
+
     @Test
     fun testHorizontalGrid_noChild() {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = 3,
-                modifier = Modifier.testTag("grid"),
+                modifier = Modifier.testTag(gridTag),
                 content = {}
             )
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(0.dp)
             .assertHeightIsEqualTo(0.dp)
     }
@@ -62,13 +64,13 @@ class GridTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = 3,
-                modifier = Modifier.testTag("grid"),
+                modifier = Modifier.testTag(gridTag),
                 content = {}
             )
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(0.dp)
             .assertHeightIsEqualTo(0.dp)
     }
@@ -82,7 +84,7 @@ class GridTest {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = rowCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -104,7 +106,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize)
             .assertHeightIsEqualTo(childSize * rowCount)
     }
@@ -118,7 +120,7 @@ class GridTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = columnCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -140,7 +142,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(childSize)
     }
@@ -154,7 +156,7 @@ class GridTest {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = rowCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -187,7 +189,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * 2)
             .assertHeightIsEqualTo(childSize * rowCount)
     }
@@ -201,7 +203,7 @@ class GridTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = columnCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -234,7 +236,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(childSize * 2)
     }
@@ -248,7 +250,7 @@ class GridTest {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = rowCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -289,7 +291,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * 3)
             .assertHeightIsEqualTo(childSize * rowCount)
     }
@@ -303,7 +305,7 @@ class GridTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = columnCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -344,7 +346,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(childSize * 3)
     }
@@ -359,7 +361,7 @@ class GridTest {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = rowCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -386,7 +388,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(childSize * rowCount)
     }
@@ -401,7 +403,7 @@ class GridTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = columnCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -428,7 +430,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(childSize * rowCount)
     }
@@ -447,7 +449,7 @@ class GridTest {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = rowCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (index in testTags.indices) {
                     Box(
@@ -476,7 +478,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(150.dp)
             .assertHeightIsEqualTo(150.dp)
     }
@@ -495,7 +497,7 @@ class GridTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = columnCount,
-                modifier = Modifier.testTag("grid")
+                modifier = Modifier.testTag(gridTag)
             ) {
                 for (index in testTags.indices) {
                     Box(
@@ -525,7 +527,7 @@ class GridTest {
         }
 
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(150.dp)
             .assertHeightIsEqualTo(150.dp)
     }
@@ -543,7 +545,7 @@ class GridTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid")
+                    .testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -570,7 +572,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(gridHeight)
     }
@@ -588,7 +590,7 @@ class GridTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .width(gridWidth)
-                    .testTag("grid")
+                    .testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -615,7 +617,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(gridWidth)
             .assertHeightIsEqualTo(childSize * rowCount)
     }
@@ -633,7 +635,7 @@ class GridTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid")
+                    .testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -685,7 +687,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(childSize * columnCount)
             .assertHeightIsEqualTo(gridHeight)
     }
@@ -703,7 +705,7 @@ class GridTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .width(gridWidth)
-                    .testTag("grid")
+                    .testTag(gridTag)
             ) {
                 for (tag in testTags) {
                     Box(
@@ -755,7 +757,7 @@ class GridTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo(gridWidth)
             .assertHeightIsEqualTo(childSize * rowCount)
     }

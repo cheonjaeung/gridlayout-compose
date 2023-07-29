@@ -43,6 +43,8 @@ class GridArrangementTest {
     @get:Rule
     val composeRule: ComposeContentTestRule = createComposeRule()
 
+    private val gridTag: String = "grid"
+
     @Test
     fun testHorizontalGrid_withHorizontalArrangementStart_whenLtr() {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8")
@@ -54,7 +56,7 @@ class GridArrangementTest {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 HorizontalGrid(
                     rowCount = rowCount,
-                    modifier = Modifier.testTag("grid"),
+                    modifier = Modifier.testTag(gridTag),
                     horizontalArrangement = Arrangement.Start,
                 ) {
                     for (tag in testTags) {
@@ -95,7 +97,7 @@ class GridArrangementTest {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 VerticalGrid(
                     columnCount = columnCount,
-                    modifier = Modifier.testTag("grid"),
+                    modifier = Modifier.testTag(gridTag),
                     horizontalArrangement = Arrangement.Start,
                 ) {
                     for (tag in testTags) {
@@ -139,7 +141,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.Start,
                 ) {
                     for (tag in testTags) {
@@ -183,7 +185,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.Start,
                 ) {
                     for (tag in testTags) {
@@ -227,7 +229,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.End,
                 ) {
                     for (tag in testTags) {
@@ -271,7 +273,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.End,
                 ) {
                     for (tag in testTags) {
@@ -315,7 +317,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.End,
                 ) {
                     for (tag in testTags) {
@@ -359,7 +361,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.End,
                 ) {
                     for (tag in testTags) {
@@ -403,7 +405,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     for (tag in testTags) {
@@ -448,7 +450,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     for (tag in testTags) {
@@ -493,7 +495,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     for (tag in testTags) {
@@ -538,7 +540,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     for (tag in testTags) {
@@ -582,7 +584,7 @@ class GridArrangementTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.Top,
             ) {
                 for (tag in testTags) {
@@ -624,7 +626,7 @@ class GridArrangementTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.Top,
             ) {
                 for (tag in testTags) {
@@ -666,7 +668,7 @@ class GridArrangementTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 for (tag in testTags) {
@@ -708,7 +710,7 @@ class GridArrangementTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 for (tag in testTags) {
@@ -750,7 +752,7 @@ class GridArrangementTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.Center,
             ) {
                 for (tag in testTags) {
@@ -793,7 +795,7 @@ class GridArrangementTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.Center,
             ) {
                 for (tag in testTags) {
@@ -837,7 +839,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     for (tag in testTags) {
@@ -883,7 +885,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     for (tag in testTags) {
@@ -929,7 +931,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     for (tag in testTags) {
@@ -975,7 +977,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     for (tag in testTags) {
@@ -1020,7 +1022,7 @@ class GridArrangementTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 for (tag in testTags) {
@@ -1064,7 +1066,7 @@ class GridArrangementTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 for (tag in testTags) {
@@ -1109,7 +1111,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     for (tag in testTags) {
@@ -1155,7 +1157,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     for (tag in testTags) {
@@ -1201,7 +1203,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     for (tag in testTags) {
@@ -1247,7 +1249,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     for (tag in testTags) {
@@ -1292,7 +1294,7 @@ class GridArrangementTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 for (tag in testTags) {
@@ -1336,7 +1338,7 @@ class GridArrangementTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 for (tag in testTags) {
@@ -1381,7 +1383,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     for (tag in testTags) {
@@ -1429,7 +1431,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     for (tag in testTags) {
@@ -1477,7 +1479,7 @@ class GridArrangementTest {
                     rowCount = rowCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     for (tag in testTags) {
@@ -1525,7 +1527,7 @@ class GridArrangementTest {
                     columnCount = columnCount,
                     modifier = Modifier
                         .width(gridWidth)
-                        .testTag("grid"),
+                        .testTag(gridTag),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     for (tag in testTags) {
@@ -1572,7 +1574,7 @@ class GridArrangementTest {
                 rowCount = rowCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.SpaceAround,
             ) {
                 for (tag in testTags) {
@@ -1618,7 +1620,7 @@ class GridArrangementTest {
                 columnCount = columnCount,
                 modifier = Modifier
                     .height(gridHeight)
-                    .testTag("grid"),
+                    .testTag(gridTag),
                 verticalArrangement = Arrangement.SpaceAround,
             ) {
                 for (tag in testTags) {
@@ -1663,7 +1665,7 @@ class GridArrangementTest {
         composeRule.setContent {
             HorizontalGrid(
                 rowCount = rowCount,
-                modifier = Modifier.testTag("grid"),
+                modifier = Modifier.testTag(gridTag),
                 horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
                 verticalArrangement = Arrangement.spacedBy(verticalSpacing)
             ) {
@@ -1692,7 +1694,7 @@ class GridArrangementTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo((childSize * columnCount) + (horizontalSpacing * (columnCount - 1)))
             .assertHeightIsEqualTo((childSize * rowCount) + (verticalSpacing * (rowCount - 1)))
     }
@@ -1709,7 +1711,7 @@ class GridArrangementTest {
         composeRule.setContent {
             VerticalGrid(
                 columnCount = columnCount,
-                modifier = Modifier.testTag("grid"),
+                modifier = Modifier.testTag(gridTag),
                 horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
                 verticalArrangement = Arrangement.spacedBy(verticalSpacing)
             ) {
@@ -1738,7 +1740,7 @@ class GridArrangementTest {
             }
         }
         composeRule
-            .onNode(hasTestTag("grid"))
+            .onNode(hasTestTag(gridTag))
             .assertWidthIsEqualTo((childSize * columnCount) + (horizontalSpacing * (columnCount - 1)))
             .assertHeightIsEqualTo((childSize * rowCount) + (verticalSpacing * (rowCount - 1)))
     }
