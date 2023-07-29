@@ -163,7 +163,7 @@ internal class GridMeasureHelper(
         for (m in 0 until mainAxisCount) {
             val currentLineChildrenSizes = IntArray(crossAxisCount) { index ->
                 val placeable = placeables.getAt(m, index)
-                placeable.mainAxisSize()
+                placeable?.mainAxisSize() ?: 0
             }
             mainAxisBiggestChildrenSizes[m] = currentLineChildrenSizes.maxOrZero()
         }
@@ -186,7 +186,7 @@ internal class GridMeasureHelper(
         for (c in 0 until crossAxisCount) {
             val currentLineChildrenSizes = IntArray(mainAxisCount) { index ->
                 val placeable = placeables.getAt(index, c)
-                placeable.crossAxisSize()
+                placeable?.crossAxisSize() ?: 0
             }
             crossAxisBiggestChildrenSizes[c] = currentLineChildrenSizes.maxOrZero()
         }
@@ -277,13 +277,10 @@ internal class GridMeasureHelper(
     }
 
     /**
-     * Get a null-safe [Placeable] by main-axis index and cross-axis index.
-     *
-     * This function must be called only where [Placeable]s null-safety is guaranteed.
+     * Convenience method to get a [Placeable] by main-axis index and cross-axis index.
      */
-    private fun Array<Placeable?>.getAt(mainAxisIndex: Int, crossAxisIndex: Int): Placeable {
-        val mainAxisMaxIndex = (this.size / crossAxisCount) - 1
-        return this[(mainAxisMaxIndex * mainAxisIndex) + crossAxisIndex]!!
+    private fun Array<Placeable?>.getAt(mainAxisIndex: Int, crossAxisIndex: Int): Placeable? {
+        return this.getOrNull(mainAxisIndex * crossAxisCount + crossAxisIndex)
     }
 
     /**
