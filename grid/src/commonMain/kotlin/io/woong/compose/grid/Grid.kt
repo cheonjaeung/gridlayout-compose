@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.Density
  *
  * @param rows The class that determines the sizes and the number of grid cells.
  * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the layout children.
- * @param verticalArrangement The vertical arrangement of the layout children.
- * @param content The children composables of this layout.
+ * @param horizontalArrangement The horizontal arrangement of the grid cells.
+ * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param content The children of this layout.
  */
 @Composable
 inline fun HorizontalGrid(
@@ -63,12 +63,12 @@ inline fun HorizontalGrid(
  *
  * @param rowCount The count of row.
  * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the layout children.
- * @param verticalArrangement The vertical arrangement of the layout children.
- * @param content The children composables of this layout.
+ * @param horizontalArrangement The horizontal arrangement of the grid cells.
+ * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param content The children of this layout.
  */
 @Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated("Use HorizontalGrid with rows parameter.")
+@Deprecated("Use HorizontalGrid that takes SimpleGridCells parameter.")
 @Composable
 inline fun HorizontalGrid(
     rowCount: Int,
@@ -91,9 +91,9 @@ inline fun HorizontalGrid(
  *
  * @param columns The class that determines the sizes and the number of grid cells.
  * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the layout children.
- * @param verticalArrangement The vertical arrangement of the layout children.
- * @param content The children composables of this layout.
+ * @param horizontalArrangement The horizontal arrangement of the grid cells.
+ * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param content The children of this layout.
  */
 @Composable
 inline fun VerticalGrid(
@@ -124,12 +124,12 @@ inline fun VerticalGrid(
  *
  * @param columnCount The count of column.
  * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the layout children.
- * @param verticalArrangement The vertical arrangement of the layout children.
- * @param content The children composables of this layout.
+ * @param horizontalArrangement The horizontal arrangement of the grid cells.
+ * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param content The children of this layout.
  */
 @Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated("Use VerticalGrid with columns parameter.")
+@Deprecated("Use VerticalGrid that takes SimpleGridCells parameter.")
 @Composable
 inline fun VerticalGrid(
     columnCount: Int,
