@@ -16,7 +16,11 @@
 
 package io.woong.compose.grid
 
-import androidx.compose.ui.layout.*
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasurePolicy
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -24,7 +28,7 @@ import androidx.compose.ui.unit.LayoutDirection
 
 internal fun gridMeasurePolicy(
     orientation: LayoutOrientation,
-    crossAxisCount: Int,
+    calculateCrossAxisCellConstraints: Density.(Constraints) -> List<GridCellConstraints>,
     mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     mainAxisSpacing: Dp,
     crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
@@ -37,12 +41,15 @@ internal fun gridMeasurePolicy(
             constraints: Constraints
         ): MeasureResult {
             val placeables: Array<Placeable?> = arrayOfNulls(measurables.size)
+            val crossAxisCellConstraintsList = calculateCrossAxisCellConstraints(constraints)
+            val crossAxisCellCount = crossAxisCellConstraintsList.size
 
             val measureHelper = GridMeasureHelper(
                 orientation = orientation,
                 measurables = measurables,
                 placeables = placeables,
-                crossAxisCount = crossAxisCount,
+                crossAxisCellConstraintsList = crossAxisCellConstraintsList,
+                crossAxisCount = crossAxisCellCount,
                 mainAxisArrangement = mainAxisArrangement,
                 mainAxisSpacing = mainAxisSpacing,
                 crossAxisArrangement = crossAxisArrangement,
