@@ -78,7 +78,7 @@ inline fun HorizontalGrid(
     content: @Composable () -> Unit,
 ) {
     HorizontalGrid(
-        rows = SimpleGridCells.Fixed(rowCount),
+        rows = SimpleGridCells.Fixed(count = rowCount, sameWeight = false),
         modifier = modifier,
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
@@ -139,7 +139,7 @@ inline fun VerticalGrid(
     content: @Composable () -> Unit,
 ) {
     VerticalGrid(
-        columns = SimpleGridCells.Fixed(columnCount),
+        columns = SimpleGridCells.Fixed(count = columnCount, sameWeight = false),
         modifier = modifier,
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,

@@ -61,7 +61,7 @@ interface SimpleGridCells {
      * @param sameWeight Whether the row or column sizes should be same. If `true` the grid
      * layout size should be measurable, not an infinite.
      */
-    class Fixed(private val count: Int, private val sameWeight: Boolean = false) : SimpleGridCells {
+    class Fixed(private val count: Int, private val sameWeight: Boolean = true) : SimpleGridCells {
         init {
             if (count <= 0) {
                 throw IllegalArgumentException("Fixed count must be a positive value, but $count")
