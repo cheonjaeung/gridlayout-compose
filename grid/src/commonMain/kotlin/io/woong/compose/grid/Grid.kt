@@ -157,7 +157,7 @@ internal fun rememberRowCellHeightConstraints(
         { constraints ->
             val gridHeight = constraints.maxHeight
             if (gridHeight == Constraints.Infinity) {
-                throw IllegalArgumentException(
+                throw IllegalStateException(
                     "HorizontalGrid's height should be measurable, not an infinite."
                 )
             }
@@ -188,7 +188,7 @@ internal fun rememberColumnCellWidthConstraints(
         { constraints ->
             val gridWidth = constraints.maxWidth
             if (gridWidth == Constraints.Infinity) {
-                throw IllegalArgumentException(
+                throw IllegalStateException(
                     "VerticalGrid's width should be measurable, not an infinite."
                 )
             }
