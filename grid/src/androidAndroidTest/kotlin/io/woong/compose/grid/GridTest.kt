@@ -468,7 +468,7 @@ class GridTest {
     @Test
     fun testHorizontalGrid_breakDownToNextLine_withFixed() {
         val rowCount = 3
-        val gridHeight = 40.dp
+        val gridHeight = 45.dp
         val itemCount = rowCount + 1
         val itemSize = 10.dp
 
@@ -495,19 +495,13 @@ class GridTest {
                     .onNode(hasTestTag(i.toString()))
                     .assertWidthIsEqualTo(itemSize)
                     .assertHeightIsEqualTo(gridHeight / rowCount)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = 0.dp,
-                        expectedTop = (gridHeight / rowCount) * i
-                    )
+                    .assertTopPositionInRootIsEqualTo((gridHeight / rowCount) * i)
             } else {
                 composeRule
                     .onNode(hasTestTag(i.toString()))
                     .assertWidthIsEqualTo(itemSize)
                     .assertHeightIsEqualTo(gridHeight / rowCount)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = itemSize,
-                        expectedTop = 0.dp
-                    )
+                    .assertLeftPositionInRootIsEqualTo(itemSize)
             }
         }
 
@@ -520,7 +514,7 @@ class GridTest {
     @Test
     fun testVerticalGrid_breakDownToNextLine_withFixed() {
         val columnCount = 3
-        val gridWidth = 40.dp
+        val gridWidth = 45.dp
         val itemCount = columnCount + 1
         val itemSize = 10.dp
 
@@ -547,19 +541,13 @@ class GridTest {
                     .onNode(hasTestTag(i.toString()))
                     .assertWidthIsEqualTo(gridWidth / columnCount)
                     .assertHeightIsEqualTo(itemSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = (gridWidth / columnCount) * i,
-                        expectedTop = 0.dp
-                    )
+                    .assertLeftPositionInRootIsEqualTo((gridWidth / columnCount) * i)
             } else {
                 composeRule
                     .onNode(hasTestTag(i.toString()))
                     .assertWidthIsEqualTo(gridWidth / columnCount)
                     .assertHeightIsEqualTo(itemSize)
-                    .assertPositionInRootIsEqualTo(
-                        expectedLeft = 0.dp,
-                        expectedTop = itemSize
-                    )
+                    .assertTopPositionInRootIsEqualTo(itemSize)
             }
         }
 
@@ -666,7 +654,7 @@ class GridTest {
     @Test
     fun testHorizontalGrid_breakDownMultipleTimes_withFixed() {
         val rowCount = 3
-        val gridHeight = 40.dp
+        val gridHeight = 45.dp
         val itemCount = rowCount * 2 + 1
         val itemSize = 10.dp
 
@@ -694,10 +682,7 @@ class GridTest {
                         .onNode(hasTestTag(i.toString()))
                         .assertWidthIsEqualTo(itemSize)
                         .assertHeightIsEqualTo(gridHeight / rowCount)
-                        .assertPositionInRootIsEqualTo(
-                            expectedLeft = 0.dp,
-                            expectedTop = (gridHeight / rowCount) * i
-                        )
+                        .assertTopPositionInRootIsEqualTo((gridHeight / rowCount) * i)
                 }
 
                 i < rowCount * 2 -> {
@@ -716,10 +701,7 @@ class GridTest {
                         .onNode(hasTestTag(i.toString()))
                         .assertWidthIsEqualTo(itemSize)
                         .assertHeightIsEqualTo(gridHeight / rowCount)
-                        .assertPositionInRootIsEqualTo(
-                            expectedLeft = itemSize * 2,
-                            expectedTop = 0.dp
-                        )
+                        .assertLeftPositionInRootIsEqualTo(itemSize * 2)
                 }
             }
         }
@@ -733,7 +715,7 @@ class GridTest {
     @Test
     fun testVerticalGrid_breakDownMultipleTimes_withFixed() {
         val columnCount = 3
-        val gridWidth = 40.dp
+        val gridWidth = 45.dp
         val itemCount = columnCount * 2 + 1
         val itemSize = 10.dp
 
@@ -761,10 +743,7 @@ class GridTest {
                         .onNode(hasTestTag(i.toString()))
                         .assertWidthIsEqualTo(gridWidth / columnCount)
                         .assertHeightIsEqualTo(itemSize)
-                        .assertPositionInRootIsEqualTo(
-                            expectedLeft = (gridWidth / columnCount) * i,
-                            expectedTop = 0.dp
-                        )
+                        .assertLeftPositionInRootIsEqualTo((gridWidth / columnCount) * i)
                 }
 
                 i < columnCount * 2 -> {
@@ -783,10 +762,7 @@ class GridTest {
                         .onNode(hasTestTag(i.toString()))
                         .assertWidthIsEqualTo(gridWidth / columnCount)
                         .assertHeightIsEqualTo(itemSize)
-                        .assertPositionInRootIsEqualTo(
-                            expectedLeft = 0.dp,
-                            expectedTop = itemSize * 2
-                        )
+                        .assertTopPositionInRootIsEqualTo(itemSize * 2)
                 }
             }
         }
