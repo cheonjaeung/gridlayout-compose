@@ -103,12 +103,14 @@ interface SimpleGridCells {
         override fun equals(other: Any?): Boolean {
             if (other !is Fixed) return false
             if (this.count != other.count) return false
+            if (this.sameWeight != other.sameWeight) return false
             return true
         }
 
         override fun hashCode(): Int {
-            // Positive value to make difference from Adaptive.
-            return count.hashCode()
+            var hash = count.hashCode()
+            hash = 31 * hash + sameWeight.hashCode()
+            return hash
         }
     }
 
