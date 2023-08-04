@@ -20,6 +20,7 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.unit.Dp
+import kotlin.math.roundToInt
 
 /**
  * Asserts that the layout of this nod has size equal to [expectedSize].
@@ -53,4 +54,11 @@ fun calculateMainAxisCount(itemCount: Int, crossAxisCount: Int): Int {
     } else {
         itemCount / crossAxisCount + 1
     }
+}
+
+/**
+ * Returns expected cross axis count for grid layout using [SimpleGridCells.Adaptive].
+ */
+fun expectAdaptiveGridCrossAxisCount(gridSize: Dp, minSize: Dp): Int {
+    return gridSize.value.roundToInt() / minSize.value.roundToInt()
 }

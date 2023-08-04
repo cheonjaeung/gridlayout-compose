@@ -18,6 +18,9 @@ package io.woong.compose.grid
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import kotlin.math.max
 
 /**
  * A class determines the sizes and the number of cells, columns in vertical or rows in
@@ -69,6 +72,45 @@ interface SimpleGridCells {
 
         override fun hashCode(): Int {
             return count.hashCode()
+        }
+    }
+
+    /**
+     * Make grid to have as many rows or columns as possible and each cell has at least [minSize].
+     *
+     * For example, `Adaptive(20.dp)` for `VerticalGrid(Modifier.width(66.dp)` means that there
+     * will be 3 columns and each cell will have 22dp width. If grid width is changed to 80dp, the
+     * column count will be 4 and each cell will have 20dp width.
+     *
+     * @param minSize The minimum size which each cell should have.
+     */
+    class Adaptive(private val minSize: Dp) : SimpleGridCells {
+        init {
+            if (minSize <= 0.dp) {
+                throw IllegalArgumentException("Adaptive minSize must be a positive value, but $minSize")
+            }
+        }
+
+        override fun Density.calculateCrossAxisCellSizes(
+            availableSize: Int,
+            spacing: Int
+        ): List<Int> {
+            val minSizePx = minSize.roundToPx()
+            val count = max((availableSize + spacing) / (minSizePx + spacing), 1)
+            val totalSpacing = spacing * (count - 1)
+            val totalCellSize = availableSize - totalSpacing
+            val cellSize = totalCellSize / count
+            return List(count) { cellSize }
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (other !is Adaptive) return false
+            if (this.minSize != other.minSize) return false
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return -minSize.hashCode()
         }
     }
 }
