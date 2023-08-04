@@ -58,11 +58,3 @@ internal data class OrientationIndependentConstraints(
         }
     }
 }
-
-/**
- * A constraints class for measuring gird cell sizes.
- */
-internal data class GridCellConstraints(
-    val minSize: Int,
-    val maxSize: Int,
-)

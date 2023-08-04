@@ -78,7 +78,7 @@ inline fun HorizontalGrid(
     content: @Composable () -> Unit,
 ) {
     HorizontalGrid(
-        rows = SimpleGridCells.Fixed(count = rowCount, sameWeight = false),
+        rows = SimpleGridCells.Fixed(count = rowCount),
         modifier = modifier,
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
@@ -139,7 +139,7 @@ inline fun VerticalGrid(
     content: @Composable () -> Unit,
 ) {
     VerticalGrid(
-        columns = SimpleGridCells.Fixed(count = columnCount, sameWeight = false),
+        columns = SimpleGridCells.Fixed(count = columnCount),
         modifier = modifier,
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
@@ -152,7 +152,7 @@ inline fun VerticalGrid(
 internal fun rememberRowCellHeightConstraints(
     rows: SimpleGridCells,
     verticalArrangement: Arrangement.Vertical,
-): Density.(Constraints) -> List<GridCellConstraints> {
+): Density.(Constraints) -> List<Int> {
     return remember(rows, verticalArrangement) {
         { constraints ->
             val gridHeight = constraints.maxHeight
@@ -162,17 +162,10 @@ internal fun rememberRowCellHeightConstraints(
                 )
             }
             with(rows) {
-                val minConstraints = calculateCrossAxisMinCellSizes(
+                calculateCrossAxisCellSizes(
                     availableSize = gridHeight,
                     spacing = verticalArrangement.spacing.roundToPx(),
                 )
-                val maxConstraints = calculateCrossAxisMaxCellSizes(
-                    availableSize = gridHeight,
-                    spacing = verticalArrangement.spacing.roundToPx(),
-                )
-                minConstraints.zip(maxConstraints) { min, max ->
-                    GridCellConstraints(min, max)
-                }
             }
         }
     }
@@ -183,7 +176,7 @@ internal fun rememberRowCellHeightConstraints(
 internal fun rememberColumnCellWidthConstraints(
     columns: SimpleGridCells,
     horizontalArrangement: Arrangement.Horizontal,
-): Density.(Constraints) -> List<GridCellConstraints> {
+): Density.(Constraints) -> List<Int> {
     return remember(columns, horizontalArrangement) {
         { constraints ->
             val gridWidth = constraints.maxWidth
@@ -193,17 +186,10 @@ internal fun rememberColumnCellWidthConstraints(
                 )
             }
             with(columns) {
-                val minConstraints = calculateCrossAxisMinCellSizes(
+                calculateCrossAxisCellSizes(
                     availableSize = gridWidth,
                     spacing = horizontalArrangement.spacing.roundToPx(),
                 )
-                val maxConstraints = calculateCrossAxisMaxCellSizes(
-                    availableSize = gridWidth,
-                    spacing = horizontalArrangement.spacing.roundToPx(),
-                )
-                minConstraints.zip(maxConstraints) { min, max ->
-                    GridCellConstraints(min, max)
-                }
             }
         }
     }
@@ -212,7 +198,7 @@ internal fun rememberColumnCellWidthConstraints(
 @PublishedApi
 @Composable
 internal fun rememberHorizontalGridMeasurePolicy(
-    calculateRowCellHeightConstraints: Density.(Constraints) -> List<GridCellConstraints>,
+    calculateRowCellHeightConstraints: Density.(Constraints) -> List<Int>,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
 ): MeasurePolicy {
@@ -239,7 +225,7 @@ internal fun rememberHorizontalGridMeasurePolicy(
 @PublishedApi
 @Composable
 internal fun rememberVerticalGridMeasurePolicy(
-    calculateColumnCellWidthConstraints: Density.(Constraints) -> List<GridCellConstraints>,
+    calculateColumnCellWidthConstraints: Density.(Constraints) -> List<Int>,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
 ): MeasurePolicy {
