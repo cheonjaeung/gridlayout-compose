@@ -45,14 +45,12 @@ fun SemanticsNodeInteraction.assertSizeIsEqualTo(
 }
 
 /**
- * Common utilities for grid layout tests.
+ * Calculates expected main axis count by cross axis count and item count.
  */
-object TestUtils {
-    fun computeMainAxisCount(itemCount: Int, crossAxisCount: Int): Int {
-        return if (itemCount % crossAxisCount == 0) {
-            itemCount / crossAxisCount
-        } else {
-            itemCount / crossAxisCount + 1
-        }
+fun calculateMainAxisCount(itemCount: Int, crossAxisCount: Int): Int {
+    return if (itemCount % crossAxisCount == 0) {
+        itemCount / crossAxisCount
+    } else {
+        itemCount / crossAxisCount + 1
     }
 }

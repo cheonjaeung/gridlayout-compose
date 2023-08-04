@@ -50,7 +50,7 @@ class GridArrangementTest {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8")
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -91,7 +91,7 @@ class GridArrangementTest {
         val testTags = arrayOf("1", "2", "3", "4", "5", "6", "7", "8")
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -133,7 +133,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -177,7 +177,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -221,7 +221,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -265,7 +265,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -309,7 +309,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -353,7 +353,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -397,7 +397,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -442,7 +442,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -487,7 +487,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -532,7 +532,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -577,7 +577,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -619,7 +619,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -661,7 +661,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -703,7 +703,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -745,7 +745,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -788,7 +788,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -831,7 +831,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -877,7 +877,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -923,7 +923,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -969,7 +969,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -1015,7 +1015,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -1059,7 +1059,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -1103,7 +1103,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -1149,7 +1149,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -1195,7 +1195,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -1241,7 +1241,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -1287,7 +1287,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -1331,7 +1331,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -1375,7 +1375,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -1423,7 +1423,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -1471,7 +1471,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -1519,7 +1519,7 @@ class GridArrangementTest {
         val gridWidth = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -1567,7 +1567,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -1613,7 +1613,7 @@ class GridArrangementTest {
         val gridHeight = 100.dp
         val childSize = 20.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
@@ -1660,7 +1660,7 @@ class GridArrangementTest {
         val horizontalSpacing = 5.dp
         val verticalSpacing = 10.dp
         val rowCount = 3
-        val columnCount = TestUtils.computeMainAxisCount(testTags.size, rowCount)
+        val columnCount = calculateMainAxisCount(testTags.size, rowCount)
 
         composeRule.setContent {
             HorizontalGrid(
@@ -1706,7 +1706,7 @@ class GridArrangementTest {
         val horizontalSpacing = 5.dp
         val verticalSpacing = 10.dp
         val columnCount = 3
-        val rowCount = TestUtils.computeMainAxisCount(testTags.size, columnCount)
+        val rowCount = calculateMainAxisCount(testTags.size, columnCount)
 
         composeRule.setContent {
             VerticalGrid(
