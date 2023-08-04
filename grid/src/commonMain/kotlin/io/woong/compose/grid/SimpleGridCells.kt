@@ -39,8 +39,8 @@ interface SimpleGridCells {
     /**
      * Make grid to have fixed number of rows or columns.
      *
-     * For example, `Fixed(3)` means that there are 3 rows and columns. And each cells will have
-     * same size. If grid layout size is 90dp, each cell size will be 30dp.
+     * For example, `Fixed(3)` for `VerticalGrid(Modifier.width(90.dp)` means that there will be
+     * 3 columns and each cell have 30dp width.
      *
      * @param count The number of rows or columns.
      */
