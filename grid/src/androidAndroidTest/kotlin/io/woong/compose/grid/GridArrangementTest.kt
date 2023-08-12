@@ -31,6 +31,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -929,12 +930,13 @@ class GridArrangementTest {
             }
         }
 
-        val expectedItemCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
-        val expectedItemSize = gridSize / expectedItemCount
+        val cellCount = (gridSize + spacing).value.roundToInt() / (itemSize + spacing).value.roundToInt()
+        val totalSpacing = spacing * (cellCount - 1)
+        val expectedItemSize = (gridSize - totalSpacing) / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+                .assertLeftPositionInRootIsEqualTo((expectedItemSize + spacing) * i)
         }
     }
 
@@ -1049,7 +1051,7 @@ class GridArrangementTest {
     fun testVerticalGrid_horizontalArrangementSpacedBy_adaptive_rtl() {
         val itemCount = 3
         val itemSize = 10.dp
-        val gridSize = 60.dp
+        val gridSize = 55.dp
         val spacing = 5.dp
 
         composeRule.setContent {
@@ -1070,13 +1072,14 @@ class GridArrangementTest {
             }
         }
 
-        val expectedItemCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
-        val expectedItemSize = gridSize / expectedItemCount
+        val cellCount = (gridSize + spacing).value.roundToInt() / (itemSize + spacing).value.roundToInt()
+        val totalSpacing = spacing * (cellCount - 1)
+        val expectedItemSize = (gridSize - totalSpacing) / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
                 .assertLeftPositionInRootIsEqualTo(
-                    gridSize - expectedItemSize * (i + 1)
+                    gridSize - expectedItemSize * (i + 1) - (spacing * i)
                 )
         }
     }
@@ -1506,7 +1509,7 @@ class GridArrangementTest {
     fun testHorizontalGrid_verticalArrangementSpacedBy_adaptive() {
         val itemCount = 3
         val itemSize = 10.dp
-        val gridSize = 60.dp
+        val gridSize = 55.dp
         val spacing = 5.dp
 
         composeRule.setContent {
@@ -1525,12 +1528,13 @@ class GridArrangementTest {
             }
         }
 
-        val expectedItemCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
-        val expectedItemSize = gridSize / expectedItemCount
+        val cellCount = (gridSize + spacing).value.roundToInt() / (itemSize + spacing).value.roundToInt()
+        val totalSpacing = spacing * (cellCount - 1)
+        val expectedItemSize = (gridSize - totalSpacing) / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+                .assertTopPositionInRootIsEqualTo((expectedItemSize + spacing) * i)
         }
     }
 
