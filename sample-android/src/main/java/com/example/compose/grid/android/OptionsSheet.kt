@@ -1,8 +1,8 @@
 package com.example.compose.grid.android
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 
 @Composable
 fun OptionsSheet(
@@ -67,9 +66,7 @@ fun OptionsSheet(
                     title = "Use Random Size Items",
                     checked = useRandomSize,
                     onCheckedChange = onUseRandomSizeChange,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(5f),
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
 
@@ -84,9 +81,7 @@ fun OptionsSheet(
                         }
                     },
                     state = layoutDirectionOptionState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(4f),
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     SelectableOption(
                         title = "Ltr",
@@ -112,9 +107,7 @@ fun OptionsSheet(
                         }
                     },
                     state = orientationOptionState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(3f),
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     SelectableOption(
                         title = "Horizontal",
@@ -140,9 +133,7 @@ fun OptionsSheet(
                         }
                     },
                     state = horizontalArrangementOptionState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(2f),
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     SelectableOption(
                         title = "Arrangement.Start",
@@ -186,9 +177,7 @@ fun OptionsSheet(
                         }
                     },
                     state = verticalArrangementOptionState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(1f),
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     SelectableOption(
                         title = "Arrangement.Top",
@@ -274,7 +263,7 @@ private fun ToggleOption(
 ) {
     Surface(
         onClick = { onCheckedChange(!checked) },
-        modifier = modifier.zIndex(1f),
+        modifier = modifier,
     ) {
         Row(
             modifier = modifier.then(
@@ -310,7 +299,7 @@ private fun ExpandableOption(
     Column(modifier = modifier) {
         Surface(
             onClick = onTitleClick,
-            modifier = Modifier.zIndex(1f),
+            modifier = Modifier,
         ) {
             Row(
                 modifier = Modifier
@@ -339,9 +328,9 @@ private fun ExpandableOption(
 
         AnimatedVisibility(
             visible = state.isExpanded,
-            enter = slideInVertically { fullHeight -> -fullHeight },
-            exit = slideOutVertically { fullHeight -> -fullHeight },
-            modifier = Modifier.zIndex(-1f),
+            enter = expandVertically { fullHeight -> -fullHeight },
+            exit = shrinkVertically { fullHeight -> -fullHeight },
+            modifier = Modifier,
         ) {
             Column {
                 Column(content = content)
