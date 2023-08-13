@@ -31,7 +31,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -412,11 +411,12 @@ class GridArrangementTest {
             }
         }
 
-        val spacing = (gridSize - (itemSize * itemCount)) / 2
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertLeftPositionInRootIsEqualTo(itemSize * i + spacing)
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
         }
     }
 
@@ -540,11 +540,12 @@ class GridArrangementTest {
             }
         }
 
-        val spacing = (gridSize - (itemSize * itemCount)) / 2
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertLeftPositionInRootIsEqualTo(gridSize - (itemSize * (i + 1)) - spacing)
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
         }
     }
 
@@ -668,11 +669,12 @@ class GridArrangementTest {
             }
         }
 
-        val spacing = gridSize - (itemSize * itemCount)
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertLeftPositionInRootIsEqualTo(spacing + itemSize * i)
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
         }
     }
 
@@ -796,11 +798,12 @@ class GridArrangementTest {
             }
         }
 
-        val spacing = gridSize - (itemSize * itemCount)
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertLeftPositionInRootIsEqualTo(gridSize - spacing - itemSize * (i + 1))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
         }
     }
 
@@ -1283,11 +1286,12 @@ class GridArrangementTest {
             }
         }
 
-        val spacing = (gridSize - (itemSize * itemCount)) / 2
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertTopPositionInRootIsEqualTo(itemSize * i + spacing)
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
         }
     }
 
@@ -1403,11 +1407,12 @@ class GridArrangementTest {
             }
         }
 
-        val spacing = gridSize - (itemSize * itemCount)
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
         for (i in 0 until itemCount) {
             composeRule
                 .onNode(hasTestTag(i.toString()))
-                .assertTopPositionInRootIsEqualTo(itemSize * i + spacing)
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
         }
     }
 

@@ -57,7 +57,7 @@ class GridTest {
 
         composeRule
             .onNode(hasTestTag(gridTag))
-            .assertSizeIsEqualTo(0.dp)
+            .assertWidthIsEqualTo(0.dp)
     }
 
     @Test
@@ -72,7 +72,7 @@ class GridTest {
 
         composeRule
             .onNode(hasTestTag(gridTag))
-            .assertSizeIsEqualTo(0.dp)
+            .assertHeightIsEqualTo(0.dp)
     }
 
     @Test
@@ -87,7 +87,7 @@ class GridTest {
 
         composeRule
             .onNode(hasTestTag(gridTag))
-            .assertSizeIsEqualTo(0.dp)
+            .assertWidthIsEqualTo(0.dp)
     }
 
     @Test
@@ -102,7 +102,7 @@ class GridTest {
 
         composeRule
             .onNode(hasTestTag(gridTag))
-            .assertSizeIsEqualTo(0.dp)
+            .assertHeightIsEqualTo(0.dp)
     }
 
     @Test
