@@ -1088,6 +1088,808 @@ class GridArrangementTest {
     }
 
     @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceAround_fixed_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Fixed(1),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val endSpacing = totalSpacing / ((itemCount - 1) * 2 + 2)
+        val betweenSpacing = endSpacing * 2
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo((itemSize + betweenSpacing) * i + endSpacing)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceAround_fixed_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Fixed(itemCount),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceAround_adaptive_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Adaptive(gridSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val endSpacing = totalSpacing / ((itemCount - 1) * 2 + 2)
+        val betweenSpacing = endSpacing * 2
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo((itemSize + betweenSpacing) * i + endSpacing)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceAround_adaptive_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Adaptive(itemSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val cellCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceAround_fixed_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Fixed(1),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val endSpacing = totalSpacing / ((itemCount - 1) * 2 + 2)
+        val betweenSpacing = endSpacing * 2
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(
+                    gridSize - (itemSize * (i + 1)) - (betweenSpacing * i) - endSpacing
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceAround_fixed_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Fixed(itemCount),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceAround_adaptive_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Adaptive(gridSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val endSpacing = totalSpacing / ((itemCount - 1) * 2 + 2)
+        val betweenSpacing = endSpacing * 2
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(
+                    gridSize - (itemSize * (i + 1)) - (betweenSpacing * i) - endSpacing
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceAround_adaptive_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Adaptive(itemSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val cellCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceBetween_fixed_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Fixed(1),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val betweenSpacing = totalSpacing / (itemCount - 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo((itemSize + betweenSpacing) * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceBetween_fixed_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Fixed(itemCount),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceBetween_adaptive_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Adaptive(gridSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val betweenSpacing = totalSpacing / (itemCount - 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo((itemSize + betweenSpacing) * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceBetween_adaptive_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Adaptive(itemSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val cellCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceBetween_fixed_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Fixed(1),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val betweenSpacing = totalSpacing / (itemCount - 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(
+                    gridSize - (itemSize * (i + 1)) - (betweenSpacing * i)
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceBetween_fixed_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Fixed(itemCount),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceBetween_adaptive_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Adaptive(gridSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val betweenSpacing = totalSpacing / (itemCount - 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(
+                    gridSize - (itemSize * (i + 1)) - (betweenSpacing * i)
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceBetween_adaptive_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Adaptive(itemSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val cellCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceEvenly_fixed_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Fixed(1),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount + 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo((itemSize + spacing) * i + spacing)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceEvenly_fixed_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Fixed(itemCount),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceEvenly_adaptive_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Adaptive(gridSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount + 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo((itemSize + spacing) * i + spacing)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceEvenly_adaptive_ltr() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Adaptive(itemSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val cellCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceEvenly_fixed_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Fixed(1),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount + 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(
+                    gridSize - (itemSize * (i + 1)) - (spacing * i) - spacing
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceEvenly_fixed_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Fixed(itemCount),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_horizontalArrangementSpaceEvenly_adaptive_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                HorizontalGrid(
+                    rows = SimpleGridCells.Adaptive(gridSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount + 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(
+                    gridSize - (itemSize * (i + 1)) - (spacing * i) - spacing
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_horizontalArrangementSpaceEvenly_adaptive_rtl() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                VerticalGrid(
+                    columns = SimpleGridCells.Adaptive(itemSize),
+                    modifier = Modifier.size(gridSize),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    for (i in 0 until itemCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            }
+        }
+
+        val cellCount = gridSize.value.roundToInt() / itemSize.value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertLeftPositionInRootIsEqualTo(gridSize - expectedItemSize * (i + 1))
+        }
+    }
+
+    @Test
     fun testHorizontalGrid_verticalArrangementTop_fixed() {
         val itemCount = 3
         val itemSize = 10.dp
@@ -1571,6 +2373,377 @@ class GridArrangementTest {
             composeRule
                 .onNode(hasTestTag(i.toString()))
                 .assertTopPositionInRootIsEqualTo(itemSize * i + expectedSpacing)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_verticalArrangementSpaceAround_fixed() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(itemCount),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceAround,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_verticalArrangementSpaceAround_fixed() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(1),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceAround,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val endSpacing = totalSpacing / ((itemCount - 1) * 2 + 2)
+        val betweenSpacing = endSpacing * 2
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo((itemSize + betweenSpacing) * i + endSpacing)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_verticalArrangementSpaceAround_adaptive() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(itemSize),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceAround,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_verticalArrangementSpaceAround_adaptive() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Adaptive(gridSize),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceAround,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val endSpacing = totalSpacing / ((itemCount - 1) * 2 + 2)
+        val betweenSpacing = endSpacing * 2
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo((itemSize + betweenSpacing) * i + endSpacing)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_verticalArrangementSpaceBetween_fixed() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(itemCount),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_verticalArrangementSpaceBetween_fixed() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(1),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount - 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo((itemSize + spacing) * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_verticalArrangementSpaceBetween_adaptive() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(itemSize),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_verticalArrangementSpaceBetween_adaptive() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Adaptive(gridSize),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount - 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo((itemSize + spacing) * i)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_verticalArrangementSpaceEvenly_fixed() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(itemCount),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemSize = gridSize / itemCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_verticalArrangementSpaceEvenly_fixed() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(1),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount + 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo((itemSize + spacing) * i + spacing)
+        }
+    }
+
+    @Test
+    fun testHorizontalGrid_verticalArrangementSpaceEvenly_adaptive() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(itemSize),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val cellCount = (gridSize).value.roundToInt() / (itemSize).value.roundToInt()
+        val expectedItemSize = gridSize / cellCount
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo(expectedItemSize * i)
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_verticalArrangementSpaceEvenly_adaptive() {
+        val itemCount = 3
+        val itemSize = 10.dp
+        val gridSize = 50.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Adaptive(gridSize),
+                modifier = Modifier.size(gridSize),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val totalSpacing = gridSize - (itemSize * itemCount)
+        val spacing = totalSpacing / (itemCount + 1)
+        for (i in 0 until itemCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertTopPositionInRootIsEqualTo((itemSize + spacing) * i + spacing)
         }
     }
 }
