@@ -188,16 +188,8 @@ internal class GridMeasureHelper(
             mainAxisPositions,
         )
 
-        val crossAxisBiggestChildrenSizes = IntArray(crossAxisCount) { 0 }
-        for (c in 0 until crossAxisCount) {
-            val currentLineChildrenSizes = IntArray(mainAxisCount) { index ->
-                val placeable = placeables.getAt(index, c)
-                placeable?.crossAxisSize() ?: 0
-            }
-            crossAxisBiggestChildrenSizes[c] = currentLineChildrenSizes.maxOrZero()
-        }
         val crossAxisLayoutSize = max(
-            crossAxisBiggestChildrenSizes.sum(),
+            crossAxisCellConstraintsList.sum(),
             crossAxisLayoutSizeBeforeArrange
         ).coerceIn(
             constraints.crossAxisMinSize,
@@ -205,7 +197,7 @@ internal class GridMeasureHelper(
         )
         crossAxisArrangement(
             crossAxisLayoutSize,
-            crossAxisBiggestChildrenSizes,
+            crossAxisCellConstraintsList.toIntArray(),
             this.layoutDirection,
             this,
             crossAxisPositions,
@@ -271,17 +263,6 @@ internal class GridMeasureHelper(
             width
         } else {
             height
-        }
-    }
-
-    /**
-     * Returns cross axis size of this [Placeable] by current orientation.
-     */
-    private fun Placeable.crossAxisSize(): Int {
-        return if (orientation == LayoutOrientation.Horizontal) {
-            height
-        } else {
-            width
         }
     }
 
