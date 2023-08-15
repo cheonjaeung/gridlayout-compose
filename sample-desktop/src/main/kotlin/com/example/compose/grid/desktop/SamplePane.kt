@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.woong.compose.grid.HorizontalGrid
+import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
 
 data class GridItemInfo(
@@ -45,7 +46,7 @@ fun SamplePane(
         ) {
             if (isVertical) {
                 VerticalGrid(
-                    columnCount = 3,
+                    columns = SimpleGridCells.Fixed(3),
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = gridHorizontalArrangement,
                     verticalArrangement = gridVerticalArrangement,
@@ -60,7 +61,7 @@ fun SamplePane(
                 }
             } else {
                 HorizontalGrid(
-                    rowCount = 3,
+                    rows = SimpleGridCells.Fixed(3),
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = gridHorizontalArrangement,
                     verticalArrangement = gridVerticalArrangement,
