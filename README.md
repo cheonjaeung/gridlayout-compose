@@ -24,9 +24,10 @@ dependencies {
 ![usage-example](images/usage-example.png)
 
 ```kotlin
+@Composable
 fun ExampleGrid(
     colors: List<Color>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
     VerticalGrid(
         columns = SimpleGridCells.Fixed(3),
