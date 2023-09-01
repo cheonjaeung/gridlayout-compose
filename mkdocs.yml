@@ -1,0 +1,37 @@
+# Site Information
+site_name: 'GridLayout for Compose'
+site_description: 'Missing grid layout for Jetpack Compose and Compose Multiplatform.'
+site_author: 'Jaewoong Cheon'
+site_url: 'https://cheonjaewoong.github.io/gridlayout-compose/'
+copyright: 'Copyright &copy; 2023 Jaewoong Cheon'
+
+# Theme Configurations
+theme:
+  name: 'material'
+  palette:
+    primary: 'black'
+    accent: 'blue'
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+# Navigation Configurations
+nav:
+  - 'Overview': index.md
+  - 'Documentation':
+    - 'Installation': installation.md
+    - 'Layout Composables': layout-composables.md
+    - 'Cell Strategy': cell-strategy.md
+    - 'Arrangement': arrangement.md
+  - 'Changelog': 'https://github.com/cheonjaewoong/gridlayout-compose/blob/main/CHANGELOG.md'
+
+# Repository Information
+repo_name: 'gridlayout-compose'
+repo_url: 'https://github.com/cheonjaewoong/gridlayout-compose'
