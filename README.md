@@ -21,7 +21,7 @@ dependencies {
 
 ## Usage
 
-![usage-example](images/usage-example.png)
+![usage-example](docs/images/overview-grid.png)
 
 ```kotlin
 @Composable
