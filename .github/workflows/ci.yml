@@ -88,6 +88,11 @@ jobs:
       - name: Build Documentation Site
         run: mkdocs build
 
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./site
+
   deploy-docs:
     name: Deploy Documentation
     runs-on: ubuntu-latest
