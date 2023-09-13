@@ -67,7 +67,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
   build-docs:
-    name: Publish Documentation
+    name: Build Documentation
     runs-on: ubuntu-latest
     needs: test
     steps:
