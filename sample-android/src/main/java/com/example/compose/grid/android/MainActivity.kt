@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import io.woong.compose.grid.SimpleGridCells
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
 
             var itemCount by remember { mutableStateOf(12) }
             var useRandomSize by remember { mutableStateOf(true) }
+            var fixedCount by remember { mutableStateOf(3) }
+            var adaptiveMinSize by remember { mutableStateOf(80.dp) }
+            var cells: SimpleGridCells by remember { mutableStateOf(SimpleGridCells.Fixed(fixedCount)) }
             var layoutDirection: LayoutDirection by remember { mutableStateOf(LayoutDirection.Ltr) }
             var orientation: Orientation by remember { mutableStateOf(Orientation.Vertical) }
             var horizontalArrangement: Arrangement.Horizontal by remember {
@@ -61,6 +65,7 @@ class MainActivity : ComponentActivity() {
                     content = {
                         SampleScreen(
                             modifier = Modifier.fillMaxSize(),
+                            cells = cells,
                             items = items,
                             layoutDirection = layoutDirection,
                             gridHorizontalArrangement = horizontalArrangement,
@@ -83,6 +88,12 @@ class MainActivity : ComponentActivity() {
                             onItemCountChange = { itemCount = it },
                             useRandomSize = useRandomSize,
                             onUseRandomSizeChange = { useRandomSize = it },
+                            cells = cells,
+                            onCellsChange = { cells = it },
+                            fixedCount = fixedCount,
+                            onFixedCountChange = { fixedCount = it },
+                            adaptiveMinSize = adaptiveMinSize,
+                            onAdaptiveMinSizeChange = { adaptiveMinSize = it },
                             layoutDirection = layoutDirection,
                             onLayoutDirectionChange = { layoutDirection = it },
                             orientation = orientation,

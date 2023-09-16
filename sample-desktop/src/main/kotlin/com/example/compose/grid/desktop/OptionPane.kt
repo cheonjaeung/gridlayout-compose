@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import io.woong.compose.grid.SimpleGridCells
 
 @Composable
 fun OptionPane(
@@ -41,6 +42,12 @@ fun OptionPane(
     onItemCountChange: (Int) -> Unit,
     useRandomSize: Boolean,
     onUseRandomSizeChange: (Boolean) -> Unit,
+    cells: SimpleGridCells,
+    onCellsChange: (SimpleGridCells) -> Unit,
+    fixedCount: Int,
+    onFixedCountChange: (Int) -> Unit,
+    adaptiveMinSize: Dp,
+    onAdaptiveMinSizeChange: (Dp) -> Unit,
     layoutDirection: LayoutDirection,
     onLayoutDirectionChange: (LayoutDirection) -> Unit,
     orientation: Orientation,
@@ -51,8 +58,9 @@ fun OptionPane(
     onVerticalArrangementChange: (Arrangement.Vertical) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val orientationOptionState = rememberExpandableOptionState()
+    val cellsOptionsState = rememberExpandableOptionState()
     val layoutDirectionOptionState = rememberExpandableOptionState()
+    val orientationOptionState = rememberExpandableOptionState()
     val horizontalArrangementOptionState = rememberExpandableOptionState()
     val verticalArrangementOptionState = rememberExpandableOptionState()
 
@@ -83,6 +91,48 @@ fun OptionPane(
                         .fillMaxWidth()
                         .zIndex(5f),
                 )
+            }
+
+            item {
+                ExpandableOption(
+                    title = "Cell Strategy",
+                    onTitleClick = {
+                        if (cellsOptionsState.isExpanded) {
+                            cellsOptionsState.fold()
+                        } else {
+                            cellsOptionsState.expand()
+                        }
+                    },
+                    state = cellsOptionsState,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    SelectableSliderOption(
+                        title = "Fixed",
+                        isSelected = cells is SimpleGridCells.Fixed,
+                        indicator = fixedCount.toString(),
+                        value = fixedCount.toFloat(),
+                        valueRange = 1f..10f,
+                        steps = 10,
+                        onClick = { onCellsChange(SimpleGridCells.Fixed(fixedCount)) },
+                        onValueChange = {
+                            onFixedCountChange(it.toInt())
+                            onCellsChange(SimpleGridCells.Fixed(it.toInt()))
+                        },
+                    )
+                    SelectableSliderOption(
+                        title = "Adaptive",
+                        isSelected = cells is SimpleGridCells.Adaptive,
+                        indicator = adaptiveMinSize.toString(),
+                        value = adaptiveMinSize.value,
+                        valueRange = 50f..150f,
+                        steps = 19,
+                        onClick = { onCellsChange(SimpleGridCells.Adaptive(adaptiveMinSize)) },
+                        onValueChange = {
+                            onAdaptiveMinSizeChange(it.dp)
+                            onCellsChange(SimpleGridCells.Adaptive(it.dp))
+                        },
+                    )
+                }
             }
 
             item {
@@ -273,6 +323,64 @@ private fun SliderOption(
             onValueChange = onValueChange,
             steps = steps,
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SelectableSliderOption(
+    title: String,
+    isSelected: Boolean,
+    indicator: String,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onClick: () -> Unit,
+    onValueChange: (Float) -> Unit,
+    modifier: Modifier = Modifier,
+    steps: Int = 0,
+) {
+    Surface(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(OptionDefaults.Height),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(text = title)
+                if (isSelected) {
+                    Icon(
+                        painter = painterResource("check_black_24dp.svg"),
+                        contentDescription = null,
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(OptionDefaults.Height),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    modifier = Modifier.weight(0.25f),
+                    text = indicator,
+                    fontWeight = FontWeight.Normal,
+                )
+                Slider(
+                    modifier = Modifier.weight(0.75f),
+                    value = value,
+                    valueRange = valueRange,
+                    onValueChange = onValueChange,
+                    steps = steps,
+                    enabled = isSelected,
+                )
+            }
+        }
     }
 }
 

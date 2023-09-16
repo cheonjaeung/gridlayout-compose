@@ -25,6 +25,7 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import io.woong.compose.grid.SimpleGridCells
 import kotlin.random.Random
 
 fun main() = application {
@@ -39,6 +40,9 @@ fun main() = application {
     ) {
         var itemCount by remember { mutableStateOf(12) }
         var useRandomSize by remember { mutableStateOf(true) }
+        var fixedCount by remember { mutableStateOf(3) }
+        var adaptiveMinSize by remember { mutableStateOf(80.dp) }
+        var cells: SimpleGridCells by remember { mutableStateOf(SimpleGridCells.Fixed(fixedCount)) }
         var layoutDirection: LayoutDirection by remember { mutableStateOf(LayoutDirection.Ltr) }
         var orientation: Orientation by remember { mutableStateOf(Orientation.Vertical) }
         var horizontalArrangement: Arrangement.Horizontal by remember {
@@ -62,6 +66,7 @@ fun main() = application {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight(),
+                    cells = cells,
                     items = items,
                     layoutDirection = layoutDirection,
                     gridHorizontalArrangement = horizontalArrangement,
@@ -82,6 +87,12 @@ fun main() = application {
                     onItemCountChange = { itemCount = it },
                     useRandomSize = useRandomSize,
                     onUseRandomSizeChange = { useRandomSize = it },
+                    cells = cells,
+                    onCellsChange = { cells = it },
+                    fixedCount = fixedCount,
+                    onFixedCountChange = { fixedCount = it },
+                    adaptiveMinSize = adaptiveMinSize,
+                    onAdaptiveMinSizeChange = { adaptiveMinSize = it },
                     layoutDirection = layoutDirection,
                     onLayoutDirectionChange = { layoutDirection = it },
                     orientation = orientation,

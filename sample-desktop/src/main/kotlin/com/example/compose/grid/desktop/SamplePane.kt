@@ -36,6 +36,7 @@ data class GridItemInfo(
 
 @Composable
 fun SamplePane(
+    cells: SimpleGridCells,
     items: List<GridItemInfo>,
     isVertical: Boolean,
     layoutDirection: LayoutDirection,
@@ -51,7 +52,7 @@ fun SamplePane(
         ) {
             if (isVertical) {
                 VerticalGrid(
-                    columns = SimpleGridCells.Fixed(3),
+                    columns = cells,
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState),
@@ -68,7 +69,7 @@ fun SamplePane(
                 }
             } else {
                 HorizontalGrid(
-                    rows = SimpleGridCells.Fixed(3),
+                    rows = cells,
                     modifier = Modifier
                         .fillMaxSize()
                         .horizontalScroll(scrollState),

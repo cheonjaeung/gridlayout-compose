@@ -40,6 +40,7 @@ data class GridItemInfo(
 
 @Composable
 fun SampleScreen(
+    cells: SimpleGridCells,
     items: List<GridItemInfo>,
     isVertical: Boolean,
     layoutDirection: LayoutDirection,
@@ -56,7 +57,7 @@ fun SampleScreen(
         ) {
             if (isVertical) {
                 VerticalGrid(
-                    columns = SimpleGridCells.Fixed(3),
+                    columns = cells,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
@@ -74,7 +75,7 @@ fun SampleScreen(
                 }
             } else {
                 HorizontalGrid(
-                    rows = SimpleGridCells.Fixed(3),
+                    rows = cells,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
