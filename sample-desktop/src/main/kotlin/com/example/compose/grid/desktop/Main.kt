@@ -37,7 +37,7 @@ fun main() = application {
             size = DpSize(1200.dp, 800.dp)
         )
     ) {
-        val itemCount by remember { mutableStateOf(12) }
+        var itemCount by remember { mutableStateOf(12) }
         var useRandomSize by remember { mutableStateOf(true) }
         var layoutDirection: LayoutDirection by remember { mutableStateOf(LayoutDirection.Ltr) }
         var orientation: Orientation by remember { mutableStateOf(Orientation.Vertical) }
@@ -78,6 +78,8 @@ fun main() = application {
                     modifier = Modifier
                         .width(400.dp)
                         .fillMaxHeight(),
+                    itemCount = itemCount,
+                    onItemCountChange = { itemCount = it },
                     useRandomSize = useRandomSize,
                     onUseRandomSizeChange = { useRandomSize = it },
                     layoutDirection = layoutDirection,

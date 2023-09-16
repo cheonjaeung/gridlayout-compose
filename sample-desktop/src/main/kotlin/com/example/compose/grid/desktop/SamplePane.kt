@@ -2,12 +2,15 @@ package com.example.compose.grid.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -40,6 +43,8 @@ fun SamplePane(
     gridVerticalArrangement: Arrangement.Vertical,
     modifier: Modifier = Modifier,
 ) {
+    val scrollState = rememberScrollState()
+
     Box(modifier = modifier) {
         CompositionLocalProvider(
             LocalLayoutDirection provides layoutDirection
@@ -47,7 +52,9 @@ fun SamplePane(
             if (isVertical) {
                 VerticalGrid(
                     columns = SimpleGridCells.Fixed(3),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollState),
                     horizontalArrangement = gridHorizontalArrangement,
                     verticalArrangement = gridVerticalArrangement,
                 ) {
@@ -62,7 +69,9 @@ fun SamplePane(
             } else {
                 HorizontalGrid(
                     rows = SimpleGridCells.Fixed(3),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .horizontalScroll(scrollState),
                     horizontalArrangement = gridHorizontalArrangement,
                     verticalArrangement = gridVerticalArrangement,
                 ) {

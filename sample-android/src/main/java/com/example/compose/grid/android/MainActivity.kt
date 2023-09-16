@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 )
             )
 
-            val itemCount by remember { mutableStateOf(12) }
+            var itemCount by remember { mutableStateOf(12) }
             var useRandomSize by remember { mutableStateOf(true) }
             var layoutDirection: LayoutDirection by remember { mutableStateOf(LayoutDirection.Ltr) }
             var orientation: Orientation by remember { mutableStateOf(Orientation.Vertical) }
@@ -79,6 +79,8 @@ class MainActivity : ComponentActivity() {
                     },
                     sheetContent = {
                         OptionsSheet(
+                            itemCount = itemCount,
+                            onItemCountChange = { itemCount = it },
                             useRandomSize = useRandomSize,
                             onUseRandomSizeChange = { useRandomSize = it },
                             layoutDirection = layoutDirection,

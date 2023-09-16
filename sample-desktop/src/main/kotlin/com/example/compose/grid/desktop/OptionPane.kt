@@ -13,10 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +37,8 @@ import androidx.compose.ui.zIndex
 
 @Composable
 fun OptionPane(
+    itemCount: Int,
+    onItemCountChange: (Int) -> Unit,
     useRandomSize: Boolean,
     onUseRandomSizeChange: (Boolean) -> Unit,
     layoutDirection: LayoutDirection,
@@ -59,6 +62,18 @@ fun OptionPane(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
+            item {
+                SliderOption(
+                    title = "Item Count",
+                    indicator = itemCount.toString(),
+                    value = itemCount.toFloat(),
+                    valueRange = 0f..50f,
+                    onValueChange = { onItemCountChange(it.toInt()) },
+                    modifier = Modifier.fillMaxWidth(),
+                    steps = 50,
+                )
+            }
+
             item {
                 ToggleOption(
                     title = "Use Random Size Items",
@@ -220,6 +235,44 @@ fun OptionPane(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SliderOption(
+    title: String,
+    indicator: String,
+    value: Float,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: (Float) -> Unit,
+    modifier: Modifier = Modifier,
+    steps: Int = 0,
+) {
+    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(OptionDefaults.Height),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = indicator,
+                fontWeight = FontWeight.Normal,
+            )
+        }
+
+        Slider(
+            modifier = Modifier.height(OptionDefaults.Height),
+            value = value,
+            valueRange = valueRange,
+            onValueChange = onValueChange,
+            steps = steps,
+        )
     }
 }
 
