@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.compose.grid.android"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.compose.grid.android"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
 
