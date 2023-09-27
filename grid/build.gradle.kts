@@ -8,10 +8,9 @@ plugins {
 }
 
 kotlin {
-    android()
+    androidTarget()
     jvm("desktop")
 
-    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -28,7 +27,7 @@ kotlin {
                 implementation(libs.compose.android.foundation)
             }
         }
-        val androidTest by getting {
+        val androidInstrumentedTest by getting {
             dependsOn(commonTest)
             dependencies {
                 implementation(libs.junit4)
@@ -50,13 +49,12 @@ kotlin {
 
 android {
     namespace = "${project.group}"
-    compileSdk = 33
+    compileSdk = 34
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
