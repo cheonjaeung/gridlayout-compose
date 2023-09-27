@@ -8,10 +8,9 @@ plugins {
 }
 
 kotlin {
-    android()
+    androidTarget()
     jvm("desktop")
 
-    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -28,7 +27,7 @@ kotlin {
                 implementation(libs.compose.android.foundation)
             }
         }
-        val androidTest by getting {
+        val androidInstrumentedTest by getting {
             dependsOn(commonTest)
             dependencies {
                 implementation(libs.junit4)
