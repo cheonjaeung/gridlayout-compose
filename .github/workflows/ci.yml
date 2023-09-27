@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - "*"
+      - "main"
     tags:
       - "v*"
   pull_request:
@@ -69,6 +69,7 @@ jobs:
   build-docs:
     name: Build Documentation
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: test
     steps:
       - name: Checkout
