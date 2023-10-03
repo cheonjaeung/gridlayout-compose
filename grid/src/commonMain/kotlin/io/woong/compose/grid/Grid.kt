@@ -61,34 +61,6 @@ inline fun HorizontalGrid(
 /**
  * A layout composable that places its children in a grid.
  *
- * @param rowCount The count of row.
- * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the grid cells.
- * @param verticalArrangement The vertical arrangement of the grid cells.
- * @param content The children of this layout.
- */
-@Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated("Use HorizontalGrid that takes SimpleGridCells parameter.")
-@Composable
-inline fun HorizontalGrid(
-    rowCount: Int,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    content: @Composable () -> Unit,
-) {
-    HorizontalGrid(
-        rows = SimpleGridCells.Fixed(count = rowCount),
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement,
-        content = content,
-    )
-}
-
-/**
- * A layout composable that places its children in a grid.
- *
  * @param columns The class that determines the sizes and the number of grid cells.
  * @param modifier The modifier to be applied to this layout.
  * @param horizontalArrangement The horizontal arrangement of the grid cells.
@@ -116,34 +88,6 @@ inline fun VerticalGrid(
         content = content,
         measurePolicy = measurePolicy,
         modifier = modifier,
-    )
-}
-
-/**
- * A layout composable that places its children in a grid.
- *
- * @param columnCount The count of column.
- * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the grid cells.
- * @param verticalArrangement The vertical arrangement of the grid cells.
- * @param content The children of this layout.
- */
-@Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated("Use VerticalGrid that takes SimpleGridCells parameter.")
-@Composable
-inline fun VerticalGrid(
-    columnCount: Int,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    content: @Composable () -> Unit,
-) {
-    VerticalGrid(
-        columns = SimpleGridCells.Fixed(count = columnCount),
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement,
-        content = content,
     )
 }
 
