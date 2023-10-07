@@ -12,7 +12,7 @@ plugins {
 
 allprojects {
     group = "io.woong.compose.grid"
-    version = "0.2.0"
+    version = "1.0.0"
 
     repositories {
         maven {
