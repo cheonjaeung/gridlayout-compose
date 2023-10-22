@@ -40,7 +40,7 @@ inline fun HorizontalGrid(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    content: @Composable () -> Unit,
+    content: @Composable GridScope.() -> Unit,
 ) {
     val calculateRowCellHeightsFunction = rememberRowCellHeightConstraints(
         rows = rows,
@@ -53,7 +53,7 @@ inline fun HorizontalGrid(
         verticalArrangement = verticalArrangement,
     )
     Layout(
-        content = content,
+        content = { GridScopeInstance.content() },
         measurePolicy = measurePolicy,
         modifier = modifier,
     )
@@ -74,7 +74,7 @@ inline fun VerticalGrid(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    content: @Composable () -> Unit,
+    content: @Composable GridScope.() -> Unit,
 ) {
     val calculateColumnCellWidthsFunction = rememberColumnCellWidthConstraints(
         columns = columns,
@@ -87,7 +87,7 @@ inline fun VerticalGrid(
         verticalArrangement = verticalArrangement,
     )
     Layout(
-        content = content,
+        content = { GridScopeInstance.content() },
         measurePolicy = measurePolicy,
         modifier = modifier,
     )
