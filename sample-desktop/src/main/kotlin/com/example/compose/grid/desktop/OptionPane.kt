@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
@@ -326,7 +325,6 @@ private fun SliderOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SelectableSliderOption(
     title: String,
@@ -384,7 +382,6 @@ private fun SelectableSliderOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SelectableOption(
     title: String,
@@ -415,7 +412,6 @@ private fun SelectableOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ToggleOption(
     title: String,
@@ -450,7 +446,6 @@ private fun ToggleOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExpandableOption(
     title: String,
