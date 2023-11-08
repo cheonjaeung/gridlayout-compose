@@ -168,6 +168,68 @@ class GridTest {
     }
 
     @Test
+    fun testHorizontalGrid_oneItem_withFixed_fillFalse() {
+        val itemTag = "1"
+        val itemSize = 10.dp
+        val gridHeight = 30.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(1, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .testTag(itemTag)
+                            .size(itemSize)
+                    )
+                }
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag(itemTag))
+            .assertSizeIsEqualTo(expectedWidth = itemSize, expectedHeight = itemSize)
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertSizeIsEqualTo(expectedWidth = itemSize, expectedHeight = gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_oneItem_withFixed_fillFalse() {
+        val itemTag = "1"
+        val itemSize = 10.dp
+        val gridWidth = 30.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(1, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .testTag(itemTag)
+                            .size(itemSize)
+                    )
+                }
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag(itemTag))
+            .assertSizeIsEqualTo(expectedWidth = itemSize, expectedHeight = itemSize)
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertSizeIsEqualTo(expectedWidth = gridWidth, expectedHeight = itemSize)
+    }
+
+    @Test
     fun testHorizontalGrid_oneItem_withFixed_multipleCount() {
         val itemTag = "1"
         val itemSize = 10.dp
@@ -227,6 +289,74 @@ class GridTest {
         composeRule
             .onNode(hasTestTag(itemTag))
             .assertWidthIsEqualTo(gridWidth / columnCount)
+            .assertHeightIsEqualTo(itemSize)
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize)
+    }
+
+    @Test
+    fun testHorizontalGrid_oneItem_withFixed_multipleCount_fillFalse() {
+        val itemTag = "1"
+        val itemSize = 10.dp
+        val gridHeight = 40.dp
+        val rowCount = 3
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .testTag(itemTag)
+                            .size(itemSize)
+                    )
+                }
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag(itemTag))
+            .assertWidthIsEqualTo(itemSize)
+            .assertHeightIsEqualTo(itemSize)
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_oneItem_withFixed_multipleCount_fillFalse() {
+        val itemTag = "1"
+        val itemSize = 10.dp
+        val gridWidth = 40.dp
+        val columnCount = 3
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .testTag(itemTag)
+                            .size(itemSize)
+                    )
+                }
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag(itemTag))
+            .assertWidthIsEqualTo(itemSize)
             .assertHeightIsEqualTo(itemSize)
 
         composeRule
@@ -299,6 +429,70 @@ class GridTest {
         composeRule
             .onNode(hasTestTag(itemTag))
             .assertSizeIsEqualTo(expectedWidth = expectedItemWidth, expectedHeight = itemSize)
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertSizeIsEqualTo(expectedWidth = gridWidth, expectedHeight = itemSize)
+    }
+
+    @Test
+    fun testHorizontalGrid_oneItem_withAdaptive_fillFalse() {
+        val itemTag = "1"
+        val itemSize = 10.dp
+        val minHeight = 8.dp
+        val gridHeight = 30.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(minHeight, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .testTag(itemTag)
+                            .size(itemSize)
+                    )
+                }
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag(itemTag))
+            .assertSizeIsEqualTo(expectedWidth = itemSize, expectedHeight = itemSize)
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertSizeIsEqualTo(expectedWidth = itemSize, expectedHeight = gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_oneItem_withAdaptive_fillFalse() {
+        val itemTag = "1"
+        val itemSize = 10.dp
+        val minWidth = 8.dp
+        val gridWidth = 30.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Adaptive(minWidth, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .testTag(itemTag)
+                            .size(itemSize)
+                    )
+                }
+            )
+        }
+
+        composeRule
+            .onNode(hasTestTag(itemTag))
+            .assertSizeIsEqualTo(expectedWidth = itemSize, expectedHeight = itemSize)
 
         composeRule
             .onNode(hasTestTag(gridTag))
@@ -384,6 +578,82 @@ class GridTest {
     }
 
     @Test
+    fun testHorizontalGrid_oneLine_withFixed_fillFalse() {
+        val rowCount = 3
+        val gridHeight = 45.dp
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight),
+                content = {
+                    for (i in 0 until rowCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            )
+        }
+
+        val expectedItemHeight = gridHeight / rowCount
+        for (i in 0 until rowCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertSizeIsEqualTo(itemSize)
+                .assertTopPositionInRootIsEqualTo(expectedItemHeight * i)
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_oneLine_withFixed_fillFalse() {
+        val columnCount = 3
+        val gridWidth = 45.dp
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth),
+                content = {
+                    for (i in 0 until columnCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            )
+        }
+
+        val expectedItemWidth = gridWidth / columnCount
+        for (i in 0 until columnCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertSizeIsEqualTo(itemSize)
+                .assertLeftPositionInRootIsEqualTo(expectedItemWidth * i)
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize)
+    }
+
+    @Test
     fun testHorizontalGrid_oneLine_withAdaptive() {
         val gridHeight = 30.dp
         val minHeight = 8.dp
@@ -454,6 +724,84 @@ class GridTest {
                 .onNode(hasTestTag(i.toString()))
                 .assertWidthIsEqualTo(expectedItemWidth)
                 .assertHeightIsEqualTo(itemSize)
+                .assertLeftPositionInRootIsEqualTo(expectedItemWidth * i)
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize)
+    }
+
+    @Test
+    fun testHorizontalGrid_oneLine_withAdaptive_fillFalse() {
+        val gridHeight = 30.dp
+        val minHeight = 8.dp
+        val itemSize = 5.dp
+        val rowCount = expectAdaptiveGridCrossAxisCount(gridHeight, minHeight)
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(minHeight, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight),
+                content = {
+                    for (i in 0 until rowCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            )
+        }
+
+        val expectedItemHeight = gridHeight / rowCount
+        for (i in 0 until rowCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertSizeIsEqualTo(itemSize)
+                .assertTopPositionInRootIsEqualTo(expectedItemHeight * i)
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_oneLine_withAdaptive_fillFalse() {
+        val gridWidth = 30.dp
+        val minWidth = 8.dp
+        val itemSize = 5.dp
+        val columnCount = expectAdaptiveGridCrossAxisCount(gridWidth, minWidth)
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Adaptive(minWidth, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth),
+                content = {
+                    for (i in 0 until columnCount) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(itemSize)
+                        )
+                    }
+                }
+            )
+        }
+
+        val expectedItemWidth = gridWidth / columnCount
+        for (i in 0 until columnCount) {
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertSizeIsEqualTo(itemSize)
                 .assertLeftPositionInRootIsEqualTo(expectedItemWidth * i)
         }
 
@@ -556,6 +904,94 @@ class GridTest {
     }
 
     @Test
+    fun testHorizontalGrid_breakDownToNextLine_withFixed_fillFalse() {
+        val rowCount = 3
+        val gridHeight = 45.dp
+        val itemCount = rowCount + 1
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        for (i in 0 until itemCount) {
+            if (i < rowCount) {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertTopPositionInRootIsEqualTo((gridHeight / rowCount) * i)
+            } else {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertLeftPositionInRootIsEqualTo(itemSize)
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize * 2)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_breakDownToNextLine_withFixed_fillFalse() {
+        val columnCount = 3
+        val gridWidth = 45.dp
+        val itemCount = columnCount + 1
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        for (i in 0 until itemCount) {
+            if (i < columnCount) {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertLeftPositionInRootIsEqualTo((gridWidth / columnCount) * i)
+            } else {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertTopPositionInRootIsEqualTo(itemSize)
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize * 2)
+    }
+
+    @Test
     fun testHorizontalGrid_breakDownToNextLine_withAdaptive() {
         val gridHeight = 30.dp
         val minHeight = 8.dp
@@ -641,6 +1077,98 @@ class GridTest {
                     .onNode(hasTestTag(i.toString()))
                     .assertWidthIsEqualTo(expectedItemWidth)
                     .assertHeightIsEqualTo(itemSize)
+                    .assertTopPositionInRootIsEqualTo(itemSize)
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize * 2)
+    }
+
+    @Test
+    fun testHorizontalGrid_breakDownToNextLine_withAdaptive_fillFalse() {
+        val gridHeight = 30.dp
+        val minHeight = 8.dp
+        val itemSize = 5.dp
+        val rowCount = expectAdaptiveGridCrossAxisCount(gridHeight, minHeight)
+        val itemCount = rowCount + 1
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(minHeight, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemHeight = gridHeight / rowCount
+        for (i in 0 until itemCount) {
+            if (i < rowCount) {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertTopPositionInRootIsEqualTo(expectedItemHeight * i)
+            } else {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertLeftPositionInRootIsEqualTo(itemSize)
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize * 2)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_breakDownToNextLine_withAdaptive_fillFalse() {
+        val gridWidth = 30.dp
+        val minWidth = 8.dp
+        val itemSize = 5.dp
+        val columnCount = expectAdaptiveGridCrossAxisCount(gridWidth, minWidth)
+        val itemCount = columnCount + 1
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemWidth = gridWidth / columnCount
+        for (i in 0 until itemCount) {
+            if (i < columnCount) {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
+                    .assertLeftPositionInRootIsEqualTo(expectedItemWidth * i)
+            } else {
+                composeRule
+                    .onNode(hasTestTag(i.toString()))
+                    .assertSizeIsEqualTo(itemSize)
                     .assertTopPositionInRootIsEqualTo(itemSize)
             }
         }
@@ -762,6 +1290,122 @@ class GridTest {
                         .onNode(hasTestTag(i.toString()))
                         .assertWidthIsEqualTo(gridWidth / columnCount)
                         .assertHeightIsEqualTo(itemSize)
+                        .assertTopPositionInRootIsEqualTo(itemSize * 2)
+                }
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize * 3)
+    }
+
+    @Test
+    fun testHorizontalGrid_breakDownMultipleTimes_withFixed_fillFalse() {
+        val rowCount = 3
+        val gridHeight = 45.dp
+        val itemCount = rowCount * 2 + 1
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        for (i in 0 until itemCount) {
+            when {
+                i < rowCount -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertTopPositionInRootIsEqualTo((gridHeight / rowCount) * i)
+                }
+
+                i < rowCount * 2 -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = itemSize,
+                            expectedTop = (gridHeight / rowCount) * (i - rowCount)
+                        )
+                }
+
+                else -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertLeftPositionInRootIsEqualTo(itemSize * 2)
+                }
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize * 3)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_breakDownMultipleTimes_withFixed_fillFalse() {
+        val columnCount = 3
+        val gridWidth = 45.dp
+        val itemCount = columnCount * 2 + 1
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        for (i in 0 until itemCount) {
+            when {
+                i < columnCount -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertLeftPositionInRootIsEqualTo((gridWidth / columnCount) * i)
+                }
+
+                i < columnCount * 2 -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = (gridWidth / columnCount) * (i - columnCount),
+                            expectedTop = itemSize
+                        )
+                }
+
+                else -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
                         .assertTopPositionInRootIsEqualTo(itemSize * 2)
                 }
             }
@@ -900,6 +1544,126 @@ class GridTest {
     }
 
     @Test
+    fun testHorizontalGrid_breakDownMultipleTimes_withAdaptive_fillFalse() {
+        val gridHeight = 30.dp
+        val minHeight = 8.dp
+        val itemSize = 5.dp
+        val rowCount = expectAdaptiveGridCrossAxisCount(gridHeight, minHeight)
+        val itemCount = rowCount * 2 + 1
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Adaptive(minHeight, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .height(gridHeight)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemHeight = gridHeight / rowCount
+        for (i in 0 until itemCount) {
+            when {
+                i < rowCount -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertTopPositionInRootIsEqualTo(expectedItemHeight * i)
+                }
+
+                i < rowCount * 2 -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = itemSize,
+                            expectedTop = expectedItemHeight * (i - rowCount)
+                        )
+                }
+
+                else -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertLeftPositionInRootIsEqualTo(itemSize * 2)
+                }
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(itemSize * 3)
+            .assertHeightIsEqualTo(gridHeight)
+    }
+
+    @Test
+    fun testVerticalGrid_breakDownMultipleTimes_withAdaptive_fillFalse() {
+        val gridWidth = 30.dp
+        val minWidth = 8.dp
+        val itemSize = 5.dp
+        val columnCount = expectAdaptiveGridCrossAxisCount(gridWidth, minWidth)
+        val itemCount = columnCount * 2 + 1
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Adaptive(minWidth, fill = false),
+                modifier = Modifier
+                    .testTag(gridTag)
+                    .width(gridWidth)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                    )
+                }
+            }
+        }
+
+        val expectedItemWidth = gridWidth / columnCount
+        for (i in 0 until itemCount) {
+            when {
+                i < columnCount -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertLeftPositionInRootIsEqualTo(expectedItemWidth * i)
+                }
+
+                i < columnCount * 2 -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertPositionInRootIsEqualTo(
+                            expectedLeft = expectedItemWidth * (i - columnCount),
+                            expectedTop = itemSize
+                        )
+                }
+
+                else -> {
+                    composeRule
+                        .onNode(hasTestTag(i.toString()))
+                        .assertSizeIsEqualTo(itemSize)
+                        .assertTopPositionInRootIsEqualTo(itemSize * 2)
+                }
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag(gridTag))
+            .assertWidthIsEqualTo(gridWidth)
+            .assertHeightIsEqualTo(itemSize * 3)
+    }
+
+    @Test
     fun testHorizontalGrid_notEnoughLayoutSize_withFixed() {
         val rowCount = 2
         val gridSize = 30.dp
@@ -1004,7 +1768,6 @@ class GridTest {
             .onNode(hasTestTag("3"))
             .assertIsNotDisplayed()
     }
-
 
     @Test
     fun testHorizontalGrid_notEnoughLayoutSize_withAdaptive() {

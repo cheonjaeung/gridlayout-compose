@@ -42,6 +42,8 @@ fun main() = application {
         var useRandomSize by remember { mutableStateOf(true) }
         var fixedCount by remember { mutableStateOf(3) }
         var adaptiveMinSize by remember { mutableStateOf(80.dp) }
+        var fixedFill by remember { mutableStateOf(true) }
+        var adaptiveFill by remember { mutableStateOf(true) }
         var cells: SimpleGridCells by remember { mutableStateOf(SimpleGridCells.Fixed(fixedCount)) }
         var layoutDirection: LayoutDirection by remember { mutableStateOf(LayoutDirection.Ltr) }
         var orientation: Orientation by remember { mutableStateOf(Orientation.Vertical) }
@@ -93,6 +95,10 @@ fun main() = application {
                     onFixedCountChange = { fixedCount = it },
                     adaptiveMinSize = adaptiveMinSize,
                     onAdaptiveMinSizeChange = { adaptiveMinSize = it },
+                    fixedFill = fixedFill,
+                    onFixedFillChange = { fixedFill = it },
+                    adaptiveFill = adaptiveFill,
+                    onAdaptiveFillChange = { adaptiveFill = it },
                     layoutDirection = layoutDirection,
                     onLayoutDirectionChange = { layoutDirection = it },
                     orientation = orientation,

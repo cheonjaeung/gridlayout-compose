@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
@@ -28,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -48,6 +48,10 @@ fun OptionPane(
     onFixedCountChange: (Int) -> Unit,
     adaptiveMinSize: Dp,
     onAdaptiveMinSizeChange: (Dp) -> Unit,
+    fixedFill: Boolean,
+    onFixedFillChange: (Boolean) -> Unit,
+    adaptiveFill: Boolean,
+    onAdaptiveFillChange: (Boolean) -> Unit,
     layoutDirection: LayoutDirection,
     onLayoutDirectionChange: (LayoutDirection) -> Unit,
     orientation: Orientation,
@@ -106,30 +110,74 @@ fun OptionPane(
                     state = cellsOptionsState,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    SelectableSliderOption(
+                    CellStrategyOption(
                         title = "Fixed",
                         isSelected = cells is SimpleGridCells.Fixed,
                         indicator = fixedCount.toString(),
                         value = fixedCount.toFloat(),
                         valueRange = 1f..10f,
                         steps = 10,
-                        onClick = { onCellsChange(SimpleGridCells.Fixed(fixedCount)) },
+                        onClick = {
+                            onCellsChange(
+                                SimpleGridCells.Fixed(
+                                    count = fixedCount,
+                                    fill = fixedFill
+                                )
+                            )
+                        },
                         onValueChange = {
                             onFixedCountChange(it.toInt())
-                            onCellsChange(SimpleGridCells.Fixed(it.toInt()))
+                            onCellsChange(
+                                SimpleGridCells.Fixed(
+                                    count = it.toInt(),
+                                    fill = fixedFill
+                                )
+                            )
+                        },
+                        checked = fixedFill,
+                        onCheckedChange = {
+                            onFixedFillChange(it)
+                            onCellsChange(
+                                SimpleGridCells.Fixed(
+                                    count = fixedCount,
+                                    fill = it
+                                )
+                            )
                         },
                     )
-                    SelectableSliderOption(
+                    CellStrategyOption(
                         title = "Adaptive",
                         isSelected = cells is SimpleGridCells.Adaptive,
                         indicator = adaptiveMinSize.toString(),
                         value = adaptiveMinSize.value,
                         valueRange = 50f..150f,
                         steps = 19,
-                        onClick = { onCellsChange(SimpleGridCells.Adaptive(adaptiveMinSize)) },
+                        onClick = {
+                            onCellsChange(
+                                SimpleGridCells.Adaptive(
+                                    minSize = adaptiveMinSize,
+                                    fill = adaptiveFill
+                                )
+                            )
+                        },
                         onValueChange = {
                             onAdaptiveMinSizeChange(it.dp)
-                            onCellsChange(SimpleGridCells.Adaptive(it.dp))
+                            onCellsChange(
+                                SimpleGridCells.Adaptive(
+                                    minSize = it.dp,
+                                    fill = adaptiveFill
+                                )
+                            )
+                        },
+                        checked = adaptiveFill,
+                        onCheckedChange = {
+                            onAdaptiveFillChange(it)
+                            onCellsChange(
+                                SimpleGridCells.Adaptive(
+                                    minSize = adaptiveMinSize,
+                                    fill = it
+                                )
+                            )
                         },
                     )
                 }
@@ -326,9 +374,8 @@ private fun SliderOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SelectableSliderOption(
+private fun CellStrategyOption(
     title: String,
     isSelected: Boolean,
     indicator: String,
@@ -336,6 +383,8 @@ private fun SelectableSliderOption(
     valueRange: ClosedFloatingPointRange<Float>,
     onClick: () -> Unit,
     onValueChange: (Float) -> Unit,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     steps: Int = 0,
 ) {
@@ -351,7 +400,10 @@ private fun SelectableSliderOption(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(text = title)
+                Text(
+                    text = title,
+                    color = if (isSelected) Color.Unspecified else Color.Gray
+                )
                 if (isSelected) {
                     Icon(
                         painter = painterResource("check_black_24dp.svg"),
@@ -369,6 +421,7 @@ private fun SelectableSliderOption(
                 Text(
                     modifier = Modifier.weight(0.25f),
                     text = indicator,
+                    color = if (isSelected) Color.Unspecified else Color.Gray,
                     fontWeight = FontWeight.Normal,
                 )
                 Slider(
@@ -380,11 +433,28 @@ private fun SelectableSliderOption(
                     enabled = isSelected,
                 )
             }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(OptionDefaults.Height),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "Fill",
+                    color = if (isSelected) Color.Unspecified else Color.Gray,
+                    fontWeight = FontWeight.Normal,
+                )
+                Switch(
+                    checked = checked,
+                    onCheckedChange = onCheckedChange,
+                    enabled = isSelected
+                )
+            }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SelectableOption(
     title: String,
@@ -415,7 +485,6 @@ private fun SelectableOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ToggleOption(
     title: String,
@@ -450,7 +519,6 @@ private fun ToggleOption(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExpandableOption(
     title: String,
