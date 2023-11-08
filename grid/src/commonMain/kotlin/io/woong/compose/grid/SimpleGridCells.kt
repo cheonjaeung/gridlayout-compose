@@ -39,6 +39,8 @@ interface SimpleGridCells {
      */
     fun Density.calculateCrossAxisCellSizes(availableSize: Int, spacing: Int): List<Int>
 
+    fun fillCellSize(): Boolean
+
     /**
      * Make grid to have fixed number of rows or columns.
      *
@@ -46,8 +48,12 @@ interface SimpleGridCells {
      * 3 columns and each cell have 30dp width.
      *
      * @param count The number of rows or columns.
+     * @param fill When `true`, item composable fill cell's width or height.
      */
-    class Fixed(private val count: Int) : SimpleGridCells {
+    class Fixed(
+        private val count: Int,
+        private val fill: Boolean = true
+    ) : SimpleGridCells {
         init {
             if (count <= 0) {
                 throw IllegalArgumentException("Fixed count must be a positive value, but $count")
@@ -67,14 +73,22 @@ interface SimpleGridCells {
             }
         }
 
+        override fun fillCellSize(): Boolean {
+            return fill
+        }
+
         override fun equals(other: Any?): Boolean {
             if (other !is Fixed) return false
             if (this.count != other.count) return false
+            if (this.fill != other.fill) return false
             return true
         }
 
         override fun hashCode(): Int {
-            return count.hashCode()
+            var hash = 1
+            hash = hash * 31 + count.hashCode()
+            hash = hash * 31 + fill.hashCode()
+            return hash
         }
     }
 
@@ -86,8 +100,12 @@ interface SimpleGridCells {
      * column count will be 4 and each cell will have 20dp width.
      *
      * @param minSize The minimum size which each cell should have.
+     * @param fill When `true`, item composable fill cell's width or height.
      */
-    class Adaptive(private val minSize: Dp) : SimpleGridCells {
+    class Adaptive(
+        private val minSize: Dp,
+        private val fill: Boolean = true
+    ) : SimpleGridCells {
         init {
             if (minSize <= 0.dp) {
                 throw IllegalArgumentException("Adaptive minSize must be a positive value, but $minSize")
@@ -109,14 +127,22 @@ interface SimpleGridCells {
             }
         }
 
+        override fun fillCellSize(): Boolean {
+            return fill
+        }
+
         override fun equals(other: Any?): Boolean {
             if (other !is Adaptive) return false
             if (this.minSize != other.minSize) return false
+            if (this.fill != other.fill) return false
             return true
         }
 
         override fun hashCode(): Int {
-            return -minSize.hashCode()
+            var hash = -1
+            hash = hash * 31 + minSize.hashCode()
+            hash = hash * 31 + fill.hashCode()
+            return hash
         }
     }
 }
