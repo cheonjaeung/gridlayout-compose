@@ -49,6 +49,7 @@ internal class GridMeasureHelper(
     val measurables: List<Measurable>,
     val placeables: Array<Placeable?>,
     val crossAxisCellConstraintsList: List<Int>,
+    val fillCellSize: Boolean,
     val crossAxisCount: Int,
     val mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     val mainAxisSpacing: Dp,
@@ -100,7 +101,7 @@ internal class GridMeasureHelper(
                             } else {
                                 mainAxisMaxLayoutSize - mainAxisPlacedSpace
                             },
-                            crossAxisMinSize = crossAxisCellConstraints,
+                            crossAxisMinSize = if (fillCellSize) crossAxisCellConstraints else 0,
                             crossAxisMaxSize = crossAxisCellConstraints,
                         ).toConstraints(orientation)
                     )

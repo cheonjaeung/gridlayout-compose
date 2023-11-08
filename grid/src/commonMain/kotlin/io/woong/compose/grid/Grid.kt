@@ -48,6 +48,7 @@ inline fun HorizontalGrid(
     )
     val measurePolicy = rememberHorizontalGridMeasurePolicy(
         calculateRowCellHeightConstraints = calculateRowCellHeightsFunction,
+        fillCellHeight = remember(rows) { rows.fillCellSize() },
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
     )
@@ -81,6 +82,7 @@ inline fun VerticalGrid(
     )
     val measurePolicy = rememberVerticalGridMeasurePolicy(
         calculateColumnCellWidthConstraints = calculateColumnCellWidthsFunction,
+        fillCellWidth = remember(columns) { columns.fillCellSize() },
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
     )
@@ -143,13 +145,20 @@ internal fun rememberColumnCellWidthConstraints(
 @Composable
 internal fun rememberHorizontalGridMeasurePolicy(
     calculateRowCellHeightConstraints: Density.(Constraints) -> List<Int>,
+    fillCellHeight: Boolean,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
 ): MeasurePolicy {
-    return remember(calculateRowCellHeightConstraints, horizontalArrangement, verticalArrangement) {
+    return remember(
+        calculateRowCellHeightConstraints,
+        fillCellHeight,
+        horizontalArrangement,
+        verticalArrangement
+    ) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Horizontal,
             calculateCrossAxisCellConstraints = calculateRowCellHeightConstraints,
+            fillCellSize = fillCellHeight,
             mainAxisArrangement = { totalSize, sizes, layoutDirection, density, outPosition ->
                 with(horizontalArrangement) {
                     density.arrange(totalSize, sizes, layoutDirection, outPosition)
@@ -170,13 +179,20 @@ internal fun rememberHorizontalGridMeasurePolicy(
 @Composable
 internal fun rememberVerticalGridMeasurePolicy(
     calculateColumnCellWidthConstraints: Density.(Constraints) -> List<Int>,
+    fillCellWidth: Boolean,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
 ): MeasurePolicy {
-    return remember(calculateColumnCellWidthConstraints, horizontalArrangement, verticalArrangement) {
+    return remember(
+        calculateColumnCellWidthConstraints,
+        fillCellWidth,
+        horizontalArrangement,
+        verticalArrangement
+    ) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Vertical,
             calculateCrossAxisCellConstraints = calculateColumnCellWidthConstraints,
+            fillCellSize = fillCellWidth,
             mainAxisArrangement = { totalSize, sizes, _, density, outPosition ->
                 with(verticalArrangement) {
                     density.arrange(totalSize, sizes, outPosition)

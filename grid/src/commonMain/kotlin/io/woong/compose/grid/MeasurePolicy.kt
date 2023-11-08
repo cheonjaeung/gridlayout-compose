@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.LayoutDirection
 internal fun gridMeasurePolicy(
     orientation: LayoutOrientation,
     calculateCrossAxisCellConstraints: Density.(Constraints) -> List<Int>,
+    fillCellSize: Boolean,
     mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     mainAxisSpacing: Dp,
     crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
@@ -49,6 +50,7 @@ internal fun gridMeasurePolicy(
                 measurables = measurables,
                 placeables = placeables,
                 crossAxisCellConstraintsList = crossAxisCellConstraintsList,
+                fillCellSize = fillCellSize,
                 crossAxisCount = crossAxisCellCount,
                 mainAxisArrangement = mainAxisArrangement,
                 mainAxisSpacing = mainAxisSpacing,
