@@ -18,10 +18,9 @@ The following table shows which platform is supported.
 
 | Platform | Status      |
 |----------|-------------|
-| Android  | Available   |
-| iOS      | Not Tested  |
-| Desktop  | Available   |
-| Web      | Not Planned |
+| Android  | ✅ Available |
+| iOS      | ✅ Available |
+| Desktop  | ✅ Available |
 
 ## Compose Version Dependency
 
