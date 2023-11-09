@@ -11,6 +11,11 @@ theme:
   palette:
     primary: 'black'
     accent: 'blue'
+  icon:
+    logo: material/grid
+  font:
+    text: Inter
+    code: Jetbrains Mono
 
 # Extensions
 markdown_extensions:
