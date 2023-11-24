@@ -1,51 +1,57 @@
-# Grid Layout Composables
+# Layout Composables
 
-There are 2 layout composables, `VerticalGrid` and `HorizontalGrid`.
-Both composables have same behavior but different directions.
+GridLayout library provides a simple API to make grid UI.
+And also this library's grids have similar API to lazy grids.
+If you have used LazyGrid, you can use this library more easily.
 
-`VerticalGrid` places item rows from top to bottom.
-The grid places items from left to right (when RTL, right to left) until the row is filled.
-After the row is filled, the grid places next item at the next row.
-The next row will be placed at the bottom of the previous row.
+![grid-increasing](./images/grid-increasing.png)
 
-The following code sample shows an example of vertical grid.
+Basically, there are 2 composables to make grid, `HorizontalGrid` and `VerticalGrid`.
+`HorizontalGrid` is a grid layout composable that increases its width as items increases
+and `VerticalGrid` increases its height as items increases.
 
-```kotlin
-VerticalGrid(
-    columns = SimpleGridCells.Fixed(3),
-    modifier = Modifier.fillMaxWidth(),
-) {
-    for ((index, color) in colors.withIndex()) {
-        ColorBox(
-            color = color,
-            text = (index + 1).toString(),
-        )
-    }
-}
-```
-
-![usage-vertical](./images/usage-vertical.png)
-
-`HorizontalGrid` has similar behavior but for different direction.
-`HorizontalGrid` place item columns from left to right (when RTL, right to left).
-The grid places item from top to bottom until the column is filled.
-After the columns is filled, the grid places next item at the next column.
-The next column will be places at the right (when RTL, left) of the previous column.
-
-The following code sample shows an example of horizontal grid.
+The following sample code shows how to use these grid layout composables.
 
 ```kotlin
 HorizontalGrid(
     rows = SimpleGridCells.Fixed(3),
-    modifier = Modifier.fillMaxHeight(),
+    modifier = Modifier.fillMaxHeight()
 ) {
-    for ((index, color) in colors.withIndex()) {
-        ColorBox(
-            color = color,
-            text = (index + 1).toString(),
-        )
-    }
+    Item()
+    Item()
+    Item()
+}
+
+VerticalGrid(
+    columns = SimpleGridCells.Fixed(3),
+    modifier = Modifier.fillMaxWidth()
+) {
+    Item()
+    Item()
+    Item()
 }
 ```
 
-![usage-horizontal](./images/usage-horizontal.png)
+!!! note
+    You can see `rows` and `columns` parameter for `HorizontalGrid` and `VerticalGrid`.
+    This parameter is required parameter for grid layout.
+    For details, see [cell strategy](./cell-strategy.md) section.
+
+## RTL (Right to Left) Supports
+
+![layout-directions](./images/layout-direction.png)
+
+GridLayout supports RTL layout direction. Grids check current layout direction and places items by
+direction.
+
+If you want to apply a specified layout direction manually, wrap grid layout with `CompositionLocalProvider` and
+provide `LocalLayoutDirection` like following code:
+
+```kotlin
+CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+    HorizontalGrid(
+        rows = SimpleGridCells.Fixed(3),
+        modifier = Modifier.fillMaxHeight()
+    ) { /* content */ }
+}
+```
