@@ -1,7 +1,15 @@
 <h1 align="center">Grid Layout for Compose</h1>
 <p align="center"><i>Missing grid layout for Jetpack Compose and Compose Multiplatform</i></p>
 
+# GridLayout for Compose
+
+[![ci-latest-status](https://github.com/cheonjaewoong/gridlayout-compose/actions/workflows/ci.yml/badge.svg)](https://github.com/cheonjaewoong/gridlayout-compose/actions/workflows/ci.yml)
+![maven-central](https://img.shields.io/maven-central/v/io.woong.compose.grid/grid)
+[![Static Badge](https://img.shields.io/badge/License-Apache%202.0-Green)](https://github.com/cheonjaewoong/gridlayout-compose/blob/main/LICENSE.txt)
+
 GridLayout for Compose is a library that provides simple grid layout composables for Jetpack Compose and Compose Multiplatform.
+
+![grid-examples](docs/images/grid-overview-examples.png)
 
 Jetpack Compose doesn't contains non-lazy grid layout, there are only lazy grid layout.
 There are some alternatives, combining rows and colums or flow layout.
@@ -21,7 +29,7 @@ dependencies {
 
 ## Usage
 
-![usage-example](docs/images/overview-grid.png)
+![usage-example](docs/images/usage-example.png)
 
 ```kotlin
 VerticalGrid(
