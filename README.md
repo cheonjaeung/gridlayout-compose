@@ -1,6 +1,3 @@
-<h1 align="center">Grid Layout for Compose</h1>
-<p align="center"><i>Missing grid layout for Jetpack Compose and Compose Multiplatform</i></p>
-
 # GridLayout for Compose
 
 [![ci-latest-status](https://github.com/cheonjaewoong/gridlayout-compose/actions/workflows/ci.yml/badge.svg)](https://github.com/cheonjaewoong/gridlayout-compose/actions/workflows/ci.yml)
