@@ -1,5 +1,7 @@
 # GridLayout for Compose
 
+![overview-examples](images/grid-overview-examples.png)
+
 **GridLayout for Compose** is a library for missing grid layout in Jetpack Compose and Compose Multiplatform.
 This library helps to implement simple grid UI.
 
@@ -15,7 +17,7 @@ Below list is the core features of this library:
 The grid layout composables have simple API to implement grid.
 For example to draw grid like this:
 
-![usage-example](images/overview-grid.png)
+![usage-example](images/usage-example.png)
 
 You can write code like this:
 

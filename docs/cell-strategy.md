@@ -11,35 +11,73 @@ They are similar to LazyGrid's `Fixed` and `Adaptive`.
 `SimpleGridCells.Fixed` is a cell strategy for exact count of rows or columns.
 And each cell will have 1/n of the grid size.
 
-For example, `Fixed(4)` means that the grid should have 4 cells.
-If the grid width is 400dp, each cell have 100dp width.
-If `Fixed(4)` is applied to `VerticalGrid`, the grid will be like this:
+The API of `Fixed` looks like this:
 
 ```kotlin
+class Fixed(private val count: Int) : SimpleGridCells
+```
+
+There is a parameter called `count`. This is the maximum number of cells the grid should have on
+each line. The `count` must be a positive number. If 0 or negative number is provided, it occurs
+an exception.
+
+For example, a grid has 400dp width or height, and `Fixed(4)` is applied.
+
+```kotlin
+HorizontalGrid(
+    rows = SimpleGridCells.Fixed(4),
+    modifier = Modifier.height(400.dp)
+) { /* content */ }
+
 VerticalGrid(
     columns = SimpleGridCells.Fixed(4),
     modifier = Modifier.width(400.dp)
 ) { /* content */ }
 ```
 
-![fixed-example](./images/cell-strategy-fixed-example.png)
+![fixed-example](./images/fixed-example.png)
+
+The grid will have 4 cells on each line.
+If the grid is horizontal, it will have 4 rows and if vertical, it will have 4 columns.
+And each cells should have 1/n of the grid size.
+In this example, each cells will have 100dp width or height.
 
 ## Adaptive
 
 `SimpleGridCells.Adaptive` is a cell strategy for as many cells as possible.
 And each cell will have at least minimum size.
 
-For example, when `Adaptive(60.dp)` is applied to `VerticalGrid` with 400dp width.
-The number of cells will be 6 and the size of each cell will be about 66.666...dp.
-Because 6 is the maximum count of cells as long as it kept minimum size.
-(When the number of cells is 7, each cell size will be about 57.1dp.
-It is smaller than minimum size.)
+The API of `Adaptive` looks like this:
 
 ```kotlin
+class Adaptive(private val minSize: Dp) : SimpleGridCells
+```
+
+There is a parameter called `minSize`. This is the minimum size of each cell should have.
+The `minSize` must be a positive size. If the size is 0 or below, it occurs an exception.
+The grid layout with `Adaptive` calculates the maximum number of cells possible while keeping
+the `minSize` restriction.
+
+For example, a grid has 400dp width or height and `Adaptive(120.dp)` is applied.
+
+```kotlin
+HorizontalGrid(
+    rows = SimpleGridCells.Adaptive(120.dp),
+    modifier = Modifier.height(400.dp)
+) { /* content */ }
+
 VerticalGrid(
-    columns = SimpleGridCells.Adaptive(60.dp),
+    columns = SimpleGridCells.Adaptive(120.dp),
     modifier = Modifier.width(400.dp)
 ) { /* content */ }
 ```
 
-![adaptive-example](./images/cell-strategy-adaptive-example.png)
+![adaptive-example](./images/adaptive-example.png)
+
+The grid will calculate how many cells should have.
+In this case, the grid will have 3 cells on each line.
+Because, there is no way to have 4 or more cells while keeping `minSize` restriction.
+And each cells will have 1/3 of 400dp (about 133.333dp) width or height.
+
+If the grid size is expanded to 600dp, the number of cells on each line will be changed to 5
+and each cell's size will be 120dp.
