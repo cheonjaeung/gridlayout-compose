@@ -75,58 +75,60 @@ internal class GridMeasureHelper(
         val measurableCount = measurables.size
         val mainAxisCount = mainAxisCountByCrossAxisCount(measurableCount, crossAxisCount)
 
-        var i = 0
+        var measurableIndex = 0
+        var mainAxisIndex = 0
         var mainAxisPlacedSpace = 0
         var mainAxisSpaceAfterLast: Int
         var mainAxisTotalLayoutSize = 0
         var crossAxisTotalLayoutSize = 0
 
-        for (m in 0 until mainAxisCount) {
+        while (measurableIndex < measurableCount) {
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
+            var crossAxisIndex = 0
             var placeableMainAxisSizeMax = 0
             var crossAxisPlacedSpace = 0
             var crossAxisSpaceAfterLast: Int
 
-            for (c in 0 until crossAxisCount) {
-                if (i < measurableCount) {
-                    val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
-                    val measurable = measurables[i]
-                    val crossAxisCellConstraints = crossAxisCellConstraintsList[c]
+            while (crossAxisIndex < crossAxisCount && measurableIndex < measurableCount) {
+                val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
+                val measurable = measurables[measurableIndex]
+                val crossAxisCellConstraints = crossAxisCellConstraintsList[crossAxisIndex]
 
-                    val placeable = measurable.measure(
-                        constraints = OrientationIndependentConstraints(
-                            mainAxisMinSize = 0,
-                            mainAxisMaxSize = if (mainAxisMaxLayoutSize == Constraints.Infinity) {
-                                Constraints.Infinity
-                            } else {
-                                mainAxisMaxLayoutSize - mainAxisPlacedSpace
-                            },
-                            crossAxisMinSize = if (fillCellSize) crossAxisCellConstraints else 0,
-                            crossAxisMaxSize = crossAxisCellConstraints,
-                        ).toConstraints(orientation)
-                    )
+                val placeable = measurable.measure(
+                    constraints = OrientationIndependentConstraints(
+                        mainAxisMinSize = 0,
+                        mainAxisMaxSize = if (mainAxisMaxLayoutSize == Constraints.Infinity) {
+                            Constraints.Infinity
+                        } else {
+                            mainAxisMaxLayoutSize - mainAxisPlacedSpace
+                        },
+                        crossAxisMinSize = if (fillCellSize) crossAxisCellConstraints else 0,
+                        crossAxisMaxSize = crossAxisCellConstraints,
+                    ).toConstraints(orientation)
+                )
 
-                    crossAxisSpaceAfterLast = min(
-                        if (c == crossAxisCount - 1) 0 else crossAxisSpacingPx,
-                        crossAxisMaxLayoutSize - crossAxisPlacedSpace - crossAxisCellConstraints
-                    )
-                    crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
-                    placeableMainAxisSizeMax = max(
-                        placeableMainAxisSizeMax,
-                        placeable.mainAxisSize()
-                    )
-                    crossAxisTotalLayoutSize = max(crossAxisTotalLayoutSize, crossAxisPlacedSpace)
-                    placeables[i] = placeable
-                    i++
-                }
+                crossAxisSpaceAfterLast = min(
+                    if (crossAxisIndex == crossAxisCount - 1) 0 else crossAxisSpacingPx,
+                    crossAxisMaxLayoutSize - crossAxisPlacedSpace - crossAxisCellConstraints
+                )
+                crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
+                placeableMainAxisSizeMax = max(
+                    placeableMainAxisSizeMax,
+                    placeable.mainAxisSize()
+                )
+                crossAxisTotalLayoutSize = max(crossAxisTotalLayoutSize, crossAxisPlacedSpace)
+                placeables[measurableIndex] = placeable
+                crossAxisIndex++
+                measurableIndex++
             }
 
             mainAxisSpaceAfterLast = min(
-                if (m == mainAxisCount - 1) 0 else mainAxisSpacingPx,
+                if (mainAxisIndex == mainAxisCount - 1) 0 else mainAxisSpacingPx,
                 mainAxisMaxLayoutSize - mainAxisPlacedSpace - placeableMainAxisSizeMax
             )
             mainAxisPlacedSpace += placeableMainAxisSizeMax + mainAxisSpaceAfterLast
             mainAxisTotalLayoutSize = max(mainAxisTotalLayoutSize, mainAxisPlacedSpace)
+            mainAxisIndex++
         }
 
         val mainAxisLayoutSizeBeforeArrange = mainAxisTotalLayoutSize.coerceIn(
