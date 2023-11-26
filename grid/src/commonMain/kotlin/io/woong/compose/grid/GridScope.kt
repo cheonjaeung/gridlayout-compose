@@ -16,8 +16,23 @@
 
 package io.woong.compose.grid
 
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.Modifier
+
+/**
+ * A Scope for the children of [HorizontalGrid] or [VerticalGrid].
+ */
 interface GridScope {
+    /**
+     * Sets the span of the composable. If span is not provided, it will be considered 1.
+     */
+    @Stable
+    fun Modifier.span(span: Int): Modifier
 }
 
 internal object GridScopeInstance : GridScope {
+    override fun Modifier.span(span: Int): Modifier {
+        require(span > 0) { "span must be bigger than zero, $span is zero or negative" }
+        return this.then(GridSpanElement(span))
+    }
 }
