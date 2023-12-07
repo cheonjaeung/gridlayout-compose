@@ -24,7 +24,10 @@ import androidx.compose.ui.Modifier
  */
 interface GridScope {
     /**
-     * Sets the span of the composable. If span is not provided, it will be considered 1.
+     * Sets the span of the cell. The default span size is 1.
+     *
+     * If the given span is bigger than current line's remaining span, this cell will be placed
+     * at the next line.
      */
     @Stable
     fun Modifier.span(span: Int): Modifier
