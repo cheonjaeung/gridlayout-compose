@@ -34,8 +34,7 @@ internal class GridSpanElement(val span: Int) : ModifierNodeElement<GridSpanNode
         if (this === other) return true
         if (other == null) return false
         if (other !is GridSpanElement) return false
-        if (this.span != other.span) return false
-        return true
+        return this.span == other.span
     }
 
     override fun hashCode(): Int {
@@ -51,4 +50,8 @@ internal class GridSpanNode(var span: Int) : Modifier.Node(), ParentDataModifier
     }
 }
 
-internal data class GridSpanParentData(var span: Int = 1)
+internal data class GridSpanParentData(var span: Int = DefaultSpan) {
+    companion object {
+        internal const val DefaultSpan: Int = 1
+    }
+}

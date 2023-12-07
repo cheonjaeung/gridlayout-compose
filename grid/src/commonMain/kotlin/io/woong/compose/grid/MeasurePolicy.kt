@@ -20,7 +20,6 @@ import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
-import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -59,14 +58,12 @@ private class GridMeasurePolicy(
         measurables: List<Measurable>,
         constraints: Constraints
     ): MeasureResult {
-        val placeables: Array<Placeable?> = arrayOfNulls(measurables.size)
         val crossAxisCellConstraintsList = calculateCrossAxisCellConstraints(constraints)
         val crossAxisCellCount = crossAxisCellConstraintsList.size
 
         val measureHelper = GridMeasureHelper(
             orientation = orientation,
             measurables = measurables,
-            placeables = placeables,
             crossAxisCellConstraintsList = crossAxisCellConstraintsList,
             fillCellSize = fillCellSize,
             crossAxisCount = crossAxisCellCount,
@@ -100,7 +97,6 @@ private class GridMeasurePolicy(
         return layout(width = layoutWidth, height = layoutHeight) {
             measureHelper.place(
                 placeableScope = this,
-                measureResult = measureResult,
                 arrangeResult = arrangeResult,
             )
         }
