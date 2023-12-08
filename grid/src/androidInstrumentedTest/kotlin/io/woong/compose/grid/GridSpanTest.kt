@@ -16,6 +16,7 @@
 
 package io.woong.compose.grid
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -525,6 +526,178 @@ class GridSpanTest {
             .assertPositionInRootIsEqualTo(
                 expectedLeft = 0.dp,
                 expectedTop = itemSize
+            )
+    }
+
+    @Test
+    fun testHorizontalGrid_spanWithSpacedBy() {
+        val rowCount = 3
+        val itemSize = 20.dp
+        val spacingSize = 5.dp
+        val gridHeight = itemSize * rowCount + spacingSize * (rowCount - 1)
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount),
+                modifier = Modifier
+                    .testTag("grid")
+                    .height(gridHeight),
+                horizontalArrangement = Arrangement.spacedBy(spacingSize),
+                verticalArrangement = Arrangement.spacedBy(spacingSize)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .testTag("0")
+                        .size(itemSize)
+                        .span(1)
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("1")
+                        .size(itemSize)
+                        .span(2)
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("2")
+                        .size(itemSize)
+                        .span(2)
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("3")
+                        .size(itemSize)
+                        .span(1)
+                )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("0"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = 0.dp
+            )
+            .assertSizeIsEqualTo(expectedSize = itemSize)
+        composeRule
+            .onNode(hasTestTag("1"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = itemSize + spacingSize
+            )
+            .assertSizeIsEqualTo(
+                expectedWidth = itemSize,
+                expectedHeight = itemSize * 2 + spacingSize
+            )
+        composeRule
+            .onNode(hasTestTag("2"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = itemSize + spacingSize,
+                expectedTop = 0.dp
+            )
+            .assertSizeIsEqualTo(
+                expectedWidth = itemSize,
+                expectedHeight = itemSize * 2 + spacingSize
+            )
+        composeRule
+            .onNode(hasTestTag("3"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = itemSize + spacingSize,
+                expectedTop = (itemSize * 2 + spacingSize) + spacingSize
+            )
+            .assertSizeIsEqualTo(expectedSize = itemSize)
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertSizeIsEqualTo(
+                expectedWidth = itemSize * 2 + spacingSize,
+                expectedHeight = gridHeight
+            )
+    }
+
+    @Test
+    fun testVerticalGrid_spanWithSpacedBy() {
+        val columnCount = 3
+        val itemSize = 20.dp
+        val spacingSize = 5.dp
+        val gridWidth = itemSize * columnCount + spacingSize * (columnCount - 1)
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount),
+                modifier = Modifier
+                    .testTag("grid")
+                    .width(gridWidth),
+                horizontalArrangement = Arrangement.spacedBy(spacingSize),
+                verticalArrangement = Arrangement.spacedBy(spacingSize)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .testTag("0")
+                        .size(itemSize)
+                        .span(1)
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("1")
+                        .size(itemSize)
+                        .span(2)
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("2")
+                        .size(itemSize)
+                        .span(2)
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("3")
+                        .size(itemSize)
+                        .span(1)
+                )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("0"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = 0.dp
+            )
+            .assertSizeIsEqualTo(expectedSize = itemSize)
+        composeRule
+            .onNode(hasTestTag("1"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = itemSize + spacingSize,
+                expectedTop = 0.dp
+            )
+            .assertSizeIsEqualTo(
+                expectedWidth = itemSize * 2 + spacingSize,
+                expectedHeight = itemSize
+            )
+        composeRule
+            .onNode(hasTestTag("2"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = itemSize + spacingSize
+            )
+            .assertSizeIsEqualTo(
+                expectedWidth = itemSize * 2 + spacingSize,
+                expectedHeight = itemSize
+            )
+        composeRule
+            .onNode(hasTestTag("3"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = (itemSize * 2 + spacingSize) + spacingSize,
+                expectedTop = itemSize + spacingSize
+            )
+            .assertSizeIsEqualTo(expectedSize = itemSize)
+
+        composeRule
+            .onNode(hasTestTag("grid"))
+            .assertSizeIsEqualTo(
+                expectedWidth = gridWidth,
+                expectedHeight = itemSize * 2 + spacingSize
             )
     }
 }

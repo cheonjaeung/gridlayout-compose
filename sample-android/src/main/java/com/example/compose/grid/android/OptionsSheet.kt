@@ -279,6 +279,11 @@ fun OptionsSheet(
                         isSelected = horizontalArrangement == Arrangement.SpaceEvenly,
                         onClick = { onHorizontalArrangementChange(Arrangement.SpaceEvenly) },
                     )
+                    SelectableOption(
+                        title = "Arrangement.spacedBy(8.dp)",
+                        isSelected = horizontalArrangement == Arrangement.spacedBy(8.dp),
+                        onClick = { onHorizontalArrangementChange(Arrangement.spacedBy(8.dp)) },
+                    )
                 }
 
                 ExpandableOption(
@@ -322,6 +327,11 @@ fun OptionsSheet(
                         title = "Arrangement.SpaceEvenly",
                         isSelected = verticalArrangement == Arrangement.SpaceEvenly,
                         onClick = { onVerticalArrangementChange(Arrangement.SpaceEvenly) },
+                    )
+                    SelectableOption(
+                        title = "Arrangement.spacedBy(8.dp)",
+                        isSelected = verticalArrangement == Arrangement.spacedBy(8.dp),
+                        onClick = { onVerticalArrangementChange(Arrangement.spacedBy(8.dp)) },
                     )
                 }
             }

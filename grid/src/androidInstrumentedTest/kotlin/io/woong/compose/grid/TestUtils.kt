@@ -16,10 +16,16 @@
 
 package io.woong.compose.grid
 
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.test.SemanticsNodeInteraction
-import androidx.compose.ui.test.assertHeightIsEqualTo
-import androidx.compose.ui.test.assertWidthIsEqualTo
+import androidx.compose.ui.test.assertIsEqualTo
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
+import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.unit.width
 import kotlin.math.roundToInt
 
 /**
@@ -27,10 +33,11 @@ import kotlin.math.roundToInt
  */
 fun SemanticsNodeInteraction.assertSizeIsEqualTo(
     expectedSize: Dp,
+    tolerance: Dp = 1.dp
 ): SemanticsNodeInteraction {
     return this
-        .assertWidthIsEqualTo(expectedSize)
-        .assertHeightIsEqualTo(expectedSize)
+        .assertWidthIsEqualTo(expectedSize, tolerance)
+        .assertHeightIsEqualTo(expectedSize, tolerance)
 }
 
 /**
@@ -38,23 +45,53 @@ fun SemanticsNodeInteraction.assertSizeIsEqualTo(
  */
 fun SemanticsNodeInteraction.assertSizeIsEqualTo(
     expectedWidth: Dp,
-    expectedHeight: Dp
+    expectedHeight: Dp,
+    tolerance: Dp = 1.dp
 ): SemanticsNodeInteraction {
     return this
-        .assertWidthIsEqualTo(expectedWidth)
-        .assertHeightIsEqualTo(expectedHeight)
+        .assertWidthIsEqualTo(expectedWidth, tolerance)
+        .assertHeightIsEqualTo(expectedHeight, tolerance)
 }
 
-/**
- * Calculates expected main axis count by cross axis count and item count.
- */
-fun calculateMainAxisCount(itemCount: Int, crossAxisCount: Int): Int {
-    return if (itemCount % crossAxisCount == 0) {
-        itemCount / crossAxisCount
-    } else {
-        itemCount / crossAxisCount + 1
+fun SemanticsNodeInteraction.assertWidthIsEqualTo(
+    expectedWidth: Dp,
+    tolerance: Dp = 1.dp
+): SemanticsNodeInteraction {
+    return withUnclippedBoundsInRoot {
+        it.width.assertIsEqualTo(expectedWidth, "width", tolerance)
     }
 }
+
+fun SemanticsNodeInteraction.assertHeightIsEqualTo(
+    expectedWidth: Dp,
+    tolerance: Dp = 1.dp
+): SemanticsNodeInteraction {
+    return withUnclippedBoundsInRoot {
+        it.height.assertIsEqualTo(expectedWidth, "width", tolerance)
+    }
+}
+
+private fun SemanticsNodeInteraction.withUnclippedBoundsInRoot(
+    assertion: (DpRect) -> Unit
+): SemanticsNodeInteraction {
+    val node = fetchSemanticsNode("Failed to retrieve bounds of the node.")
+    val bounds = with(node.layoutInfo.density) {
+        node.unclippedBoundsInRoot.let {
+            DpRect(it.left.toDp(), it.top.toDp(), it.right.toDp(), it.bottom.toDp())
+        }
+    }
+    assertion.invoke(bounds)
+    return this
+}
+
+private val SemanticsNode.unclippedBoundsInRoot: Rect
+    get() {
+        return if (layoutInfo.isPlaced) {
+            Rect(positionInRoot, size.toSize())
+        } else {
+            Dp.Unspecified.value.let { Rect(it, it, it, it) }
+        }
+    }
 
 /**
  * Returns expected cross axis count for grid layout using [SimpleGridCells.Adaptive].
