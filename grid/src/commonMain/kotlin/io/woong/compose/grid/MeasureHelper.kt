@@ -136,7 +136,8 @@ internal class GridMeasureHelper(
 
                 val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
                 val measurable = measurables[measurableIndex]
-                val crossAxisCellConstraints = crossAxisCellConstraintsList[crossAxisIndex] * span
+                val crossAxisCellConstraints = crossAxisCellConstraintsList[crossAxisIndex] * span +
+                    crossAxisSpacingPx * (span - 1)
 
                 val placeable = measurable.measure(
                     constraints = OrientationIndependentConstraints(
