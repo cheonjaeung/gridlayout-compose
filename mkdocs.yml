@@ -38,6 +38,7 @@ nav:
     - 'Layout Composables': layout-composables.md
     - 'Cell Strategy': cell-strategy.md
     - 'Arrangement': arrangement.md
+    - 'Spanning Cells': span.md
   - 'Changelog': 'https://github.com/cheonjaewoong/gridlayout-compose/blob/main/CHANGELOG.md'
 
 # Repository Information
