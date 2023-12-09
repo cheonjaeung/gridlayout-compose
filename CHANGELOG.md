@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.0
+
+_2023.12.09_
+
+### Added
+
+- `content` lambda of grid now extends `GridScope`.
+- New `span` modifier is added. `span` is can applied to item composable in the `GridScope`.
+- New optional parameter `fill` is added for `SimpleGridCells.Fixed` and `SimpleGridCells.Adaptive`.
+
+### Compose Dependencies
+
+There is no dependency changes since previous version.
+
+- Android: Jetpack Compose 1.5.0
+- Multiplatform: Compose Multiplatform 1.5.2
+
 ## 1.0.0
 
 _2023.10.07_
