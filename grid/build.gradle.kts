@@ -78,7 +78,7 @@ mavenPublishing {
     coordinates("${project.group}", "grid", "${project.version}")
 
     pom {
-        name.set("grid")
+        name.set("GridLayout for Compose")
         description.set("Missing grid layout for Jetpack Compose and Compose Multiplatform.")
         url.set("https://github.com/cheonjaewoong/gridlayout-compose")
 
