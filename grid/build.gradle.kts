@@ -20,7 +20,11 @@ kotlin {
         }
     }
 
-    jvm("desktop")
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -47,14 +51,6 @@ kotlin {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.compose.android.ui.test.junit4)
                 implementation(libs.compose.android.ui.test.manifest)
-            }
-        }
-
-        val desktopMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.compose.multiplatform.runtime)
-                implementation(libs.compose.multiplatform.foundation)
             }
         }
     }
