@@ -18,8 +18,10 @@ maven-publish = { id = "com.vanniktech.maven.publish", version = "0.25.3" }
 androidx-core = { module = "androidx.core:core", version = "1.10.1" }
 compose-multiplatform-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 compose-multiplatform-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
+compose-multiplatform-ui-util = { module = "org.jetbrains.compose.ui:ui-util", version.ref = "compose-multiplatform" }
 compose-android-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose-android" }
 compose-android-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-android" }
+compose-android-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose-android" }
 
 # Test dependencies
 junit4 = { module = "junit:junit", version = "4.13.2" }

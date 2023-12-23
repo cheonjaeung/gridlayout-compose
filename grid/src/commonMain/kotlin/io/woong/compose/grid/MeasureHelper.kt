@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.util.fastForEach
 import kotlin.math.max
 import kotlin.math.min
 
@@ -265,10 +266,10 @@ internal class GridMeasureHelper(
 
         val placeableInfoTable = mutableListOf<List<PlaceablePositionInfo>>()
         var mainAxisIndex = 0
-        placeableSpanInfoTable.forEach { placeableLine ->
+        placeableSpanInfoTable.fastForEach { placeableLine ->
             val placeableInfoLine = mutableListOf<PlaceablePositionInfo>()
             var crossAxisIndex = 0
-            placeableLine.forEach { placeableSpanInfo ->
+            placeableLine.fastForEach { placeableSpanInfo ->
                 placeableInfoLine.add(
                     PlaceablePositionInfo(
                         placeable = placeableSpanInfo.placeable,
@@ -297,8 +298,8 @@ internal class GridMeasureHelper(
         arrangeResult: GridArrangeResult,
     ) = with(placeableScope) {
         val placeableInfoTable = arrangeResult.placeablePositionInfoTable
-        placeableInfoTable.forEach { placeableInfoLine ->
-            placeableInfoLine.forEach { placeableInfo ->
+        placeableInfoTable.fastForEach { placeableInfoLine ->
+            placeableInfoLine.fastForEach { placeableInfo ->
                 val placeable = placeableInfo.placeable
                 if (orientation == LayoutOrientation.Horizontal) {
                     placeable.place(

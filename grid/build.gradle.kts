@@ -16,6 +16,7 @@ kotlin {
             dependencies {
                 implementation(libs.compose.multiplatform.runtime)
                 implementation(libs.compose.multiplatform.foundation)
+                implementation(libs.compose.multiplatform.ui.util)
             }
         }
         val commonTest by getting
@@ -25,6 +26,7 @@ kotlin {
                 implementation(libs.androidx.core)
                 implementation(libs.compose.android.runtime)
                 implementation(libs.compose.android.foundation)
+                implementation(libs.compose.android.ui.util)
             }
         }
         val androidInstrumentedTest by getting {
