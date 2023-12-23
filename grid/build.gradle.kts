@@ -9,7 +9,22 @@ plugins {
 
 kotlin {
     androidTarget()
-    jvm("desktop")
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "grid"
+        }
+    }
+
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -19,7 +34,6 @@ kotlin {
                 implementation(libs.compose.multiplatform.ui.util)
             }
         }
-        val commonTest by getting
 
         val androidMain by getting {
             dependencies {
@@ -29,21 +43,13 @@ kotlin {
                 implementation(libs.compose.android.ui.util)
             }
         }
+
         val androidInstrumentedTest by getting {
-            dependsOn(commonTest)
             dependencies {
                 implementation(libs.junit4)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.compose.android.ui.test.junit4)
                 implementation(libs.compose.android.ui.test.manifest)
-            }
-        }
-
-        val desktopMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.compose.multiplatform.runtime)
-                implementation(libs.compose.multiplatform.foundation)
             }
         }
     }
