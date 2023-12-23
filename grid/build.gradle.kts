@@ -34,7 +34,6 @@ kotlin {
                 implementation(libs.compose.multiplatform.ui.util)
             }
         }
-        val commonTest by getting
 
         val androidMain by getting {
             dependencies {
@@ -44,8 +43,8 @@ kotlin {
                 implementation(libs.compose.android.ui.util)
             }
         }
+
         val androidInstrumentedTest by getting {
-            dependsOn(commonTest)
             dependencies {
                 implementation(libs.junit4)
                 implementation(libs.androidx.activity.compose)
