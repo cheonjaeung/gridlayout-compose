@@ -16,12 +16,16 @@
 
 package io.woong.compose.grid
 
+import androidx.compose.foundation.layout.LayoutScopeMarker
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 
 /**
  * A Scope for the children of [HorizontalGrid] or [VerticalGrid].
  */
+@Immutable
+@LayoutScopeMarker
 interface GridScope {
     /**
      * Sets the span of the cell. The default span size is 1.
