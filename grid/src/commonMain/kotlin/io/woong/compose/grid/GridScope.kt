@@ -19,6 +19,7 @@ package io.woong.compose.grid
 import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 /**
@@ -35,11 +36,21 @@ interface GridScope {
      */
     @Stable
     fun Modifier.span(span: Int): Modifier
+
+    /**
+     * Aligns the item to specific [Alignment] within the cell.
+     */
+    @Stable
+    fun Modifier.align(alignment: Alignment): Modifier
 }
 
 internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: Int): Modifier {
         require(span > 0) { "span must be bigger than zero, $span is zero or negative" }
         return this.then(GridSpanElement(span))
+    }
+
+    override fun Modifier.align(alignment: Alignment): Modifier {
+        return this.then(GridAlignmentElement(alignment))
     }
 }
