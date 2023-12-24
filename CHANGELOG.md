@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+Now GridLayout for Compose library supports Compose Multiplatform for iOS.
+
+### Improved
+
+- Performance for item composable measuring and placing is improved.
+
 ## 1.1.0
 
 _2023.12.09_
