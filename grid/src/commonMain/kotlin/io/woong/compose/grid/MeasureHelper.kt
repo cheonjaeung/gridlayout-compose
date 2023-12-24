@@ -80,12 +80,12 @@ internal class GridMeasureHelper(
     val crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     val crossAxisSpacing: Dp,
 ) {
-    private val gridSpanParentDataArray: Array<GridSpanParentData?> = Array(measurables.size) {
-        measurables[it].parentData as? GridSpanParentData
+    private val gridParentDataArrays: Array<GridParentData?> = Array(measurables.size) {
+        measurables[it].parentData as? GridParentData
     }
 
-    private val GridSpanParentData?.spanOrDefault: Int
-        get() = this?.span ?: GridSpanParentData.DefaultSpan
+    private val GridParentData?.spanOrDefault: Int
+        get() = this?.span ?: GridParentData.DefaultSpan
 
     /**
      * Measures children composable constraints.
@@ -124,7 +124,7 @@ internal class GridMeasureHelper(
             val placeableLine = mutableListOf<PlaceableSpanInfo>()
 
             while (spanSum < maxSpan && measurableIndex < measurableCount) {
-                val span = gridSpanParentDataArray[measurableIndex].spanOrDefault
+                val span = gridParentDataArrays[measurableIndex].spanOrDefault
                 if (span > maxSpan) {
                     measurableIndex++
                     continue

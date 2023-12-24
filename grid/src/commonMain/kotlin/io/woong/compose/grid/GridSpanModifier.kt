@@ -44,14 +44,8 @@ internal class GridSpanElement(val span: Int) : ModifierNodeElement<GridSpanNode
 
 internal class GridSpanNode(var span: Int) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
-        val p = parentData as? GridSpanParentData ?: GridSpanParentData()
+        val p = parentData as? GridParentData ?: GridParentData()
         p.span = span
         return p
-    }
-}
-
-internal data class GridSpanParentData(var span: Int = DefaultSpan) {
-    companion object {
-        internal const val DefaultSpan: Int = 1
     }
 }
