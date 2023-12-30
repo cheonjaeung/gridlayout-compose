@@ -16,14 +16,18 @@
 
 package io.woong.compose.grid
 
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.util.fastForEach
+import androidx.compose.ui.util.fastForEachIndexed
 import kotlin.math.max
 import kotlin.math.min
 
@@ -38,12 +42,14 @@ internal class GridMeasureResult(
     val crossAxisCount: Int,
     val preArrangementMainAxisLayoutSize: Int,
     val preArrangementCrossAxisLayoutSize: Int,
-    val placeableSpanInfoTable: List<List<PlaceableSpanInfo>>
+    val placeableMeasureInfoTable: List<List<PlaceableMeasureInfo>>
 )
 
-internal class PlaceableSpanInfo(
+internal class PlaceableMeasureInfo(
     val placeable: Placeable,
-    val span: Int
+    val span: Int,
+    val alignment: Alignment?,
+    val crossAxisCellSize: Int
 )
 
 /**
@@ -63,7 +69,8 @@ internal class GridArrangeResult(
 internal class PlaceablePositionInfo(
     val placeable: Placeable,
     val mainAxisPosition: Int,
-    val crossAxisPosition: Int
+    val crossAxisPosition: Int,
+    val alignedOffset: IntOffset
 )
 
 /**
@@ -80,12 +87,12 @@ internal class GridMeasureHelper(
     val crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     val crossAxisSpacing: Dp,
 ) {
-    private val gridSpanParentDataArray: Array<GridSpanParentData?> = Array(measurables.size) {
-        measurables[it].parentData as? GridSpanParentData
+    private val gridParentDataArrays: Array<GridParentData?> = Array(measurables.size) {
+        measurables[it].parentData as? GridParentData
     }
 
-    private val GridSpanParentData?.spanOrDefault: Int
-        get() = this?.span ?: GridSpanParentData.DefaultSpan
+    private val GridParentData?.spanOrDefault: Int
+        get() = this?.span ?: GridParentData.DefaultSpan
 
     /**
      * Measures children composable constraints.
@@ -101,7 +108,7 @@ internal class GridMeasureHelper(
     ): GridMeasureResult = with(measureScope) {
         @Suppress("NAME_SHADOWING")
         val constraints = OrientationIndependentConstraints(orientation, constraints)
-        val placeableTable = mutableListOf<List<PlaceableSpanInfo>>()
+        val placeableTable = mutableListOf<List<PlaceableMeasureInfo>>()
         val mainAxisSpacingPx = mainAxisSpacing.roundToPx()
         val crossAxisSpacingPx = crossAxisSpacing.roundToPx()
         val measurableCount = measurables.size
@@ -115,16 +122,16 @@ internal class GridMeasureHelper(
         var crossAxisTotalLayoutSize = 0
 
         while (measurableIndex < measurableCount) {
+            val placeableLine = mutableListOf<PlaceableMeasureInfo>()
             var spanSum = 0
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
             var crossAxisIndex = 0
             var placeableMainAxisSizeMax = 0
             var crossAxisPlacedSpace = 0
             var crossAxisSpaceAfterLast: Int
-            val placeableLine = mutableListOf<PlaceableSpanInfo>()
 
             while (spanSum < maxSpan && measurableIndex < measurableCount) {
-                val span = gridSpanParentDataArray[measurableIndex].spanOrDefault
+                val span = gridParentDataArrays[measurableIndex].spanOrDefault
                 if (span > maxSpan) {
                     measurableIndex++
                     continue
@@ -153,9 +160,11 @@ internal class GridMeasureHelper(
                     ).toConstraints(orientation)
                 )
                 placeableLine.add(
-                    PlaceableSpanInfo(
+                    PlaceableMeasureInfo(
                         placeable = placeable,
-                        span = span
+                        span = span,
+                        alignment = gridParentDataArrays[measurableIndex]?.alignment,
+                        crossAxisCellSize = crossAxisCellConstraints
                     )
                 )
 
@@ -201,7 +210,7 @@ internal class GridMeasureHelper(
             crossAxisCount = crossAxisCount,
             preArrangementMainAxisLayoutSize = mainAxisLayoutSizeBeforeArrange,
             preArrangementCrossAxisLayoutSize = crossAxisLayoutSizeBeforeArrange,
-            placeableSpanInfoTable = placeableTable
+            placeableMeasureInfoTable = placeableTable
         )
     }
 
@@ -217,7 +226,7 @@ internal class GridMeasureHelper(
         measureResult: GridMeasureResult,
     ): GridArrangeResult = with(measureScope) {
         val constraints = measureResult.constraints
-        val placeableSpanInfoTable = measureResult.placeableSpanInfoTable
+        val placeableMeasureInfoTable = measureResult.placeableMeasureInfoTable
         val mainAxisCount = measureResult.mainAxisCount
         val crossAxisCount = measureResult.crossAxisCount
         val preArrangementMainAxisLayoutSize = measureResult.preArrangementMainAxisLayoutSize
@@ -227,7 +236,7 @@ internal class GridMeasureHelper(
 
         val mainAxisBiggestChildrenSizes = IntArray(mainAxisCount) { 0 }
         for (m in 0 until mainAxisCount) {
-            val currentLinePlaceables = placeableSpanInfoTable[m]
+            val currentLinePlaceables = placeableMeasureInfoTable[m]
             val currentLineChildrenSizes = IntArray(currentLinePlaceables.size) { index ->
                 val placeable = currentLinePlaceables[index].placeable
                 placeable.mainAxisSize()
@@ -265,22 +274,41 @@ internal class GridMeasureHelper(
         )
 
         val placeableInfoTable = mutableListOf<List<PlaceablePositionInfo>>()
-        var mainAxisIndex = 0
-        placeableSpanInfoTable.fastForEach { placeableLine ->
+        placeableMeasureInfoTable.fastForEachIndexed { mainAxisIndex, placeableLine ->
             val placeableInfoLine = mutableListOf<PlaceablePositionInfo>()
             var crossAxisIndex = 0
-            placeableLine.fastForEach { placeableSpanInfo ->
+            val currentLineMainAxisCellSize = mainAxisBiggestChildrenSizes[mainAxisIndex]
+            placeableLine.fastForEach { placeableMeasureInfo ->
+                val placeable = placeableMeasureInfo.placeable
+                val alignment = placeableMeasureInfo.alignment
+                val cellSize = if (orientation == LayoutOrientation.Horizontal) {
+                    IntSize(
+                        width = currentLineMainAxisCellSize,
+                        height = placeableMeasureInfo.crossAxisCellSize
+                    )
+                } else {
+                    IntSize(
+                        width = placeableMeasureInfo.crossAxisCellSize,
+                        height = currentLineMainAxisCellSize
+                    )
+                }
+                val alignedOffset = alignment?.align(
+                    size = placeable.size(),
+                    space = cellSize,
+                    layoutDirection = this.layoutDirection
+                ) ?: IntOffset.Zero
+
                 placeableInfoLine.add(
                     PlaceablePositionInfo(
-                        placeable = placeableSpanInfo.placeable,
+                        placeable = placeable,
                         mainAxisPosition = mainAxisPositions[mainAxisIndex],
-                        crossAxisPosition = crossAxisPositions[crossAxisIndex]
+                        crossAxisPosition = crossAxisPositions[crossAxisIndex],
+                        alignedOffset = alignedOffset
                     )
                 )
-                crossAxisIndex += placeableSpanInfo.span
+                crossAxisIndex += placeableMeasureInfo.span
             }
             placeableInfoTable.add(placeableInfoLine)
-            mainAxisIndex++
         }
 
         GridArrangeResult(
@@ -301,15 +329,17 @@ internal class GridMeasureHelper(
         placeableInfoTable.fastForEach { placeableInfoLine ->
             placeableInfoLine.fastForEach { placeableInfo ->
                 val placeable = placeableInfo.placeable
+                val offset = placeableInfo.alignedOffset
+
                 if (orientation == LayoutOrientation.Horizontal) {
                     placeable.place(
-                        x = placeableInfo.mainAxisPosition,
-                        y = placeableInfo.crossAxisPosition
+                        x = placeableInfo.mainAxisPosition + offset.x,
+                        y = placeableInfo.crossAxisPosition + offset.y
                     )
                 } else {
                     placeable.place(
-                        x = placeableInfo.crossAxisPosition,
-                        y = placeableInfo.mainAxisPosition
+                        x = placeableInfo.crossAxisPosition + offset.x,
+                        y = placeableInfo.mainAxisPosition + offset.y
                     )
                 }
             }
@@ -325,6 +355,13 @@ internal class GridMeasureHelper(
         } else {
             height
         }
+    }
+
+    /**
+     * Returns the size of this [Placeable].
+     */
+    private fun Placeable.size(): IntSize {
+        return IntSize(width = width, height = height)
     }
 
     /**
