@@ -30,6 +30,8 @@ import kotlin.math.roundToInt
 
 /**
  * Asserts that the layout of this nod has size equal to [expectedSize].
+ *
+ * This function is from compose test library to customize tolerance.
  */
 fun SemanticsNodeInteraction.assertSizeIsEqualTo(
     expectedSize: Dp,
@@ -42,6 +44,8 @@ fun SemanticsNodeInteraction.assertSizeIsEqualTo(
 
 /**
  * Asserts that the layout of this nod has size equal to [expectedWidth] and [expectedHeight].
+ *
+ * This function is from compose test library to customize tolerance.
  */
 fun SemanticsNodeInteraction.assertSizeIsEqualTo(
     expectedWidth: Dp,
@@ -53,6 +57,11 @@ fun SemanticsNodeInteraction.assertSizeIsEqualTo(
         .assertHeightIsEqualTo(expectedHeight, tolerance)
 }
 
+/**
+ * Asserts that the layout of this node has width equal to [expectedWidth].
+ *
+ * This function is from compose test library to customize tolerance.
+ */
 fun SemanticsNodeInteraction.assertWidthIsEqualTo(
     expectedWidth: Dp,
     tolerance: Dp = 1.dp
@@ -62,12 +71,34 @@ fun SemanticsNodeInteraction.assertWidthIsEqualTo(
     }
 }
 
+/**
+ * Asserts that the layout of this node has height equal to [expectedHeight].
+ *
+ * This function is from compose test library to customize tolerance.
+ */
 fun SemanticsNodeInteraction.assertHeightIsEqualTo(
-    expectedWidth: Dp,
+    expectedHeight: Dp,
     tolerance: Dp = 1.dp
 ): SemanticsNodeInteraction {
     return withUnclippedBoundsInRoot {
-        it.height.assertIsEqualTo(expectedWidth, "width", tolerance)
+        it.height.assertIsEqualTo(expectedHeight, "width", tolerance)
+    }
+}
+
+/**
+ * Asserts that the layout of this node has position in the root composable that is
+ * equal to the given position.
+ *
+ * This function is from compose test library to customize tolerance.
+ */
+fun SemanticsNodeInteraction.assertPositionInRootIsEqualTo(
+    expectedLeft: Dp,
+    expectedTop: Dp,
+    tolerance: Dp = 1.dp
+): SemanticsNodeInteraction {
+    return withUnclippedBoundsInRoot {
+        it.left.assertIsEqualTo(expectedLeft, "left", tolerance)
+        it.top.assertIsEqualTo(expectedTop, "top", tolerance)
     }
 }
 
