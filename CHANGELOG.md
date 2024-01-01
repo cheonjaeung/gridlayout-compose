@@ -4,6 +4,11 @@
 
 Now GridLayout for Compose library supports Compose Multiplatform for iOS.
 
+### Added
+
+- New `align` modifier is added on `GridScope` to set alignment of specific item composable in the cell.
+  The `align` modifier takes an `Alignement` parameter like `BoxScope`'s `align`.
+
 ### Improved
 
 - Performance for item composable measuring and placing is improved.
