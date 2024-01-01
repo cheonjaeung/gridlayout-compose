@@ -2,16 +2,22 @@
 
 ## Unreleased
 
-Now GridLayout for Compose library supports Compose Multiplatform for iOS.
-
 ### Added
 
+- Start supporting Compose Multiplatform for iOS.
 - New `align` modifier is added on `GridScope` to set alignment of specific item composable in the cell.
   The `align` modifier takes an `Alignement` parameter like `BoxScope`'s `align`.
 
 ### Improved
 
 - Performance for item composable measuring and placing is improved.
+
+### Changed
+
+- Artifact names are changed. If you use library dependency for desktop platform with
+  `io.woong.compose.grid:grid-desktop`, you must change artifact name to `io.woong.compose.grid:grid-jvm`
+  or just `io.woong.compose.grid:grid`. If you already add dependency as `io.woong.compose.grid:grid`,
+  you can ignore it.
 
 ## 1.1.0
 
