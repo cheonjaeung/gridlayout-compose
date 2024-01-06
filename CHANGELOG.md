@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.2.0
+
+_2024.01.06_
 
 ### Added
 
@@ -18,6 +20,13 @@
   `io.woong.compose.grid:grid-desktop`, you must change artifact name to `io.woong.compose.grid:grid-jvm`
   or just `io.woong.compose.grid:grid`. If you already add dependency as `io.woong.compose.grid:grid`,
   you can ignore it.
+
+### Compose Dependencies
+
+There is no dependency changes since previous version.
+
+- Android: Jetpack Compose 1.5.0
+- Multiplatform: Compose Multiplatform 1.5.2
 
 ## 1.1.0
 
