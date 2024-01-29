@@ -35,6 +35,8 @@ kotlin {
                 implementation(libs.compose.multiplatform.ui)
                 implementation(libs.compose.multiplatform.material3)
                 implementation(project(":grid"))
+
+                implementation(libs.kotlinx.immutable.collections)
             }
         }
 

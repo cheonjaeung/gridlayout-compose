@@ -29,6 +29,7 @@ compose-android-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4"
 compose-android-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-android" }
 
 # Sample dependencies
+kotlinx-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.7" }
 compose-multiplatform-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 compose-multiplatform-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
