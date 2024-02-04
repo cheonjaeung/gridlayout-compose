@@ -95,11 +95,6 @@ internal class GridMeasureHelper(
 
     /**
      * Measures children composable constraints.
-     *
-     * This method calculates children constraints (minimum and maximum size) using layout
-     * constrains and arrangement spacing. After measuring step, the placeables array elements
-     * null safety is guaranteed. The result layout size of this method may be incorrect because
-     * it is before the arrangement step.
      */
     fun measure(
         measureScope: MeasureScope,
@@ -213,11 +208,7 @@ internal class GridMeasureHelper(
     }
 
     /**
-     * Arranges children composable and remeasures grid layout size.
-     *
-     * The arrangement step calculates children composable's position in the grid layout.
-     * After the arrangement, this method recalculates grid layout size and the result size is
-     * actual layout size.
+     * Calculates positions of the item composables.
      */
     fun arrange(
         measureScope: MeasureScope,
