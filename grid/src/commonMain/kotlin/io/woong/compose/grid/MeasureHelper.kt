@@ -37,11 +37,10 @@ import kotlin.math.min
  * It contains basic layout information and placeables as 2-dimension table.
  */
 internal class GridMeasureResult(
-    val constraints: OrientationIndependentConstraints,
     val mainAxisCount: Int,
     val crossAxisCount: Int,
-    val preArrangementMainAxisLayoutSize: Int,
-    val preArrangementCrossAxisLayoutSize: Int,
+    val mainAxisLayoutSize: Int,
+    val crossAxisLayoutSize: Int,
     val placeableMeasureInfoTable: List<List<PlaceableMeasureInfo>>
 )
 
@@ -96,11 +95,6 @@ internal class GridMeasureHelper(
 
     /**
      * Measures children composable constraints.
-     *
-     * This method calculates children constraints (minimum and maximum size) using layout
-     * constrains and arrangement spacing. After measuring step, the placeables array elements
-     * null safety is guaranteed. The result layout size of this method may be incorrect because
-     * it is before the arrangement step.
      */
     fun measure(
         measureScope: MeasureScope,
@@ -195,42 +189,36 @@ internal class GridMeasureHelper(
         }
         mainAxisTotalLayoutSize -= mainAxisSpacingPx
 
-        val mainAxisLayoutSizeBeforeArrange = mainAxisTotalLayoutSize.coerceIn(
+        val mainAxisLayoutSize = mainAxisTotalLayoutSize.coerceIn(
             constraints.mainAxisMinSize,
             constraints.mainAxisMaxSize
         )
-        val crossAxisLayoutSizeBeforeArrange = crossAxisTotalLayoutSize.coerceIn(
+        val crossAxisLayoutSize = crossAxisTotalLayoutSize.coerceIn(
             constraints.crossAxisMinSize,
             constraints.crossAxisMaxSize
         )
 
         GridMeasureResult(
-            constraints = constraints,
             mainAxisCount = mainAxisIndex,
             crossAxisCount = crossAxisCount,
-            preArrangementMainAxisLayoutSize = mainAxisLayoutSizeBeforeArrange,
-            preArrangementCrossAxisLayoutSize = crossAxisLayoutSizeBeforeArrange,
+            mainAxisLayoutSize = mainAxisLayoutSize,
+            crossAxisLayoutSize = crossAxisLayoutSize,
             placeableMeasureInfoTable = placeableTable
         )
     }
 
     /**
-     * Arranges children composable and remeasures grid layout size.
-     *
-     * The arrangement step calculates children composable's position in the grid layout.
-     * After the arrangement, this method recalculates grid layout size and the result size is
-     * actual layout size.
+     * Calculates positions of the item composables.
      */
     fun arrange(
         measureScope: MeasureScope,
         measureResult: GridMeasureResult,
     ): GridArrangeResult = with(measureScope) {
-        val constraints = measureResult.constraints
         val placeableMeasureInfoTable = measureResult.placeableMeasureInfoTable
         val mainAxisCount = measureResult.mainAxisCount
         val crossAxisCount = measureResult.crossAxisCount
-        val preArrangementMainAxisLayoutSize = measureResult.preArrangementMainAxisLayoutSize
-        val preArrangementCrossAxisLayoutSize = measureResult.preArrangementCrossAxisLayoutSize
+        val mainAxisLayoutSize = measureResult.mainAxisLayoutSize
+        val crossAxisLayoutSize = measureResult.crossAxisLayoutSize
         val mainAxisPositions = IntArray(mainAxisCount) { 0 }
         val crossAxisPositions = IntArray(crossAxisCount) { 0 }
 
@@ -243,13 +231,6 @@ internal class GridMeasureHelper(
             }
             mainAxisBiggestChildrenSizes[m] = currentLineChildrenSizes.maxOrZero()
         }
-        val mainAxisLayoutSize = max(
-            mainAxisBiggestChildrenSizes.sum(),
-            preArrangementMainAxisLayoutSize
-        ).coerceIn(
-            constraints.mainAxisMinSize,
-            constraints.mainAxisMaxSize
-        )
         mainAxisArrangement(
             mainAxisLayoutSize,
             mainAxisBiggestChildrenSizes,
@@ -258,13 +239,6 @@ internal class GridMeasureHelper(
             mainAxisPositions,
         )
 
-        val crossAxisLayoutSize = max(
-            crossAxisCellConstraintsList.sum(),
-            preArrangementCrossAxisLayoutSize
-        ).coerceIn(
-            constraints.crossAxisMinSize,
-            constraints.crossAxisMaxSize
-        )
         crossAxisArrangement(
             crossAxisLayoutSize,
             crossAxisCellConstraintsList.toIntArray(),
