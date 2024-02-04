@@ -1,5 +1,11 @@
 # Changelog
 
+## Unpublished
+
+### Fixed
+
+- Fixed incorrect layout size when grid should have smaller size than constraints max size.
+
 ## 1.2.0
 
 _2024.01.06_
