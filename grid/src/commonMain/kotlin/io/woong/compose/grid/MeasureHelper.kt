@@ -123,6 +123,7 @@ internal class GridMeasureHelper(
             var placeableMainAxisSizeMax = 0
             var crossAxisPlacedSpace = 0
             var crossAxisSpaceAfterLast: Int
+            var crossAxisLineLayoutSize = 0
 
             while (spanSum < maxSpan && measurableIndex < measurableCount) {
                 val span = gridParentDataArrays[measurableIndex].spanOrDefault
@@ -164,24 +165,25 @@ internal class GridMeasureHelper(
 
                 crossAxisSpaceAfterLast = min(
                     crossAxisSpacingPx,
-                    crossAxisMaxLayoutSize - crossAxisPlacedSpace - crossAxisCellConstraints
+                    crossAxisMaxLayoutSize + crossAxisSpacingPx - crossAxisPlacedSpace - crossAxisCellConstraints
                 )
                 crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
                 placeableMainAxisSizeMax = max(
                     placeableMainAxisSizeMax,
                     placeable.mainAxisSize()
                 )
-                crossAxisTotalLayoutSize = max(crossAxisTotalLayoutSize, crossAxisPlacedSpace)
+                crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
                 crossAxisIndex += span
                 measurableIndex++
             }
-            crossAxisTotalLayoutSize -= crossAxisSpacingPx
+            crossAxisLineLayoutSize -= crossAxisSpacingPx
+            crossAxisTotalLayoutSize = max(crossAxisTotalLayoutSize, crossAxisLineLayoutSize)
 
             placeableTable.add(placeableLine)
 
             mainAxisSpaceAfterLast = min(
                 mainAxisSpacingPx,
-                mainAxisMaxLayoutSize - mainAxisPlacedSpace - placeableMainAxisSizeMax
+                mainAxisMaxLayoutSize + mainAxisSpacingPx - mainAxisPlacedSpace - placeableMainAxisSizeMax
             )
             mainAxisPlacedSpace += placeableMainAxisSizeMax + mainAxisSpaceAfterLast
             mainAxisTotalLayoutSize = max(mainAxisTotalLayoutSize, mainAxisPlacedSpace)
