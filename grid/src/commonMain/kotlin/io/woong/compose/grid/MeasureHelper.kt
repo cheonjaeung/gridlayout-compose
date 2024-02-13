@@ -148,7 +148,7 @@ internal class GridMeasureHelper(
                         mainAxisMaxSize = if (mainAxisMaxLayoutSize == Constraints.Infinity) {
                             Constraints.Infinity
                         } else {
-                            mainAxisMaxLayoutSize - mainAxisPlacedSpace
+                            (mainAxisMaxLayoutSize - mainAxisPlacedSpace).coerceAtLeast(0)
                         },
                         crossAxisMinSize = if (fillCellSize) crossAxisCellConstraints else 0,
                         crossAxisMaxSize = crossAxisCellConstraints,
