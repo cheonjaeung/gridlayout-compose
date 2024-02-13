@@ -1,6 +1,8 @@
 # Changelog
 
-## Unpublished
+## 1.2.1
+
+_2024.02.13_
 
 ### Fixed
 
