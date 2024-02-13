@@ -5,6 +5,7 @@
 ### Fixed
 
 - Fixed incorrect layout size when grid should have smaller size than constraints max size.
+- Fixed incorrect spacing before the last item.
 
 ## 1.2.0
 
