@@ -1,9 +1,9 @@
 [versions]
-kotlin = "1.9.0"
-android-gradle-plugin = "8.1.1"
-compose-multiplatform = "1.5.1"
-compose-android = "1.5.0"
-compose-android-compiler-plugin = "1.5.2"
+kotlin = "1.9.22"
+android-gradle-plugin = "8.2.0"
+compose-multiplatform = "1.6.0"
+compose-android = "1.6.0"
+compose-android-compiler-plugin = "1.5.10"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -15,7 +15,7 @@ compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-m
 maven-publish = { id = "com.vanniktech.maven.publish", version = "0.25.3" }
 
 [libraries]
-androidx-core = { module = "androidx.core:core", version = "1.10.1" }
+androidx-core = { module = "androidx.core:core", version = "1.12.0" }
 compose-multiplatform-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 compose-multiplatform-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
 compose-multiplatform-ui-util = { module = "org.jetbrains.compose.ui:ui-util", version.ref = "compose-multiplatform" }
@@ -33,6 +33,6 @@ kotlinx-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collec
 compose-multiplatform-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 compose-multiplatform-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.7.2" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.8.2" }
 compose-android-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-android" }
-compose-android-material3 = { module = "androidx.compose.material3:material3", version = "1.1.1" }
+compose-android-material3 = { module = "androidx.compose.material3:material3", version = "1.2.0" }
