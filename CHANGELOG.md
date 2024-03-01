@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.2
+
+_2024.03.01_
+
+### Dependencies
+
+Project dependencies are updated.
+
+- Kotlin: 1.9.0 -> 1.9.22
+- Android Gradle Plugin: 8.1.1 -> 8.2.0
+- Compose Compiler Plugin: 1.5.2 -> 1.5.10
+- Compose Android: 1.5.0 -> 1.6.0
+- Compose Multiplatform: 1.5.1 -> 1.6.0
+
 ## 1.2.1
 
 _2024.02.13_
