@@ -29,11 +29,9 @@ The following table shows Compose versions which each library version depends on
 
 | GridLayout Version | Compose Version (Android) | Compose Version (Multiplatform) |
 |--------------------|---------------------------|---------------------------------|
-| 1.2.x              | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
-| 1.1.x              | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
-| 1.0.x              | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
-| 0.2.x              | Jetpack Compose 1.4.3     | Compose Multiplatform 1.4.1     |
-| 0.1.x              | Jetpack Compose 1.4.3     | Compose Multiplatform 1.4.1     |
+| 1.2.2              | Jetpack Compose 1.6.0     | Compose Multiplatform 1.6.0     |
+| 1.0.0 ~ 1.2.1      | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
+| 0.1.0 ~ 0.2.0      | Jetpack Compose 1.4.3     | Compose Multiplatform 1.4.1     |
 
 ## Android SDK Version
 
@@ -41,8 +39,5 @@ It is recommended to use following target SDK version when using this library fo
 
 | GridLayout Version | Android Target SDK | Android Minimum SDK |
 |--------------------|--------------------|---------------------|
-| 1.2.x              | Android 14 (34)    | Lollipop (21)       |
-| 1.1.x              | Android 14 (34)    | Lollipop (21)       |
-| 1.0.x              | Android 14 (34)    | Lollipop (21)       |
-| 0.2.x              | Android 13 (33)    | Lollipop (21)       |
-| 0.1.x              | Android 13 (33)    | Lollipop (21)       |
+| 1.0.0 ~ current    | Android 14 (34)    | Lollipop (21)       |
+| 0.1.0 ~ 0.2.0      | Android 13 (33)    | Lollipop (21)       |
