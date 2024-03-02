@@ -1,9 +1,9 @@
 # Site Information
 site_name: 'GridLayout for Compose'
-site_description: 'Missing grid layout for Jetpack Compose and Compose Multiplatform.'
-site_author: 'Jaewoong Cheon'
-site_url: 'https://cheonjaewoong.github.io/gridlayout-compose/'
-copyright: 'Copyright &copy; 2023 Jaewoong Cheon'
+site_description: 'Missing non lazy grid layout for Compose Multiplatform.'
+site_author: 'Jaeung Cheon'
+site_url: 'https://cheonjaeung.github.io/gridlayout-compose/'
+copyright: 'Copyright &copy; 2023 Jaeung Cheon'
 
 # Theme Configurations
 theme:
@@ -40,8 +40,8 @@ nav:
     - 'Arrangement': arrangement.md
     - 'Alignment': alignment.md
     - 'Spanning Cells': span.md
-  - 'Changelog': 'https://github.com/cheonjaewoong/gridlayout-compose/blob/main/CHANGELOG.md'
+  - 'Changelog': 'https://github.com/cheonjaeung/gridlayout-compose/blob/main/CHANGELOG.md'
 
 # Repository Information
 repo_name: 'gridlayout-compose'
-repo_url: 'https://github.com/cheonjaewoong/gridlayout-compose'
+repo_url: 'https://github.com/cheonjaeung/gridlayout-compose'

@@ -88,7 +88,7 @@ mavenPublishing {
     pom {
         name.set("GridLayout for Compose")
         description.set("Missing grid layout for Jetpack Compose and Compose Multiplatform.")
-        url.set("https://github.com/cheonjaewoong/gridlayout-compose")
+        url.set("https://github.com/cheonjaeung/gridlayout-compose")
 
         licenses {
             license {
@@ -99,16 +99,16 @@ mavenPublishing {
 
         developers {
             developer {
-                id.set("cheonjaewoong")
-                name.set("Jaewoong Cheon")
+                id.set("cheonjaeung")
+                name.set("Jaeung Cheon")
                 email.set("cheonjaewoong@gmail.com")
             }
         }
 
         scm {
-            url.set("https://github.com/cheonjaewoong/gridlayout-compose")
-            connection.set("scm:git:git://github.com/cheonjaewoong/gridlayout-compose.git")
-            developerConnection.set("scm:git:ssh://git@github.com/cheonjaewoong/gridlayout-compose.git")
+            url.set("https://github.com/cheonjaeung/gridlayout-compose")
+            connection.set("scm:git:git://github.com/cheonjaeung/gridlayout-compose.git")
+            developerConnection.set("scm:git:ssh://git@github.com/cheonjaeung/gridlayout-compose.git")
         }
     }
 }

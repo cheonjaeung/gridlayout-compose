@@ -9,7 +9,7 @@ dependencies {
 }
 ```
 
-> Checkout latest version in [GitHub Releases](https://github.com/cheonjaewoong/gridlayout-compose/releases).
+> Checkout latest version in [GitHub Releases](https://github.com/cheonjaeung/gridlayout-compose/releases).
 
 ## Platform Supports
 
