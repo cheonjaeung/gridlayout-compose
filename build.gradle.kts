@@ -11,7 +11,7 @@ plugins {
 }
 
 allprojects {
-    group = "io.woong.compose.grid"
+    group = "com.cheonjaeung.compose.grid"
     version = "1.2.2"
 
     repositories {
