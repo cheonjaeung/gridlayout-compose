@@ -12,7 +12,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.25.3" }
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.28.0" }
 
 [libraries]
 androidx-core = { module = "androidx.core:core", version = "1.12.0" }
