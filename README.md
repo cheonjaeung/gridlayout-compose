@@ -1,7 +1,7 @@
 # GridLayout for Compose
 
 [![ci-latest-status](https://github.com/cheonjaeung/gridlayout-compose/actions/workflows/ci.yml/badge.svg)](https://github.com/cheonjaeung/gridlayout-compose/actions/workflows/ci.yml)
-![maven-central](https://img.shields.io/maven-central/v/io.woong.compose.grid/grid)
+![maven-central](https://img.shields.io/maven-central/v/com.cheonjaeung.compose.grid/grid)
 [![Static Badge](https://img.shields.io/badge/License-Apache%202.0-Green)](https://github.com/cheonjaeung/gridlayout-compose/blob/main/LICENSE.txt)
 
 GridLayout for Compose is a library that provides simple grid layout composables for Jetpack Compose and Compose Multiplatform.
@@ -20,9 +20,12 @@ To download this library, add dependency to your gradle:
 
 ```groovy
 dependencies {
-    implementation("io.woong.compose.grid:grid:<version>")
+    implementation("com.cheonjaeung.compose.grid:grid:<version>")
 }
 ```
+
+**After the 2.0.0 version, the group id and package name is changed from**
+**`io.woong.compose.grid` to `com.cheonjaeung.compose.grid`.**
 
 ## Usage
 

@@ -5,9 +5,12 @@ To download this library, just add it to your dependencies.
 
 ```groovy
 dependencies {
-    implementation("io.woong.compose.grid:grid:<version>")
+    implementation("com.cheonjaeung.compose.grid:grid:<version>")
 }
 ```
+
+**After the 2.0.0 version, the group id and package name is changed from**
+**`io.woong.compose.grid` to `com.cheonjaeung.compose.grid`.**
 
 > Checkout latest version in [GitHub Releases](https://github.com/cheonjaeung/gridlayout-compose/releases).
 
@@ -29,7 +32,7 @@ The following table shows Compose versions which each library version depends on
 
 | GridLayout Version | Compose Version (Android) | Compose Version (Multiplatform) |
 |--------------------|---------------------------|---------------------------------|
-| 1.2.2              | Jetpack Compose 1.6.0     | Compose Multiplatform 1.6.0     |
+| 1.2.2 ~ current    | Jetpack Compose 1.6.0     | Compose Multiplatform 1.6.0     |
 | 1.0.0 ~ 1.2.1      | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
 | 0.1.0 ~ 0.2.0      | Jetpack Compose 1.4.3     | Compose Multiplatform 1.4.1     |
 
