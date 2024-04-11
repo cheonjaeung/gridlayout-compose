@@ -60,7 +60,7 @@ jobs:
           java-version: '17'
 
       - name: Publish to Maven Central
-        run: ./gradlew :grid:publish --no-daemon --no-parallel --stacktrace
+        run: ./gradlew publish --stacktrace
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
