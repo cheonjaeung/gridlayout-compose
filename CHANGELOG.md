@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+_2024.04.13_
+
+**Library's group id and package name is changed from `io.woong.compose.grid` to `com.cheonjaeung.compose.grid`.**
+
 ## 1.2.2
 
 _2024.03.01_
