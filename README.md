@@ -4,15 +4,23 @@
 ![maven-central](https://img.shields.io/maven-central/v/com.cheonjaeung.compose.grid/grid)
 [![Static Badge](https://img.shields.io/badge/License-Apache%202.0-Green)](https://github.com/cheonjaeung/gridlayout-compose/blob/main/LICENSE.txt)
 
-GridLayout for Compose is a library that provides simple grid layout composables for Jetpack Compose and Compose Multiplatform.
+GridLayout for Compose is a library that provides missing non lazy grid layout composables for Compose Multiplatform.
 
 ![grid-examples](docs/images/grid-overview-examples.png)
 
-Jetpack Compose doesn't contains non-lazy grid layout, there are only lazy grid layout.
-There are some alternatives, combining rows and colums or flow layout.
-But these alternatives are not for just grid and they need size or position calculating.
-This library provides grid layout with similar API to lazy grid (but for non-lazy).
-It helps to implement simple grid UI like implementing lazy grid.
+Jetpack Compose doesn't offer non lazy grid layout, there are only lazy grid layout and alternatives (for example, flow layout).
+But sometimes, we need to use grid layout for less complexity and more intuitive layout code.
+This library can be simpler solution for small grid UI.
+
+There are benefits of this library:
+
+- **Similar API to LazyGrid**: The GridLayout's APIs are designed to provide similar development experience to LazyGrid.
+- **Easy to implement adaptive grid**: There are _"Fixed"_ and _"Adaptive"_ for grid layout management like LazyGrid.
+  Like LazyGrid, it eliminates dealing with different screen sizes.
+- **Simple to use as a part of LazyList**: The GridLayout is not lazy layout. It can be simply placed in lazy layouts.
+  If only a portion of the full layout is grid, No need to use LazyGrid with span size for full layout.
+- **Efficient for small datasets**: LazyGrid has complex logics for large datasets. But when datasets are small, it can be inefficient.
+  The GridLayout is just a simple layout. It can be more efficient for smaller datasets.
 
 ## Installation
 
