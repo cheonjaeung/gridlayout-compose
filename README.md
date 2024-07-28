@@ -62,4 +62,6 @@ Please see [changelog](./CHANGELOG.md) file.
 
 ## License
 
+Copyright 2023 Jaeung Cheon.
+
 GridLayout for Compose is licensed under Apache License 2.0. See [license file](./LICENSE.txt) for more details.
