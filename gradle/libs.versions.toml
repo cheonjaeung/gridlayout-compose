@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.9.22"
-androidGradlePlugin = "8.2.0"
+androidGradlePlugin = "8.6.0"
 composeMultiplatform = "1.6.0"
 composeAndroid = "1.6.0"
 composeAndroidCompilerPlugin = "1.5.10"
