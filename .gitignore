@@ -8,6 +8,17 @@
 *.ipr
 *.iws
 
+xcuserdata/
+*.xcodeproj/*
+*.xcscmblueprint
+*.xccheckout
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
 .gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
