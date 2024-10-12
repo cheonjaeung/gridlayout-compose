@@ -22,6 +22,15 @@ interface GridScope {
     fun Modifier.span(span: Int): Modifier
 
     /**
+     * Sets the span of the cell. The default span size is 1.
+     *
+     * @param span A span calculation lambda. If the result of [span] lambda is null, it means
+     * that this item uses default span size.
+     */
+    @Stable
+    fun Modifier.span(span: ((GridItemSpanScope.(index: Int) -> Int))? = null): Modifier
+
+    /**
      * Aligns the item to specific [Alignment] within the cell.
      */
     @Stable
@@ -30,8 +39,11 @@ interface GridScope {
 
 internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: Int): Modifier {
-        require(span > 0) { "span must be bigger than zero, $span is zero or negative" }
-        return this.then(GridSpanElement(span))
+        return this.then(GridSpanElement { span })
+    }
+
+    override fun Modifier.span(span: (GridItemSpanScope.(index: Int) -> Int)?): Modifier {
+        return this.then(GridSpanElement(span ?: GridParentData.DefaultSpan))
     }
 
     override fun Modifier.align(alignment: Alignment): Modifier {

@@ -14,6 +14,7 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -93,6 +94,78 @@ class GridSpanTest {
         }
     }
 
+    @Test
+    fun testHorizontalGrid_nullSpan() {
+        val rowCount = 3
+        val columnCount = 3
+        val itemCount = rowCount * columnCount
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount),
+                modifier = Modifier.size(itemSize * columnCount, itemSize * rowCount)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                            .span(null)
+                    )
+                }
+            }
+        }
+
+        for (i in 0 until itemCount) {
+            val rowIndex = i % rowCount
+            val columnIndex = i / columnCount
+
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertPositionInRootIsEqualTo(
+                    expectedLeft = itemSize * columnIndex,
+                    expectedTop = itemSize * rowIndex
+                )
+        }
+    }
+
+    @Test
+    fun testVerticalGrid_nullSpan() {
+        val rowCount = 3
+        val columnCount = 3
+        val itemCount = rowCount * columnCount
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(rowCount),
+                modifier = Modifier.size(itemSize * columnCount, itemSize * rowCount)
+            ) {
+                for (i in 0 until itemCount) {
+                    Box(
+                        modifier = Modifier
+                            .testTag(i.toString())
+                            .size(itemSize)
+                            .span(null)
+                    )
+                }
+            }
+        }
+
+        for (i in 0 until itemCount) {
+            val rowIndex = i / rowCount
+            val columnIndex = i % columnCount
+
+            composeRule
+                .onNode(hasTestTag(i.toString()))
+                .assertPositionInRootIsEqualTo(
+                    expectedLeft = itemSize * columnIndex,
+                    expectedTop = itemSize * rowIndex
+                )
+        }
+    }
+
     @Test(expected = IllegalArgumentException::class)
     fun testHorizontalGrid_negativeSpan() {
         composeRule.setContent {
@@ -102,7 +175,7 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(10.dp)
-                            .span(-1)
+                            .span { -1 }
                     )
                 }
             }
@@ -118,7 +191,7 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(10.dp)
-                            .span(-1)
+                            .span { -1 }
                     )
                 }
             }
@@ -134,7 +207,7 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(10.dp)
-                            .span(0)
+                            .span { 0 }
                     )
                 }
             }
@@ -150,7 +223,7 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(10.dp)
-                            .span(0)
+                            .span { 0 }
                     )
                 }
             }
@@ -174,7 +247,7 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(itemSize)
-                            .span(1)
+                            .span { 1 }
                     )
                 }
             }
@@ -210,7 +283,7 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(itemSize)
-                            .span(1)
+                            .span { 1 }
                     )
                 }
             }
@@ -243,19 +316,19 @@ class GridSpanTest {
                     modifier = Modifier
                         .testTag("0")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("1")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("2")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
             }
         }
@@ -294,19 +367,19 @@ class GridSpanTest {
                     modifier = Modifier
                         .testTag("0")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("1")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("2")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
             }
         }
@@ -332,7 +405,7 @@ class GridSpanTest {
     }
 
     @Test
-    fun testHorizontalGrid_fullSpan() {
+    fun testHorizontalGrid_maxLineSpan() {
         val rowCount = 3
         val itemCount = 4
         val itemSize = 10.dp
@@ -347,7 +420,10 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(itemSize)
-                            .span(rowCount)
+                            .span {
+                                assertEquals(rowCount, maxLineSpan)
+                                maxLineSpan
+                            }
                     )
                 }
             }
@@ -364,7 +440,7 @@ class GridSpanTest {
     }
 
     @Test
-    fun testVerticalGrid_fullSpan() {
+    fun testVerticalGrid_maxLineSpan() {
         val columnCount = 3
         val itemCount = 4
         val itemSize = 10.dp
@@ -379,7 +455,10 @@ class GridSpanTest {
                         modifier = Modifier
                             .testTag(i.toString())
                             .size(itemSize)
-                            .span(columnCount)
+                            .span {
+                                assertEquals(columnCount, maxLineSpan)
+                                maxLineSpan
+                            }
                     )
                 }
             }
@@ -396,6 +475,156 @@ class GridSpanTest {
     }
 
     @Test
+    fun testHorizontalGrid_maxCurrentLineSpan() {
+        val rowCount = 3
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            HorizontalGrid(
+                rows = SimpleGridCells.Fixed(rowCount),
+                modifier = Modifier.height(itemSize * rowCount)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .testTag("0")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(rowCount, maxCurrentLineSpan)
+                            1
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("1")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(rowCount - 1, maxCurrentLineSpan)
+                            1
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("2")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(rowCount - 2, maxCurrentLineSpan)
+                            1
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("3")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(rowCount, maxCurrentLineSpan)
+                            1
+                        }
+                )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("0"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = 0.dp
+            )
+        composeRule
+            .onNode(hasTestTag("1"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = itemSize
+            )
+        composeRule
+            .onNode(hasTestTag("2"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = itemSize * 2
+            )
+        composeRule
+            .onNode(hasTestTag("3"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = itemSize,
+                expectedTop = 0.dp
+            )
+    }
+
+    @Test
+    fun testVerticalGrid_maxCurrentLineSpan() {
+        val columnCount = 3
+        val itemSize = 10.dp
+
+        composeRule.setContent {
+            VerticalGrid(
+                columns = SimpleGridCells.Fixed(columnCount),
+                modifier = Modifier.width(itemSize * columnCount)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .testTag("0")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(columnCount, maxCurrentLineSpan)
+                            1
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("1")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(columnCount - 1, maxCurrentLineSpan)
+                            1
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("2")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(columnCount - 2, maxCurrentLineSpan)
+                            1
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .testTag("3")
+                        .size(itemSize)
+                        .span {
+                            assertEquals(columnCount, maxCurrentLineSpan)
+                            1
+                        }
+                )
+            }
+        }
+
+        composeRule
+            .onNode(hasTestTag("0"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = 0.dp
+            )
+        composeRule
+            .onNode(hasTestTag("1"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = itemSize,
+                expectedTop = 0.dp
+            )
+        composeRule
+            .onNode(hasTestTag("2"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = itemSize * 2,
+                expectedTop = 0.dp
+            )
+        composeRule
+            .onNode(hasTestTag("3"))
+            .assertPositionInRootIsEqualTo(
+                expectedLeft = 0.dp,
+                expectedTop = itemSize
+            )
+    }
+
+    @Test
     fun testHorizontalGrid_overSpan() {
         val rowCount = 3
         val itemSize = 10.dp
@@ -409,19 +638,19 @@ class GridSpanTest {
                     modifier = Modifier
                         .testTag("0")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("1")
                         .size(itemSize)
-                        .span(100)
+                        .span { maxLineSpan + 100 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("2")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
                 Box(
                     modifier = Modifier
@@ -468,19 +697,19 @@ class GridSpanTest {
                     modifier = Modifier
                         .testTag("0")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("1")
                         .size(itemSize)
-                        .span(100)
+                        .span { maxLineSpan + 100 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("2")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
                 Box(
                     modifier = Modifier
@@ -533,25 +762,25 @@ class GridSpanTest {
                     modifier = Modifier
                         .testTag("0")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("1")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("2")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("3")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
             }
         }
@@ -619,25 +848,25 @@ class GridSpanTest {
                     modifier = Modifier
                         .testTag("0")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("1")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("2")
                         .size(itemSize)
-                        .span(2)
+                        .span { 2 }
                 )
                 Box(
                     modifier = Modifier
                         .testTag("3")
                         .size(itemSize)
-                        .span(1)
+                        .span { 1 }
                 )
             }
         }
