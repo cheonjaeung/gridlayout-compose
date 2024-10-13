@@ -42,15 +42,18 @@ If a vertical grid has 4 columns and already one cell is filled, the `maxCurrent
 The following code is an example of the span calculation with span information.
 
 ```kotlin
-Item(
-    modifier = Modifier.span { index ->
-        if (maxLineSpan == maxCurrentLineSpan) {
-            maxLineSpan - index
-        } else {
-            maxCurrentLineSpan
+VerticalGrid(columns = SimpleGridCells.Adaptive(30.dp)) {
+    for (i in 0 until itemCount)
+    Item(
+        modifier = Modifier.span {
+            if (maxLineSpan == maxCurrentLineSpan) {
+                maxLineSpan - i
+            } else {
+                maxCurrentLineSpan
+            }
         }
-    }
-)
+    )
+}
 ```
 
 There is a convenience modifier that just takes an integer span.
