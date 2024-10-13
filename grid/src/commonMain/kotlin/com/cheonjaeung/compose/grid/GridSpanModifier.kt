@@ -6,7 +6,7 @@ import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.unit.Density
 
 internal class GridSpanElement(
-    val span: GridItemSpanScope.(index: Int) -> Int
+    val span: GridItemSpanScope.() -> Int
 ) : ModifierNodeElement<GridSpanNode>() {
     override fun create(): GridSpanNode {
         return GridSpanNode(span)
@@ -29,7 +29,7 @@ internal class GridSpanElement(
 }
 
 internal class GridSpanNode(
-    var span: GridItemSpanScope.(index: Int) -> Int
+    var span: GridItemSpanScope.() -> Int
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val p = parentData as? GridParentData ?: GridParentData()

@@ -28,7 +28,7 @@ interface GridScope {
      * that this item uses default span size.
      */
     @Stable
-    fun Modifier.span(span: ((GridItemSpanScope.(index: Int) -> Int))? = null): Modifier
+    fun Modifier.span(span: ((GridItemSpanScope.() -> Int))? = null): Modifier
 
     /**
      * Aligns the item to specific [Alignment] within the cell.
@@ -42,7 +42,7 @@ internal object GridScopeInstance : GridScope {
         return this.then(GridSpanElement { span })
     }
 
-    override fun Modifier.span(span: (GridItemSpanScope.(index: Int) -> Int)?): Modifier {
+    override fun Modifier.span(span: (GridItemSpanScope.() -> Int)?): Modifier {
         return this.then(GridSpanElement(span ?: GridParentData.DefaultSpan))
     }
 
