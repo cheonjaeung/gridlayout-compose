@@ -66,7 +66,16 @@ fun SampleScreen() {
     MaterialTheme {
         var dialog: Dialogs? by remember { mutableStateOf(null) }
 
-        var colors: PersistentList<Color> by remember { mutableStateOf(persistentListOf()) }
+        var colors: PersistentList<Color> by remember {
+            mutableStateOf(
+                persistentListOf(
+                    randomColor(),
+                    randomColor(),
+                    randomColor(),
+                    randomColor()
+                )
+            )
+        }
 
         val systemLayoutDirection = LocalLayoutDirection.current
         var layoutDirection by remember { mutableStateOf(systemLayoutDirection) }
