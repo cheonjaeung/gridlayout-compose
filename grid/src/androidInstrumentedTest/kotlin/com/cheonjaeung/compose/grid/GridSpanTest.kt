@@ -16,6 +16,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -170,64 +171,72 @@ class GridSpanTest {
     }
 
     @Test(expected = Exception::class)
-    fun testHorizontalGrid_negativeSpan() = runComposeUiTest {
-        composeRule.setContent {
-            HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
-                for (i in 0 until 9) {
-                    Box(
-                        modifier = Modifier
-                            .testTag(i.toString())
-                            .size(10.dp)
-                            .span { -1 }
-                    )
+    fun testHorizontalGrid_negativeSpan() = runBlocking {
+        runComposeUiTest {
+            composeRule.setContent {
+                HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
+                    for (i in 0 until 9) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(10.dp)
+                                .span { -1 }
+                        )
+                    }
                 }
             }
         }
     }
 
     @Test(expected = Exception::class)
-    fun testVerticalGrid_negativeSpan() = runComposeUiTest {
-        composeRule.setContent {
-            VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
-                for (i in 0 until 9) {
-                    Box(
-                        modifier = Modifier
-                            .testTag(i.toString())
-                            .size(10.dp)
-                            .span { -1 }
-                    )
+    fun testVerticalGrid_negativeSpan() = runBlocking {
+        runComposeUiTest {
+            composeRule.setContent {
+                VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
+                    for (i in 0 until 9) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(10.dp)
+                                .span { -1 }
+                        )
+                    }
                 }
             }
         }
     }
 
     @Test(expected = Exception::class)
-    fun testHorizontalGrid_zeroSpan() = runComposeUiTest {
-        composeRule.setContent {
-            HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
-                for (i in 0 until 9) {
-                    Box(
-                        modifier = Modifier
-                            .testTag(i.toString())
-                            .size(10.dp)
-                            .span { 0 }
-                    )
+    fun testHorizontalGrid_zeroSpan() = runBlocking {
+        runComposeUiTest {
+            composeRule.setContent {
+                HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
+                    for (i in 0 until 9) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(10.dp)
+                                .span { 0 }
+                        )
+                    }
                 }
             }
         }
     }
 
     @Test(expected = Exception::class)
-    fun testVerticalGrid_zeroSpan() = runComposeUiTest {
-        composeRule.setContent {
-            VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
-                for (i in 0 until 9) {
-                    Box(
-                        modifier = Modifier
-                            .testTag(i.toString())
-                            .size(10.dp)
-                            .span { 0 }
-                    )
+    fun testVerticalGrid_zeroSpan() = runBlocking {
+        runComposeUiTest {
+            composeRule.setContent {
+                VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
+                    for (i in 0 until 9) {
+                        Box(
+                            modifier = Modifier
+                                .testTag(i.toString())
+                                .size(10.dp)
+                                .span { 0 }
+                        )
+                    }
                 }
             }
         }
