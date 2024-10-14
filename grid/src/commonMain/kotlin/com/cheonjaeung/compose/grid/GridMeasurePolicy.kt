@@ -113,7 +113,7 @@ private class GridMeasureHelper(
         measurables[it].parentData as? GridParentData
     }
 
-    private val GridParentData?.spanOrDefault: Int
+    private val GridParentData?.spanOrDefault: (GridItemSpanScope.() -> Int)
         get() = this?.span ?: GridParentData.DefaultSpan
 
     /**
@@ -149,7 +149,13 @@ private class GridMeasureHelper(
             var crossAxisLineLayoutSize = 0
 
             while (spanSum < maxSpan && measurableIndex < measurableCount) {
-                val span = gridParentDataArrays[measurableIndex].spanOrDefault
+                val spanScope = GridItemSpanScopeImpl(
+                    maxCurrentLineSpan = maxSpan - spanSum,
+                    maxLineSpan = maxSpan
+                )
+                val scopeFunction = gridParentDataArrays[measurableIndex].spanOrDefault
+                val span = scopeFunction(spanScope)
+                require(span > 0) { "span must be bigger than zero, $span is zero or negative" }
                 if (span > maxSpan) {
                     measurableIndex++
                     continue
