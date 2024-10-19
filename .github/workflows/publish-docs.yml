@@ -11,7 +11,6 @@ jobs:
     name: Build Documentation
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
