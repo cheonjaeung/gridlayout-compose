@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.1.0
+
+_2024.10.19_
+
+## Changed
+
+- New `Modifier.span` is added that has a lambda parameter to calculate span size.
+In this lambda, you can access to `GridItemSpanScope` to get max span and remaining span.
+
+### Dependencies
+
+Project dependencies are updated.
+
+- Kotlin: 1.9.22 -> 1.9.25
+- Android Gradle Plugin: 8.2.0 -> 8.6.1
+- Compose Multiplatform: 1.6.0 -> 1.7.0
+- Compose Android: 1.6.0 -> 1.7.0
+- Compose Android Compiler Plugin: 1.5.10 -> 1.5.15
+
 ## 2.0.0
 
 _2024.04.13_

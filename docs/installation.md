@@ -32,7 +32,8 @@ The following table shows Compose versions which each library version depends on
 
 | GridLayout Version | Compose Version (Android) | Compose Version (Multiplatform) |
 |--------------------|---------------------------|---------------------------------|
-| 1.2.2 ~ current    | Jetpack Compose 1.6.0     | Compose Multiplatform 1.6.0     |
+| 2.1.0 ~ current    | Jetpack Compose 1.7.0     | Compose Multiplatform 1.7.0     |
+| 1.2.2 ~ 2.0.0      | Jetpack Compose 1.6.0     | Compose Multiplatform 1.6.0     |
 | 1.0.0 ~ 1.2.1      | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
 | 0.1.0 ~ 0.2.0      | Jetpack Compose 1.4.3     | Compose Multiplatform 1.4.1     |
 
