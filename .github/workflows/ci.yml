@@ -11,16 +11,6 @@ on:
       - "*"
 
 jobs:
-  validate-gradle-wrapper:
-    name: Validate Gradle Wrapper
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Validate gradle wrapper
-        uses: gradle/wrapper-validation-action@v2
-
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -34,6 +24,9 @@ jobs:
         with:
           distribution: "zulu"
           java-version: '17'
+
+      - name: Validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v3
 
       - name: Enable KVM group perms
         run: |
