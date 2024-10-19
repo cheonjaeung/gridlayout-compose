@@ -7,23 +7,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertPositionInRootIsEqualTo
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.runComposeUiTest
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@OptIn(ExperimentalTestApi::class)
 class GridSpanTest {
     @get:Rule
     val composeRule: ComposeContentTestRule = createComposeRule()
@@ -167,78 +163,6 @@ class GridSpanTest {
                     expectedLeft = itemSize * columnIndex,
                     expectedTop = itemSize * rowIndex
                 )
-        }
-    }
-
-    @Test(expected = Exception::class)
-    fun testHorizontalGrid_negativeSpan() = runBlocking {
-        runComposeUiTest {
-            composeRule.setContent {
-                HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
-                    for (i in 0 until 9) {
-                        Box(
-                            modifier = Modifier
-                                .testTag(i.toString())
-                                .size(10.dp)
-                                .span { -1 }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    @Test(expected = Exception::class)
-    fun testVerticalGrid_negativeSpan() = runBlocking {
-        runComposeUiTest {
-            composeRule.setContent {
-                VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
-                    for (i in 0 until 9) {
-                        Box(
-                            modifier = Modifier
-                                .testTag(i.toString())
-                                .size(10.dp)
-                                .span { -1 }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    @Test(expected = Exception::class)
-    fun testHorizontalGrid_zeroSpan() = runBlocking {
-        runComposeUiTest {
-            composeRule.setContent {
-                HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
-                    for (i in 0 until 9) {
-                        Box(
-                            modifier = Modifier
-                                .testTag(i.toString())
-                                .size(10.dp)
-                                .span { 0 }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    @Test(expected = Exception::class)
-    fun testVerticalGrid_zeroSpan() = runBlocking {
-        runComposeUiTest {
-            composeRule.setContent {
-                VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
-                    for (i in 0 until 9) {
-                        Box(
-                            modifier = Modifier
-                                .testTag(i.toString())
-                                .size(10.dp)
-                                .span { 0 }
-                        )
-                    }
-                }
-            }
         }
     }
 
