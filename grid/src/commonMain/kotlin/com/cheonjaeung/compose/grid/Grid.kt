@@ -3,6 +3,7 @@ package com.cheonjaeung.compose.grid
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.Density
  * @param modifier The modifier to be applied to this layout.
  * @param horizontalArrangement The horizontal arrangement of the grid cells.
  * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param alignment The default alignment of the grid cells.
  * @param content The children of this layout.
  */
 @Composable
@@ -24,6 +26,7 @@ inline fun HorizontalGrid(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    alignment: Alignment = Alignment.TopStart,
     content: @Composable GridScope.() -> Unit,
 ) {
     val calculateRowCellHeightsFunction = rememberRowCellHeightConstraints(
@@ -35,6 +38,7 @@ inline fun HorizontalGrid(
         fillCellHeight = remember(rows) { rows.fillCellSize() },
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
+        alignment = alignment
     )
     Layout(
         content = { GridScopeInstance.content() },
@@ -50,6 +54,7 @@ inline fun HorizontalGrid(
  * @param modifier The modifier to be applied to this layout.
  * @param horizontalArrangement The horizontal arrangement of the grid cells.
  * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param alignment The default alignment of the grid cells.
  * @param content The children of this layout.
  */
 @Composable
@@ -58,6 +63,7 @@ inline fun VerticalGrid(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    alignment: Alignment = Alignment.TopStart,
     content: @Composable GridScope.() -> Unit,
 ) {
     val calculateColumnCellWidthsFunction = rememberColumnCellWidthConstraints(
@@ -69,6 +75,7 @@ inline fun VerticalGrid(
         fillCellWidth = remember(columns) { columns.fillCellSize() },
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
+        alignment = alignment
     )
     Layout(
         content = { GridScopeInstance.content() },
@@ -132,12 +139,14 @@ internal fun rememberHorizontalGridMeasurePolicy(
     fillCellHeight: Boolean,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
+    alignment: Alignment,
 ): MeasurePolicy {
     return remember(
         calculateRowCellHeightConstraints,
         fillCellHeight,
         horizontalArrangement,
-        verticalArrangement
+        verticalArrangement,
+        alignment
     ) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Horizontal,
@@ -155,6 +164,7 @@ internal fun rememberHorizontalGridMeasurePolicy(
                 }
             },
             crossAxisSpacing = verticalArrangement.spacing,
+            defaultAlignment = alignment
         )
     }
 }
@@ -166,12 +176,14 @@ internal fun rememberVerticalGridMeasurePolicy(
     fillCellWidth: Boolean,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
+    alignment: Alignment
 ): MeasurePolicy {
     return remember(
         calculateColumnCellWidthConstraints,
         fillCellWidth,
         horizontalArrangement,
-        verticalArrangement
+        verticalArrangement,
+        alignment
     ) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Vertical,
@@ -189,6 +201,7 @@ internal fun rememberVerticalGridMeasurePolicy(
                 }
             },
             crossAxisSpacing = horizontalArrangement.spacing,
+            defaultAlignment = alignment
         )
     }
 }
