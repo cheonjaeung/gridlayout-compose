@@ -24,7 +24,8 @@ internal fun gridMeasurePolicy(
     mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     mainAxisSpacing: Dp,
     crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
-    crossAxisSpacing: Dp
+    crossAxisSpacing: Dp,
+    defaultAlignment: Alignment
 ): MeasurePolicy {
     return GridMeasurePolicy(
         orientation,
@@ -33,7 +34,8 @@ internal fun gridMeasurePolicy(
         mainAxisArrangement,
         mainAxisSpacing,
         crossAxisArrangement,
-        crossAxisSpacing
+        crossAxisSpacing,
+        defaultAlignment
     )
 }
 
@@ -44,7 +46,8 @@ private class GridMeasurePolicy(
     private val mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     private val mainAxisSpacing: Dp,
     private val crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
-    private val crossAxisSpacing: Dp
+    private val crossAxisSpacing: Dp,
+    private val defaultAlignment: Alignment
 ) : MeasurePolicy {
     override fun MeasureScope.measure(
         measurables: List<Measurable>,
@@ -63,6 +66,7 @@ private class GridMeasurePolicy(
             mainAxisSpacing = mainAxisSpacing,
             crossAxisArrangement = crossAxisArrangement,
             crossAxisSpacing = crossAxisSpacing,
+            defaultAlignment = defaultAlignment
         )
         val measureResult = measureHelper.measure(
             measureScope = this,
@@ -108,6 +112,7 @@ private class GridMeasureHelper(
     val mainAxisSpacing: Dp,
     val crossAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
     val crossAxisSpacing: Dp,
+    val defaultAlignment: Alignment
 ) {
     private val gridParentDataArrays: Array<GridParentData?> = Array(measurables.size) {
         measurables[it].parentData as? GridParentData
@@ -187,7 +192,7 @@ private class GridMeasureHelper(
                     PlaceableMeasureInfo(
                         placeable = placeable,
                         span = span,
-                        alignment = gridParentDataArrays[measurableIndex]?.alignment,
+                        alignment = gridParentDataArrays[measurableIndex]?.alignment ?: defaultAlignment,
                         crossAxisCellSize = crossAxisCellConstraints
                     )
                 )
@@ -297,11 +302,11 @@ private class GridMeasureHelper(
                         height = currentLineMainAxisCellSize
                     )
                 }
-                val alignedOffset = alignment?.align(
+                val alignedOffset = alignment.align(
                     size = placeable.size(),
                     space = cellSize,
                     layoutDirection = this.layoutDirection
-                ) ?: IntOffset.Zero
+                )
 
                 placeableInfoLine.add(
                     PlaceablePositionInfo(
@@ -399,7 +404,7 @@ private class GridMeasureHelper(
     class PlaceableMeasureInfo(
         val placeable: Placeable,
         val span: Int,
-        val alignment: Alignment?,
+        val alignment: Alignment,
         val crossAxisCellSize: Int
     )
 
