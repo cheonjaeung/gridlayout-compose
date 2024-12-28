@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0
+
+_2024_12_28_
+
+## Changed
+
+- `HorizontalGrid` and `VerticalGrid` now have default alignment parameter.
+
 ## 2.1.0
 
 _2024.10.19_
