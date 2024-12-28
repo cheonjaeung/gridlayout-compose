@@ -33,13 +33,12 @@ markdown_extensions:
 # Navigation Configurations
 nav:
   - 'Overview': index.md
-  - 'Documentation':
-    - 'Installation': installation.md
-    - 'Layout Composables': layout-composables.md
-    - 'Cell Strategy': cell-strategy.md
-    - 'Arrangement': arrangement.md
-    - 'Alignment': alignment.md
-    - 'Spanning Cells': span.md
+  - 'Installation': installation.md
+  - 'Layout Composables': layout-composables.md
+  - 'Cell Strategy': cell-strategy.md
+  - 'Arrangement': arrangement.md
+  - 'Alignment': alignment.md
+  - 'Spanning Cells': span.md
   - 'Changelog': 'https://github.com/cheonjaeung/gridlayout-compose/blob/main/CHANGELOG.md'
 
 # Repository Information
