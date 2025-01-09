@@ -4,6 +4,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.ParentDataModifierNode
+import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
 internal class GridAlignmentElement(val alignment: Alignment) : ModifierNodeElement<GridAlignmentNode>() {
@@ -13,6 +14,11 @@ internal class GridAlignmentElement(val alignment: Alignment) : ModifierNodeElem
 
     override fun update(node: GridAlignmentNode) {
         node.alignment = alignment
+    }
+
+    override fun InspectorInfo.inspectableProperties() {
+        name = "align"
+        value = alignment
     }
 
     override fun equals(other: Any?): Boolean {

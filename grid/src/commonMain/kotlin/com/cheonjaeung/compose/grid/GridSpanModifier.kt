@@ -3,6 +3,7 @@ package com.cheonjaeung.compose.grid
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.ParentDataModifierNode
+import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
 internal class GridSpanElement(
@@ -14,6 +15,11 @@ internal class GridSpanElement(
 
     override fun update(node: GridSpanNode) {
         node.span = span
+    }
+
+    override fun InspectorInfo.inspectableProperties() {
+        name = "span"
+        value = span
     }
 
     override fun equals(other: Any?): Boolean {
