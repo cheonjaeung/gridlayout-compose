@@ -19,6 +19,11 @@ interface GridScope {
      * at the next line.
      */
     @Stable
+    @Deprecated(
+        "Span modifier with an integer parameter is deprecated. " +
+            "Please use another span modifier with lambda parameter.",
+        ReplaceWith("this.span { span }")
+    )
     fun Modifier.span(span: Int): Modifier
 
     /**
