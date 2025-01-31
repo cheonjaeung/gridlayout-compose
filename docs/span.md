@@ -58,6 +58,10 @@ VerticalGrid(columns = SimpleGridCells.Adaptive(30.dp)) {
 
 There is a convenience modifier that just takes an integer span.
 
+!!! warning
+    Span with an integer parameter is deprecated after 2.3.0.
+    Replace it to the span with lambda parameter.
+
 ```kotlin
 HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
     Item()
