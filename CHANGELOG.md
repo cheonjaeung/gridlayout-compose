@@ -1,8 +1,17 @@
 # Changelog
 
+## 2.2.1
+
+_2025.02.08_
+
+## Changed
+
+- `Modifier.span` with single integer parameter is deprecated. Replace it to modifier with lambda parameter.
+- Modifiers of `GridScope` now have inspector info.
+
 ## 2.2.0
 
-_2024_12_28_
+_2024.12.28_
 
 ## Changed
 
