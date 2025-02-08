@@ -4,7 +4,7 @@
 
 _2025.02.08_
 
-## Changed
+### Changed
 
 - `Modifier.span` with single integer parameter is deprecated. Replace it to modifier with lambda parameter.
 - Modifiers of `GridScope` now have inspector info.
@@ -13,7 +13,7 @@ _2025.02.08_
 
 _2024.12.28_
 
-## Changed
+### Changed
 
 - `HorizontalGrid` and `VerticalGrid` now have default alignment parameter.
 
@@ -21,7 +21,7 @@ _2024.12.28_
 
 _2024.10.19_
 
-## Changed
+### Changed
 
 - New `Modifier.span` is added that has a lambda parameter to calculate span size.
 In this lambda, you can access to `GridItemSpanScope` to get max span and remaining span.
