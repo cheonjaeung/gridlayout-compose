@@ -1,0 +1,48 @@
+public abstract interface annotation class com/cheonjaeung/compose/grid/GridItemScopeMarker : java/lang/annotation/Annotation {
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/GridItemSpanScope {
+	public abstract fun getMaxCurrentLineSpan ()I
+	public abstract fun getMaxLineSpan ()I
+}
+
+public final class com/cheonjaeung/compose/grid/GridKt {
+	public static final fun HorizontalGrid (Lcom/cheonjaeung/compose/grid/SimpleGridCells;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun VerticalGrid (Lcom/cheonjaeung/compose/grid/SimpleGridCells;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/GridScope {
+	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;)Landroidx/compose/ui/Modifier;
+	public abstract fun span (Landroidx/compose/ui/Modifier;I)Landroidx/compose/ui/Modifier;
+	public abstract fun span (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
+}
+
+public final class com/cheonjaeung/compose/grid/GridScope$DefaultImpls {
+	public static synthetic fun span$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/SimpleGridCells {
+	public abstract fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public abstract fun fillCellSize ()Z
+}
+
+public final class com/cheonjaeung/compose/grid/SimpleGridCells$Adaptive : com/cheonjaeung/compose/grid/SimpleGridCells {
+	public static final field $stable I
+	public synthetic fun <init> (FZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun fillCellSize ()Z
+	public fun hashCode ()I
+}
+
+public final class com/cheonjaeung/compose/grid/SimpleGridCells$Fixed : com/cheonjaeung/compose/grid/SimpleGridCells {
+	public static final field $stable I
+	public fun <init> (IZ)V
+	public synthetic fun <init> (IZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun fillCellSize ()Z
+	public fun hashCode ()I
+}
+

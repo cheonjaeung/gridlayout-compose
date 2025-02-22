@@ -13,6 +13,7 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 maven-publish = { id = "com.vanniktech.maven.publish", version = "0.28.0" }
+kotlinx-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.17.0" }
 
 [libraries]
 androidx-core = { module = "androidx.core:core", version = "1.12.0" }
