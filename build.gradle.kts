@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.maven.publish) apply false
+    alias(libs.plugins.kotlinx.binary.compatibility.validator)
 }
 
 allprojects {
@@ -30,4 +31,11 @@ subprojects {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
     }
+}
+
+apiValidation {
+    // :samples:android, :samples:shared
+    ignoredProjects.addAll(listOf("android", "shared"))
+
+    nonPublicMarkers.add("kotlin.PublishedApi")
 }
