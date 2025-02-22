@@ -27,6 +27,9 @@ jobs:
       - name: Validate gradle wrapper
         uses: gradle/actions/wrapper-validation@v3
 
+      - name: Validate binary compatibility
+        run: ./gradlew apiCheck
+
       - name: Enable KVM group perms
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
