@@ -21,13 +21,44 @@ import androidx.compose.ui.unit.Density
  * @param content The children of this layout.
  */
 @Composable
+@Deprecated("Parameter 'alignment' is renamed to 'contentAlignment'.")
 inline fun HorizontalGrid(
     rows: SimpleGridCells,
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     alignment: Alignment = Alignment.TopStart,
-    content: @Composable GridScope.() -> Unit,
+    conflictResolver: Unit = Unit,
+    content: @Composable GridScope.() -> Unit
+) {
+    HorizontalGrid(
+        rows = rows,
+        modifier = modifier,
+        horizontalArrangement = horizontalArrangement,
+        verticalArrangement = verticalArrangement,
+        contentAlignment = alignment,
+        content = content
+    )
+}
+
+/**
+ * A layout composable that places its children in a grid.
+ *
+ * @param rows The class that determines the sizes and the number of grid cells.
+ * @param modifier The modifier to be applied to this layout.
+ * @param horizontalArrangement The horizontal arrangement of the grid cells.
+ * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param contentAlignment The default alignment of the grid cells.
+ * @param content The children of this layout.
+ */
+@Composable
+inline fun HorizontalGrid(
+    rows: SimpleGridCells,
+    modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    contentAlignment: Alignment = Alignment.TopStart,
+    content: @Composable GridScope.() -> Unit
 ) {
     val calculateRowCellHeightsFunction = rememberRowCellHeightConstraints(
         rows = rows,
@@ -38,7 +69,7 @@ inline fun HorizontalGrid(
         fillCellHeight = remember(rows) { rows.fillCellSize() },
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
-        alignment = alignment
+        contentAlignment = contentAlignment
     )
     Layout(
         content = { GridScopeInstance.content() },
@@ -58,13 +89,44 @@ inline fun HorizontalGrid(
  * @param content The children of this layout.
  */
 @Composable
+@Deprecated("Parameter 'alignment' is renamed to 'contentAlignment'.")
 inline fun VerticalGrid(
     columns: SimpleGridCells,
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     alignment: Alignment = Alignment.TopStart,
-    content: @Composable GridScope.() -> Unit,
+    conflictResolver: Unit = Unit,
+    content: @Composable GridScope.() -> Unit
+) {
+    VerticalGrid(
+        columns = columns,
+        modifier = modifier,
+        horizontalArrangement = horizontalArrangement,
+        verticalArrangement = verticalArrangement,
+        contentAlignment = alignment,
+        content = content
+    )
+}
+
+/**
+ * A layout composable that places its children in a grid.
+ *
+ * @param columns The class that determines the sizes and the number of grid cells.
+ * @param modifier The modifier to be applied to this layout.
+ * @param horizontalArrangement The horizontal arrangement of the grid cells.
+ * @param verticalArrangement The vertical arrangement of the grid cells.
+ * @param contentAlignment The default alignment of the grid cells.
+ * @param content The children of this layout.
+ */
+@Composable
+inline fun VerticalGrid(
+    columns: SimpleGridCells,
+    modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    contentAlignment: Alignment = Alignment.TopStart,
+    content: @Composable GridScope.() -> Unit
 ) {
     val calculateColumnCellWidthsFunction = rememberColumnCellWidthConstraints(
         columns = columns,
@@ -75,7 +137,7 @@ inline fun VerticalGrid(
         fillCellWidth = remember(columns) { columns.fillCellSize() },
         horizontalArrangement = horizontalArrangement,
         verticalArrangement = verticalArrangement,
-        alignment = alignment
+        contentAlignment = contentAlignment
     )
     Layout(
         content = { GridScopeInstance.content() },
@@ -139,14 +201,14 @@ internal fun rememberHorizontalGridMeasurePolicy(
     fillCellHeight: Boolean,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
-    alignment: Alignment,
+    contentAlignment: Alignment
 ): MeasurePolicy {
     return remember(
         calculateRowCellHeightConstraints,
         fillCellHeight,
         horizontalArrangement,
         verticalArrangement,
-        alignment
+        contentAlignment
     ) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Horizontal,
@@ -164,7 +226,7 @@ internal fun rememberHorizontalGridMeasurePolicy(
                 }
             },
             crossAxisSpacing = verticalArrangement.spacing,
-            defaultAlignment = alignment
+            defaultAlignment = contentAlignment
         )
     }
 }
@@ -176,14 +238,14 @@ internal fun rememberVerticalGridMeasurePolicy(
     fillCellWidth: Boolean,
     horizontalArrangement: Arrangement.Horizontal,
     verticalArrangement: Arrangement.Vertical,
-    alignment: Alignment
+    contentAlignment: Alignment
 ): MeasurePolicy {
     return remember(
         calculateColumnCellWidthConstraints,
         fillCellWidth,
         horizontalArrangement,
         verticalArrangement,
-        alignment
+        contentAlignment
     ) {
         gridMeasurePolicy(
             orientation = LayoutOrientation.Vertical,
@@ -201,7 +263,7 @@ internal fun rememberVerticalGridMeasurePolicy(
                 }
             },
             crossAxisSpacing = horizontalArrangement.spacing,
-            defaultAlignment = alignment
+            defaultAlignment = contentAlignment
         )
     }
 }
