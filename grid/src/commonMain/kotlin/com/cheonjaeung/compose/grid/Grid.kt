@@ -63,6 +63,11 @@ inline fun HorizontalGrid(
     val calculateRowCellHeightsFunction = rememberRowCellHeightConstraints(
         rows = rows,
         verticalArrangement = verticalArrangement,
+        onHeightInfinite = {
+            throw IllegalStateException(
+                "HorizontalGrid's height should be measurable, not an infinite."
+            )
+        }
     )
     val measurePolicy = rememberHorizontalGridMeasurePolicy(
         calculateRowCellHeightConstraints = calculateRowCellHeightsFunction,
@@ -131,6 +136,11 @@ inline fun VerticalGrid(
     val calculateColumnCellWidthsFunction = rememberColumnCellWidthConstraints(
         columns = columns,
         horizontalArrangement = horizontalArrangement,
+        onWidthInfinite = {
+            throw IllegalStateException(
+                "VerticalGrid's width should be measurable, not an infinite."
+            )
+        }
     )
     val measurePolicy = rememberVerticalGridMeasurePolicy(
         calculateColumnCellWidthConstraints = calculateColumnCellWidthsFunction,
@@ -151,14 +161,13 @@ inline fun VerticalGrid(
 internal fun rememberRowCellHeightConstraints(
     rows: SimpleGridCells,
     verticalArrangement: Arrangement.Vertical,
+    onHeightInfinite: () -> Unit
 ): Density.(Constraints) -> List<Int> {
     return remember(rows, verticalArrangement) {
         { constraints ->
             val gridHeight = constraints.maxHeight
             if (gridHeight == Constraints.Infinity) {
-                throw IllegalStateException(
-                    "HorizontalGrid's height should be measurable, not an infinite."
-                )
+                onHeightInfinite()
             }
             with(rows) {
                 calculateCrossAxisCellSizes(
@@ -175,14 +184,13 @@ internal fun rememberRowCellHeightConstraints(
 internal fun rememberColumnCellWidthConstraints(
     columns: SimpleGridCells,
     horizontalArrangement: Arrangement.Horizontal,
+    onWidthInfinite: () -> Unit
 ): Density.(Constraints) -> List<Int> {
     return remember(columns, horizontalArrangement) {
         { constraints ->
             val gridWidth = constraints.maxWidth
             if (gridWidth == Constraints.Infinity) {
-                throw IllegalStateException(
-                    "VerticalGrid's width should be measurable, not an infinite."
-                )
+                onWidthInfinite()
             }
             with(columns) {
                 calculateCrossAxisCellSizes(
