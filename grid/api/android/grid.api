@@ -15,7 +15,6 @@ public final class com/cheonjaeung/compose/grid/GridKt {
 
 public abstract interface class com/cheonjaeung/compose/grid/GridScope {
 	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;)Landroidx/compose/ui/Modifier;
-	public abstract fun span (Landroidx/compose/ui/Modifier;I)Landroidx/compose/ui/Modifier;
 	public abstract fun span (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 }
 
