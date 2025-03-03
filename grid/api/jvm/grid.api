@@ -7,7 +7,9 @@ public abstract interface class com/cheonjaeung/compose/grid/GridItemSpanScope {
 }
 
 public final class com/cheonjaeung/compose/grid/GridKt {
+	public static final fun HorizontalGrid (Lcom/cheonjaeung/compose/grid/SimpleGridCells;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment;Lkotlin/Unit;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun HorizontalGrid (Lcom/cheonjaeung/compose/grid/SimpleGridCells;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun VerticalGrid (Lcom/cheonjaeung/compose/grid/SimpleGridCells;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment;Lkotlin/Unit;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun VerticalGrid (Lcom/cheonjaeung/compose/grid/SimpleGridCells;Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
