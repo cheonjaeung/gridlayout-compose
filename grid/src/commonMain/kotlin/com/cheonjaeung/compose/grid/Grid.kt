@@ -218,7 +218,7 @@ internal fun rememberHorizontalGridMeasurePolicy(
         verticalArrangement,
         contentAlignment
     ) {
-        gridMeasurePolicy(
+        horizontalVerticalGridMeasurePolicy(
             orientation = LayoutOrientation.Horizontal,
             calculateCrossAxisCellConstraints = calculateRowCellHeightConstraints,
             fillCellSize = fillCellHeight,
@@ -255,7 +255,7 @@ internal fun rememberVerticalGridMeasurePolicy(
         verticalArrangement,
         contentAlignment
     ) {
-        gridMeasurePolicy(
+        horizontalVerticalGridMeasurePolicy(
             orientation = LayoutOrientation.Vertical,
             calculateCrossAxisCellConstraints = calculateColumnCellWidthConstraints,
             fillCellSize = fillCellWidth,

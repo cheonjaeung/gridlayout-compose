@@ -17,7 +17,7 @@ import androidx.compose.ui.util.fastForEachIndexed
 import kotlin.math.max
 import kotlin.math.min
 
-internal fun gridMeasurePolicy(
+internal fun horizontalVerticalGridMeasurePolicy(
     orientation: LayoutOrientation,
     calculateCrossAxisCellConstraints: Density.(Constraints) -> List<Int>,
     fillCellSize: Boolean,
@@ -27,7 +27,7 @@ internal fun gridMeasurePolicy(
     crossAxisSpacing: Dp,
     defaultAlignment: Alignment
 ): MeasurePolicy {
-    return GridMeasurePolicy(
+    return HorizontalVerticalGridMeasurePolicy(
         orientation,
         calculateCrossAxisCellConstraints,
         fillCellSize,
@@ -39,7 +39,7 @@ internal fun gridMeasurePolicy(
     )
 }
 
-private class GridMeasurePolicy(
+private class HorizontalVerticalGridMeasurePolicy(
     private val orientation: LayoutOrientation,
     private val calculateCrossAxisCellConstraints: Density.(Constraints) -> List<Int>,
     private val fillCellSize: Boolean,
@@ -56,7 +56,7 @@ private class GridMeasurePolicy(
         val crossAxisCellConstraintsList = calculateCrossAxisCellConstraints(constraints)
         val crossAxisCellCount = crossAxisCellConstraintsList.size
 
-        val measureHelper = GridMeasureHelper(
+        val measureHelper = HorizontalVerticalGridMeasureHelper(
             orientation = orientation,
             measurables = measurables,
             crossAxisCellConstraintsList = crossAxisCellConstraintsList,
@@ -102,7 +102,7 @@ private class GridMeasurePolicy(
 /**
  * A class to help grid layout measuring and placing.
  */
-private class GridMeasureHelper(
+private class HorizontalVerticalGridMeasureHelper(
     val orientation: LayoutOrientation,
     val measurables: List<Measurable>,
     val crossAxisCellConstraintsList: List<Int>,
@@ -114,12 +114,12 @@ private class GridMeasureHelper(
     val crossAxisSpacing: Dp,
     val defaultAlignment: Alignment
 ) {
-    private val gridParentDataArrays: Array<GridParentData?> = Array(measurables.size) {
-        measurables[it].parentData as? GridParentData
+    private val gridParentDataArrays: Array<HorizontalVerticalGridParentData?> = Array(measurables.size) {
+        measurables[it].parentData as? HorizontalVerticalGridParentData
     }
 
-    private val GridParentData?.spanOrDefault: (GridItemSpanScope.() -> Int)
-        get() = this?.span ?: GridParentData.DefaultSpan
+    private val HorizontalVerticalGridParentData?.spanOrDefault: (GridItemSpanScope.() -> Int)
+        get() = this?.span ?: HorizontalVerticalGridParentData.DefaultSpan
 
     /**
      * Measures children composable constraints.
@@ -389,7 +389,7 @@ private class GridMeasureHelper(
     }
 
     /**
-     * Result data of [GridMeasureHelper.measure].
+     * Result data of [HorizontalVerticalGridMeasureHelper.measure].
      *
      * It contains basic layout information and placeables as 2-dimension table.
      */
@@ -409,7 +409,7 @@ private class GridMeasureHelper(
     )
 
     /**
-     * Result data of [GridMeasureHelper.arrange].
+     * Result data of [HorizontalVerticalGridMeasureHelper.arrange].
      *
      * It contains layout size info and position of placeables.
      */
