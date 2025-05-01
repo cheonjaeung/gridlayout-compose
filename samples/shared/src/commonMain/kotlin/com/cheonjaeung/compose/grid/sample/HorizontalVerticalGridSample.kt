@@ -292,8 +292,8 @@ private fun SheetContent(
             if (isFixed) {
                 Slider(
                     modifier = Modifier.fillMaxWidth(),
-                    valueRange = 0f..9f,
-                    steps = 8,
+                    valueRange = 1f..8f,
+                    steps = 6,
                     value = fixedCount.toFloat(),
                     onValueChange = {
                         onFixedChange(true)
@@ -329,7 +329,7 @@ private fun SheetContent(
                 RadioButtonWithText(
                     modifier = Modifier.weight(1f),
                     text = "Not Fill",
-                    selected = fill,
+                    selected = !fill,
                     onClick = { onFillChange(false) }
                 )
             }
