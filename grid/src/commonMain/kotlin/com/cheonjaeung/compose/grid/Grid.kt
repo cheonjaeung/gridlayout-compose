@@ -9,9 +9,66 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 /**
- * A layout composable that places its children in a grid.
+ * A layout composable that places its children freely in a grid.
+ *
+ * @param rows The class that determines the size and the number of grid rows.
+ * @param columns The class that determines the size and the number of grid columns.
+ * @param modifier The modifier to be applied to this layout.
+ * @param horizontalSpacing The horizontal space between each cells.
+ * @param verticalSpacing The vertical space between each cells.
+ * @param contentAlignment The default alignment of the grid cells.
+ * @param content The children of this layout.
+ */
+@Composable
+inline fun BoxGrid(
+    rows: SimpleGridCells,
+    columns: SimpleGridCells,
+    modifier: Modifier = Modifier,
+    horizontalSpacing: Dp = 0.dp,
+    verticalSpacing: Dp = 0.dp,
+    contentAlignment: Alignment = Alignment.TopStart,
+    content: @Composable BoxGridScope.() -> Unit
+) {
+    val calculateRowCellHeightsFunction = rememberRowCellHeightConstraints(
+        rows = rows,
+        verticalSpacing = verticalSpacing,
+        onHeightInfinite = {
+            throw IllegalStateException(
+                "BoxGrid's height should be measurable, not an infinite."
+            )
+        }
+    )
+    val calculateColumnCellWidthsFunction = rememberColumnCellWidthConstraints(
+        columns = columns,
+        horizontalSpacing = horizontalSpacing,
+        onWidthInfinite = {
+            throw IllegalStateException(
+                "BoxGrid's width should be measurable, not an infinite."
+            )
+        }
+    )
+    val measurePolicy = rememberBoxGridMeasurePolicy(
+        calculateRowCellHeightConstraints = calculateRowCellHeightsFunction,
+        calculateColumnCellWidthConstraints = calculateColumnCellWidthsFunction,
+        fillCellWidth = remember(columns) { columns.fillCellSize() },
+        fillCellHeight = remember(rows) { rows.fillCellSize() },
+        horizontalSpacing = horizontalSpacing,
+        verticalSpacing = verticalSpacing,
+        contentAlignment = contentAlignment
+    )
+    Layout(
+        content = { BoxGridScopeInstance.content() },
+        measurePolicy = measurePolicy,
+        modifier = modifier
+    )
+}
+
+/**
+ * A layout composable that places its children sequentially in a grid.
  *
  * @param rows The class that determines the sizes and the number of grid cells.
  * @param modifier The modifier to be applied to this layout.
@@ -84,7 +141,7 @@ inline fun HorizontalGrid(
 }
 
 /**
- * A layout composable that places its children in a grid.
+ * A layout composable that places its children sequentially in a grid.
  *
  * @param columns The class that determines the sizes and the number of grid cells.
  * @param modifier The modifier to be applied to this layout.
@@ -160,6 +217,29 @@ inline fun VerticalGrid(
 @Composable
 internal fun rememberRowCellHeightConstraints(
     rows: SimpleGridCells,
+    verticalSpacing: Dp,
+    onHeightInfinite: () -> Unit
+): Density.(Constraints) -> List<Int> {
+    return remember(rows, verticalSpacing) {
+        { constraints ->
+            val gridHeight = constraints.maxHeight
+            if (gridHeight == Constraints.Infinity) {
+                onHeightInfinite()
+            }
+            with(rows) {
+                calculateCrossAxisCellSizes(
+                    availableSize = gridHeight,
+                    spacing = verticalSpacing.roundToPx()
+                )
+            }
+        }
+    }
+}
+
+@PublishedApi
+@Composable
+internal fun rememberRowCellHeightConstraints(
+    rows: SimpleGridCells,
     verticalArrangement: Arrangement.Vertical,
     onHeightInfinite: () -> Unit
 ): Density.(Constraints) -> List<Int> {
@@ -173,6 +253,29 @@ internal fun rememberRowCellHeightConstraints(
                 calculateCrossAxisCellSizes(
                     availableSize = gridHeight,
                     spacing = verticalArrangement.spacing.roundToPx(),
+                )
+            }
+        }
+    }
+}
+
+@PublishedApi
+@Composable
+internal fun rememberColumnCellWidthConstraints(
+    columns: SimpleGridCells,
+    horizontalSpacing: Dp,
+    onWidthInfinite: () -> Unit
+): Density.(Constraints) -> List<Int> {
+    return remember(columns, horizontalSpacing) {
+        { constraints ->
+            val gridWidth = constraints.maxWidth
+            if (gridWidth == Constraints.Infinity) {
+                onWidthInfinite()
+            }
+            with(columns) {
+                calculateCrossAxisCellSizes(
+                    availableSize = gridWidth,
+                    spacing = horizontalSpacing.roundToPx(),
                 )
             }
         }
@@ -199,6 +302,38 @@ internal fun rememberColumnCellWidthConstraints(
                 )
             }
         }
+    }
+}
+
+@PublishedApi
+@Composable
+internal fun rememberBoxGridMeasurePolicy(
+    calculateRowCellHeightConstraints: Density.(Constraints) -> List<Int>,
+    calculateColumnCellWidthConstraints: Density.(Constraints) -> List<Int>,
+    fillCellWidth: Boolean,
+    fillCellHeight: Boolean,
+    horizontalSpacing: Dp,
+    verticalSpacing: Dp,
+    contentAlignment: Alignment
+): MeasurePolicy {
+    return remember(
+        calculateRowCellHeightConstraints,
+        calculateColumnCellWidthConstraints,
+        fillCellWidth,
+        fillCellHeight,
+        horizontalSpacing,
+        verticalSpacing,
+        contentAlignment
+    ) {
+        boxGridMeasurePolicy(
+            calculateRowCellHeightConstraints = calculateRowCellHeightConstraints,
+            calculateColumnCellWidthConstraints = calculateColumnCellWidthConstraints,
+            fillCellWidth = fillCellWidth,
+            fillCellHeight = fillCellHeight,
+            horizontalSpacing = horizontalSpacing,
+            verticalSpacing = verticalSpacing,
+            defaultAlignment = contentAlignment
+        )
     }
 }
 

@@ -1,0 +1,109 @@
+package com.cheonjaeung.compose.grid
+
+import androidx.compose.foundation.layout.LayoutScopeMarker
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.debugInspectorInfo
+
+/**
+ * A scope for the children of [BoxGrid].
+ */
+@Immutable
+@LayoutScopeMarker
+interface BoxGridScope {
+    /**
+     * Sets the row position of the cell. The row position starts from 0 and
+     * the default is 0.
+     */
+    @Stable
+    fun Modifier.row(row: Int): Modifier
+
+    /**
+     * Sets the column position of the cell. The column position starts from 0 and
+     * the default is 0.
+     */
+    @Stable
+    fun Modifier.column(column: Int): Modifier
+
+    /**
+     * Sets the row span of the cell. The default span size is 1.
+     *
+     * @param span A span calculation lambda. If the result of [span] lambda is null, it means
+     * that this item uses default span size.
+     */
+    @Stable
+    fun Modifier.rowSpan(span: ((GridItemSpanScope.() -> Int))? = null): Modifier
+
+    /**
+     * Sets the column span of the cell. The default span size is 1.
+     *
+     * @param span A span calculation lambda. If the result of [span] lambda is null, it means
+     * that this item uses default span size.
+     */
+    @Stable
+    fun Modifier.columnSpan(span: ((GridItemSpanScope.() -> Int))? = null): Modifier
+
+    /**
+     * Aligns the item to specific [Alignment] within the cell.
+     */
+    @Stable
+    fun Modifier.align(alignment: Alignment): Modifier
+}
+
+internal object BoxGridScopeInstance : BoxGridScope {
+    override fun Modifier.row(row: Int): Modifier {
+        require(row >= 0) { "$row is invalid value, must be zero or positive" }
+        return this.then(
+            BoxGridRowColumnElement(
+                row = row,
+                inspectorInfo = debugInspectorInfo {
+                    name = "row"
+                    value = row
+                }
+            )
+        )
+    }
+
+    override fun Modifier.column(column: Int): Modifier {
+        require(column >= 0) { "$column is invalid value, must be zero or positive" }
+        return this.then(
+            BoxGridRowColumnElement(
+                column = column,
+                inspectorInfo = debugInspectorInfo {
+                    name = "column"
+                    value = column
+                }
+            )
+        )
+    }
+
+    override fun Modifier.rowSpan(span: (GridItemSpanScope.() -> Int)?): Modifier {
+        return this.then(
+            BoxGridSpanElement(
+                rowSpan = span ?: BoxGridParentData.DefaultSpan,
+                inspectorInfo = debugInspectorInfo {
+                    name = "rowSpan"
+                    value = span
+                }
+            )
+        )
+    }
+
+    override fun Modifier.columnSpan(span: (GridItemSpanScope.() -> Int)?): Modifier {
+        return this.then(
+            BoxGridSpanElement(
+                columnSpan = span ?: BoxGridParentData.DefaultSpan,
+                inspectorInfo = debugInspectorInfo {
+                    name = "columnSpan"
+                    value = span
+                }
+            )
+        )
+    }
+
+    override fun Modifier.align(alignment: Alignment): Modifier {
+        return this.then(BoxGridAlignmentElement(alignment))
+    }
+}
