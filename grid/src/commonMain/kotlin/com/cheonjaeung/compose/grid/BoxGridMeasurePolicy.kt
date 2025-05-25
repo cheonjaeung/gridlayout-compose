@@ -227,7 +227,6 @@ private class BoxGridMeasureHelper(
                     yWithoutSpacing + verticalSpacing.roundToPx() * rowPosition
                 }
 
-                // TODO fix alignment.
                 val alignedOffset = alignment.align(
                     size = placeable.size(),
                     space = cellSize,

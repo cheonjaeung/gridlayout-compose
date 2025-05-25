@@ -39,7 +39,7 @@ internal class BoxGridAlignmentNode(
     var alignment: Alignment
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
-        val p = parentData as? HorizontalVerticalGridParentData ?: HorizontalVerticalGridParentData()
+        val p = parentData as? BoxGridParentData ?: BoxGridParentData()
         p.alignment = alignment
         return p
     }
