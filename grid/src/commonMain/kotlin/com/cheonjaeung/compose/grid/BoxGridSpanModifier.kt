@@ -7,8 +7,8 @@ import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
 internal class BoxGridSpanElement(
-    val rowSpan: GridItemSpanScope.() -> Int = BoxGridParentData.DefaultSpan,
-    val columnSpan: GridItemSpanScope.() -> Int = BoxGridParentData.DefaultSpan,
+    val rowSpan: (GridItemSpanScope.() -> Int)? = null,
+    val columnSpan: (GridItemSpanScope.() -> Int)? = null,
     val inspectorInfo: InspectorInfo.() -> Unit
 ) : ModifierNodeElement<BoxGridSpanNode>() {
     override fun create(): BoxGridSpanNode {
@@ -39,13 +39,17 @@ internal class BoxGridSpanElement(
 }
 
 internal class BoxGridSpanNode(
-    var rowSpan: GridItemSpanScope.() -> Int,
-    var columnSpan: GridItemSpanScope.() -> Int
+    var rowSpan: (GridItemSpanScope.() -> Int)?,
+    var columnSpan: (GridItemSpanScope.() -> Int)?
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val p = parentData as? BoxGridParentData ?: BoxGridParentData()
-        p.rowSpan = rowSpan
-        p.columnSpan = columnSpan
+        rowSpan?.let {
+            p.rowSpan = it
+        }
+        columnSpan?.let {
+            p.columnSpan = it
+        }
         return p
     }
 }
