@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
  * @param content The children of this layout.
  */
 @Composable
+@ExperimentalGridApi
 inline fun BoxGrid(
     rows: SimpleGridCells,
     columns: SimpleGridCells,
