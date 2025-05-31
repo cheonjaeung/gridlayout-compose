@@ -1,16 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "${project.group}.sample.android"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "${project.group}.sample.android"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "${project.version}"
     }
@@ -27,10 +28,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeAndroidCompilerPlugin.get()
     }
 
     compileOptions {
