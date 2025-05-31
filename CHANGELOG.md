@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.3.0
+
+_2025.05.31_
+
+### Changed
+
+- New experimental layout composable `BoxGrid` is added.
+  `BoxGrid` is a layout that allows to place items freely in grid cells.
+  This layout is now experimental. Use it with `@ExperimentalBoxGridApi` annotation to opt-in.
+  For more information, see the documentation.
+- `HorizontalGrid` and `VerticalGrid`'s default alignment parameter `alignment` is renamed to `contentAlignment`.
+- Deprecated API `GridScope.span(Int)` is now removed. Use `GridScope.span(Lambda)` instead.
+
+### Dependencies
+
+Project dependencies are updated.
+
+- JVM Target 8 -> 11
+- Kotlin 1.9.25 -> 2.1.0
+- Android Gradle Plugin 8.6.1 -> 8.10.1
+- Compose 1.7.0 -> 1.8.0
+- Target SDK (Android Only) 34 -> 35
+
 ## 2.2.1
 
 _2025.02.08_
