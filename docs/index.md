@@ -21,13 +21,15 @@ There are benefits of this library:
 ## Overview
 
 GridLayout for Compose provides a simple layout composables for building grid UI.
-Below list is the core features of this library:
 
-- 2 layout composables (`HorizontalGrid` and `VerticalGrid`) for building grid.
-- Cell strategy called `SimpleGridCells` to define how many cells should exist.
-- Horizontal and vertical arrangement.
+This library provides 2 types of grid, **box grid** and **sequential grid**.
 
-The grid layout composables have simple API to implement grid.
+`BoxGrid` is a grid layout that allows you to place items in grid format.
+Items in `BoxGrid` can be placed in any position, and multiple items can placed in the same cell like `Box` composable.
+
+Sequential grid is a layout that arranges items in a grid format, either horizontally or vertically.
+There are 2 composables for each direction: `HorizontalGrid` and `VerticalGrid`.
+Its API is similar to `LazyGrid`.
 For example to draw grid like this:
 
 ![usage-example](images/usage-example.png)

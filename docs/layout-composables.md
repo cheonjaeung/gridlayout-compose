@@ -1,5 +1,46 @@
 # Layout Composables
 
+## Box Grid
+
+GridLayout library provides `BoxGrid` composable.
+`BoxGrid` is a grid layout composable that allows you to place items in grid format.
+Like `Box` composable, items in `BoxGrid` can be placed in any position.
+
+![boxgrid-layout](./images/boxgrid-layout.png)
+
+In the `BoxGrid`, each item can have `Modifier.row` and `Modifier.column` to specify the cell position.
+If `row` or `column` is not provided, it considered as 0.
+
+```kotlin
+BoxGrid(
+    modifier = Modifier.fillMaxSize(),
+    rows = SimpleGridCells.Fixed(3),
+    columns = SimpleGridCells.Fixed(3),
+) {
+    // It will be placed at 0, 0.
+    Item()
+
+    // It will be placed at 0, 1.
+    Item(modifier = Modifier.row(1))
+
+    // It will be placed at 1, 2.
+    Item(modifier = Modifier.column(1).row(2))
+
+    // It will be placed at 2, 0.
+    Itme(modifier = Modifier.column(2))
+}
+```
+
+!!! note
+    You can see `rows` and `columns` parameter for `HorizontalGrid` and `VerticalGrid`.
+    This parameter is required parameter for grid layout.
+    For details, see [cell strategy](./cell-strategy.md) section.
+
+## Sequential Grid
+
+GridLayout library also provides sequential grid composables, `HorizontalGrid` and `VerticalGrid`.
+These composables place items sequentially in a grid format.
+
 GridLayout library provides a simple API to make grid UI.
 And also this library's grids have similar API to lazy grids.
 If you have used LazyGrid, you can use this library more easily.
@@ -17,8 +58,16 @@ HorizontalGrid(
     rows = SimpleGridCells.Fixed(3),
     modifier = Modifier.fillMaxHeight()
 ) {
+    // It will be placed at 0, 0.
     Item()
+
+    // It will be placed at 0, 1.
     Item()
+
+    // It will be placed at 0, 2.
+    Item()
+
+    // It will be placed at 1, 0.
     Item()
 }
 
@@ -26,8 +75,16 @@ VerticalGrid(
     columns = SimpleGridCells.Fixed(3),
     modifier = Modifier.fillMaxWidth()
 ) {
+    // It will be placed at 0, 0.
     Item()
+
+    // It will be placed at 1, 0.
     Item()
+
+    // It will be placed at 2, 0.
+    Item()
+
+    // It will be placed at 0, 1.
     Item()
 }
 ```

@@ -1,11 +1,30 @@
 # Spanning Cells
 
+The `content` composable lambda of grid layout extends `BoxGridScope`.
+In the `BoxGridScope`, you can use `rowSpan` and `columnSpan` modifier to set span size of cell.
+
+The `rowSpan` and `columnSpan` modifiers take a lambda to calculate span.
+The lambda returns an integer value, the span size.
+Or you can just pass `null` instead of lambda to use default span size, which is 1.
+
+```kotlin
+BoxGrid(
+    rows = SimpleGridCells.Fixed(3),
+    columns = SimpleGridCells.Fixed(3)
+) {
+    Item(modifier = Modifier.rowSpan { 2 })
+    Item(modifier = Modifier.column(2))
+    Item(modifier = Modifier.row(1).column(1).columnSpan { 2 })
+    Item(modifier = Modifier.row(2).columnSpan { 2 })
+}
+```
+
+![span-graphics1](images/span-graphics.png)
+
+`HorizontalGrid` and `VerticalGrid` are also available to set span size.
 The `content` composable lambda of grid layout extends `GridScope`.
 To apply span size, you can set `span` modifier in the `GridScope`.
-
-The `span` modifier takes a lambda to calculate span of item.
-In the lambda, you can calculate a span size and return it.
-The following code and graphic show an example of span.
+Like `BoxGridScope`'s `rowSpan` and `columnSpan`, the `span` modifier takes a lambda to calculate span.
 
 !!! warning
     If returned span size is bigger than maximum cell count of the axis, the cell will be undisplayed.
@@ -28,7 +47,7 @@ VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
 }
 ```
 
-![span-graphic](images/span-graphic.png)
+![span-graphics2](images/span-graphics2.png)
 
 The scope of lambda parameter is called `GridItemSpanScope`.
 In the `GridItemSpanScope`, you can access to information of current line via `maxLineSpan` and `maxCurrentLineSpan`.
@@ -53,29 +72,5 @@ VerticalGrid(columns = SimpleGridCells.Adaptive(30.dp)) {
             }
         }
     )
-}
-```
-
-There is a convenience modifier that just takes an integer span.
-
-!!! warning
-    Span with an integer parameter is deprecated after 2.3.0.
-    Replace it to the span with lambda parameter.
-
-```kotlin
-HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
-    Item()
-    Item(Modifier.span(2))
-    Item(Modifier.span(2))
-    Item()
-    Item()
-}
-
-VerticalGrid(columns = SimpleGridCells.Fixed(3)) {
-    Item()
-    Item(Modifier.span(2))
-    Item(Modifier.span(2))
-    Item()
-    Item()
 }
 ```
