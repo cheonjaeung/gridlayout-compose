@@ -1,6 +1,6 @@
 # Cell Strategy
 
-Both grid layout composables take a cell strategy parameter called `SimpleGridCells`.
+All grid layout composables take a cell strategy parameter called `SimpleGridCells`.
 `SimpleGridCells` defines the number of cells and the size of each cell.
 
 There are 2 types of cell strategy, `Fixed` and `Adaptive`.

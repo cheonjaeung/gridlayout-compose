@@ -30,10 +30,14 @@ interface GridScope {
 
 internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: (GridItemSpanScope.() -> Int)?): Modifier {
-        return this.then(GridSpanElement(span ?: GridParentData.DefaultSpan))
+        return this.then(
+            HorizontalVerticalGridSpanElement(
+                span ?: HorizontalVerticalGridParentData.DefaultSpan
+            )
+        )
     }
 
     override fun Modifier.align(alignment: Alignment): Modifier {
-        return this.then(GridAlignmentElement(alignment))
+        return this.then(HorizontalVerticalGridAlignmentElement(alignment))
     }
 }
