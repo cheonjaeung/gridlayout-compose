@@ -93,10 +93,24 @@ private class BoxGridMeasureHelper(
     }
 
     private val BoxGridParentData?.rowOrDefault: Int
-        get() = this?.row ?: BoxGridParentData.DEFAULT_ROW
+        get() {
+            val row = this?.row
+            return if (row == null || row == BoxGridParentData.UNSPECIFIED_ROW) {
+                BoxGridParentData.DEFAULT_ROW
+            } else {
+                row
+            }
+        }
 
     private val BoxGridParentData?.columnOrDefault: Int
-        get() = this?.column ?: BoxGridParentData.DEFAULT_COLUMN
+        get() {
+            val column = this?.column
+            return if (column == null || column == BoxGridParentData.UNSPECIFIED_COLUMN) {
+                BoxGridParentData.DEFAULT_COLUMN
+            } else {
+                column
+            }
+        }
 
     private val BoxGridParentData?.rowSpanOrDefault: (GridItemSpanScope.() -> Int)
         get() = this?.rowSpan ?: BoxGridParentData.DefaultSpan
