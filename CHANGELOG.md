@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.1
+
+_2025.06.02_
+
+### Changed
+
+- Fix `BoxGrid` crashing when applying span size to items with unspecified row/column position.
+
 ## 2.3.0
 
 _2025.05.31_
