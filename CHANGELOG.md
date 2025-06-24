@@ -16,7 +16,7 @@ _2025.05.31_
 
 - New experimental layout composable `BoxGrid` is added.
   `BoxGrid` is a layout that allows to place items freely in grid cells.
-  This layout is now experimental. Use it with `@ExperimentalBoxGridApi` annotation to opt-in.
+  This layout is now experimental. Use it with `@ExperimentalGridApi` annotation to opt-in.
   For more information, see the documentation.
 - `HorizontalGrid` and `VerticalGrid`'s default alignment parameter `alignment` is renamed to `contentAlignment`.
 - Deprecated API `GridScope.span(Int)` is now removed. Use `GridScope.span(Lambda)` instead.
