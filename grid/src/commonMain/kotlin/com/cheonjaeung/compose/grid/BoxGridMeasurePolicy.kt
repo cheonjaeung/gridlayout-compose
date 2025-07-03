@@ -162,8 +162,8 @@ private class BoxGridMeasureHelper(
             require(columnSpan > 0) {
                 "columnSpan must be bigger than zero, $columnSpan is zero or negative"
             }
-            val remainingRowSpan = rowCount - rowSpan
-            val remainingColumnSpan = columnCount - columnSpan
+            val remainingRowSpan = rowCount - rowPosition
+            val remainingColumnSpan = columnCount - columnPosition
             if (rowSpan > remainingRowSpan || columnSpan > remainingColumnSpan) {
                 return@fastForEachIndexed
             }
