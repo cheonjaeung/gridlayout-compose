@@ -45,15 +45,6 @@ kotlin {
                 implementation(libs.compose.android.ui.util)
             }
         }
-
-        val androidInstrumentedTest by getting {
-            dependencies {
-                implementation(libs.junit4)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.compose.android.ui.test.junit4)
-                implementation(libs.compose.android.ui.test.manifest)
-            }
-        }
     }
 }
 
