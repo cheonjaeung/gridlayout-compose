@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.paparazzi)
     alias(libs.plugins.maven.publish)
 }
 
@@ -42,15 +43,6 @@ kotlin {
                 implementation(libs.compose.android.runtime)
                 implementation(libs.compose.android.foundation)
                 implementation(libs.compose.android.ui.util)
-            }
-        }
-
-        val androidInstrumentedTest by getting {
-            dependencies {
-                implementation(libs.junit4)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.compose.android.ui.test.junit4)
-                implementation(libs.compose.android.ui.test.manifest)
             }
         }
     }
