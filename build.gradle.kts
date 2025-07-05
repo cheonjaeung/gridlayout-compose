@@ -15,7 +15,7 @@ plugins {
 
 allprojects {
     group = "com.cheonjaeung.compose.grid"
-    version = "2.3.1"
+    version = "2.3.2"
 
     repositories {
         maven {

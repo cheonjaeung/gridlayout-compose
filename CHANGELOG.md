@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.3.2
+
+### Change
+
+_2025.07.05_
+
+- Fix `contentAlignment` of `BoxGrid` not working as expected.
+- Fix incorrect remaining span calculation of `BoxGrid`.
+
 ## 2.3.1
 
 _2025.06.02_
