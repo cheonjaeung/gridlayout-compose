@@ -31,24 +31,14 @@ interface BoxGridScope {
     fun Modifier.column(column: Int): Modifier
 
     /**
-     * Sets the row span of the cell. The default span size is 1.
+     * Sets the row and column span of the cell. The default span size is 1.
      *
-     * @param span A span calculation lambda. If the result of [span] lambda is null, it means
-     * that this item uses default span size.
+     * @param span A span calculation lambda. If the result is null, it means that this item uses
+     * the default span size.
      */
     @Stable
     @ExperimentalGridApi
-    fun Modifier.rowSpan(span: ((GridItemSpanScope.() -> Int))? = null): Modifier
-
-    /**
-     * Sets the column span of the cell. The default span size is 1.
-     *
-     * @param span A span calculation lambda. If the result of [span] lambda is null, it means
-     * that this item uses default span size.
-     */
-    @Stable
-    @ExperimentalGridApi
-    fun Modifier.columnSpan(span: ((GridItemSpanScope.() -> Int))? = null): Modifier
+    fun Modifier.span(span: ((BoxGridItemSpanScope).() -> BoxGridItemSpan)? = null): Modifier
 
     /**
      * Aligns the item to specific [Alignment] within the cell.
@@ -86,24 +76,12 @@ internal object BoxGridScopeInstance : BoxGridScope {
         )
     }
 
-    override fun Modifier.rowSpan(span: (GridItemSpanScope.() -> Int)?): Modifier {
+    override fun Modifier.span(span: (BoxGridItemSpanScope.() -> BoxGridItemSpan)?): Modifier {
         return this.then(
             BoxGridSpanElement(
-                rowSpan = span ?: BoxGridParentData.DefaultSpan,
+                span = span,
                 inspectorInfo = debugInspectorInfo {
-                    name = "rowSpan"
-                    value = span
-                }
-            )
-        )
-    }
-
-    override fun Modifier.columnSpan(span: (GridItemSpanScope.() -> Int)?): Modifier {
-        return this.then(
-            BoxGridSpanElement(
-                columnSpan = span ?: BoxGridParentData.DefaultSpan,
-                inspectorInfo = debugInspectorInfo {
-                    name = "columnSpan"
+                    name = "span"
                     value = span
                 }
             )

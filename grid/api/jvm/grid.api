@@ -1,14 +1,43 @@
+public final class com/cheonjaeung/compose/grid/BoxGridItemSpan {
+	public static final field Companion Lcom/cheonjaeung/compose/grid/BoxGridItemSpan$Companion;
+	public static final synthetic fun box-impl (J)Lcom/cheonjaeung/compose/grid/BoxGridItemSpan;
+	public static final fun component1-impl (J)I
+	public static final fun component2-impl (J)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (JLjava/lang/Object;)Z
+	public static final fun equals-impl0 (JJ)Z
+	public static final fun getColumnSpan-impl (J)I
+	public static final fun getRowSpan-impl (J)I
+	public fun hashCode ()I
+	public static fun hashCode-impl (J)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (J)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()J
+}
+
+public final class com/cheonjaeung/compose/grid/BoxGridItemSpan$Companion {
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/BoxGridItemSpanScope {
+	public abstract fun getMaxColumnSpan ()I
+	public abstract fun getMaxCurrentColumnSpan ()I
+	public abstract fun getMaxCurrentRowSpan ()I
+	public abstract fun getMaxRowSpan ()I
+}
+
 public abstract interface class com/cheonjaeung/compose/grid/BoxGridScope {
 	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;)Landroidx/compose/ui/Modifier;
 	public abstract fun column (Landroidx/compose/ui/Modifier;I)Landroidx/compose/ui/Modifier;
-	public abstract fun columnSpan (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 	public abstract fun row (Landroidx/compose/ui/Modifier;I)Landroidx/compose/ui/Modifier;
-	public abstract fun rowSpan (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
+	public abstract fun span (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 }
 
 public final class com/cheonjaeung/compose/grid/BoxGridScope$DefaultImpls {
-	public static synthetic fun columnSpan$default (Lcom/cheonjaeung/compose/grid/BoxGridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
-	public static synthetic fun rowSpan$default (Lcom/cheonjaeung/compose/grid/BoxGridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+	public static synthetic fun span$default (Lcom/cheonjaeung/compose/grid/BoxGridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+}
+
+public final class com/cheonjaeung/compose/grid/BoxGridSpanKt {
+	public static final fun BoxGridItemSpan (II)J
 }
 
 public abstract interface annotation class com/cheonjaeung/compose/grid/ExperimentalGridApi : java/lang/annotation/Annotation {
