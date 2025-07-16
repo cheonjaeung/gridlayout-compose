@@ -112,12 +112,6 @@ private class BoxGridMeasureHelper(
             }
         }
 
-    private val BoxGridParentData?.rowSpanOrDefault: (GridItemSpanScope.() -> Int)
-        get() = this?.rowSpan ?: BoxGridParentData.DefaultSpan
-
-    private val BoxGridParentData?.columnSpanOrDefault: (GridItemSpanScope.() -> Int)
-        get() = this?.columnSpan ?: BoxGridParentData.DefaultSpan
-
     private val BoxGridParentData?.alignmentOrDefault: Alignment
         get() = this?.alignment ?: defaultAlignment
 
@@ -143,25 +137,20 @@ private class BoxGridMeasureHelper(
                 return@fastForEachIndexed
             }
 
-            val rowSpanScope = GridItemSpanScopeImpl(
-                maxCurrentLineSpan = rowCount - rowPosition,
-                maxLineSpan = rowCount
+            val spanScope = BoxGridItemSpanScopeImpl(
+                maxCurrentRowSpan = rowCount - rowPosition,
+                maxCurrentColumnSpan = columnCount - columnPosition,
+                maxRowSpan = rowCount,
+                maxColumnSpan = columnCount
             )
-            val columnSpanScope = GridItemSpanScopeImpl(
-                maxCurrentLineSpan = columnCount - columnPosition,
-                maxLineSpan = columnCount
-            )
-            val rowSpanFunction = parentDataArray[index].rowSpanOrDefault
-            val columnSpanFunction = parentDataArray[index].columnSpanOrDefault
-            val rowSpan = rowSpanFunction(rowSpanScope)
-            val columnSpan = columnSpanFunction(columnSpanScope)
+            val spanFunction = parentDataArray[index]?.span
+            val span = if (spanFunction != null) {
+                with(spanScope) { spanFunction() }
+            } else {
+                BoxGridItemSpan.Default
+            }
+            val (rowSpan, columnSpan) = span
 
-            require(rowSpan > 0) {
-                "rowSpan must be bigger than zero, $rowSpan is zero or negative"
-            }
-            require(columnSpan > 0) {
-                "columnSpan must be bigger than zero, $columnSpan is zero or negative"
-            }
             val remainingRowSpan = rowCount - rowPosition
             val remainingColumnSpan = columnCount - columnPosition
             if (rowSpan > remainingRowSpan || columnSpan > remainingColumnSpan) {

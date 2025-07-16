@@ -7,17 +7,15 @@ import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
 internal class BoxGridSpanElement(
-    val rowSpan: (GridItemSpanScope.() -> Int)? = null,
-    val columnSpan: (GridItemSpanScope.() -> Int)? = null,
+    val span: (BoxGridItemSpanScope.() -> BoxGridItemSpan)? = null,
     val inspectorInfo: InspectorInfo.() -> Unit
 ) : ModifierNodeElement<BoxGridSpanNode>() {
     override fun create(): BoxGridSpanNode {
-        return BoxGridSpanNode(rowSpan, columnSpan)
+        return BoxGridSpanNode(span)
     }
 
     override fun update(node: BoxGridSpanNode) {
-        node.rowSpan = rowSpan
-        node.columnSpan = columnSpan
+        node.span = span
     }
 
     override fun InspectorInfo.inspectableProperties() {
@@ -28,27 +26,21 @@ internal class BoxGridSpanElement(
         if (this === other) return true
         if (other == null) return false
         if (other !is BoxGridSpanElement) return false
-        return this.rowSpan == other.rowSpan && this.columnSpan == other.columnSpan
+        return this.span == other.span
     }
 
     override fun hashCode(): Int {
-        var hash = rowSpan.hashCode()
-        hash = 31 * hash + columnSpan.hashCode()
-        return hash
+        return span.hashCode()
     }
 }
 
 internal class BoxGridSpanNode(
-    var rowSpan: (GridItemSpanScope.() -> Int)?,
-    var columnSpan: (GridItemSpanScope.() -> Int)?
+    var span: (BoxGridItemSpanScope.() -> BoxGridItemSpan)?
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val p = parentData as? BoxGridParentData ?: BoxGridParentData()
-        rowSpan?.let {
-            p.rowSpan = it
-        }
-        columnSpan?.let {
-            p.columnSpan = it
+        span?.let {
+            p.span = it
         }
         return p
     }
