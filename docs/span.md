@@ -3,8 +3,8 @@
 The `content` composable lambda of grid layout extends `BoxGridScope`.
 In the `BoxGridScope`, you can use `rowSpan` and `columnSpan` modifier to set span size of cell.
 
-The `rowSpan` and `columnSpan` modifiers take a lambda to calculate span.
-The lambda returns an integer value, the span size.
+The `span` modifiers take a lambda to calculate spans.
+The lambda returns a `BoxGridItemSpan` which represents row and column span size.
 Or you can just pass `null` instead of lambda to use default span size, which is 1.
 
 ```kotlin
@@ -12,10 +12,10 @@ BoxGrid(
     rows = SimpleGridCells.Fixed(3),
     columns = SimpleGridCells.Fixed(3)
 ) {
-    Item(modifier = Modifier.rowSpan { 2 })
+    Item(modifier = Modifier.span { BoxGridItemSpan(rowSpan = 2, columnSpan = 1) })
     Item(modifier = Modifier.column(2))
-    Item(modifier = Modifier.row(1).column(1).columnSpan { 2 })
-    Item(modifier = Modifier.row(2).columnSpan { 2 })
+    Item(modifier = Modifier.row(1).column(1).span { BoxGridItemSpan(rowSpan = 1, columnSpan = 2) })
+    Item(modifier = Modifier.row(2)span { BoxGridItemSpan(rowSpan = 1, columnSpan = 2) })
 }
 ```
 
