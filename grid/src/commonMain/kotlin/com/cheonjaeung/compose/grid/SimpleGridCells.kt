@@ -51,9 +51,9 @@ interface SimpleGridCells {
             val totalSpacing = spacing * (count - 1)
             val totalCellSize = availableSize - totalSpacing
             val cellSize = totalCellSize / count
-            val remainingPixels = cellSize % count
+            val remainingPixels = totalCellSize % count
             return List(count) { index ->
-                cellSize + if (remainingPixels > 0 && index == 0) 1 else 0
+                cellSize + if (index < remainingPixels) 1 else 0
             }
         }
 
@@ -105,9 +105,9 @@ interface SimpleGridCells {
             val totalSpacing = spacing * (count - 1)
             val totalCellSize = availableSize - totalSpacing
             val cellSize = totalCellSize / count
-            val remainingPixels = cellSize % count
+            val remainingPixels = totalCellSize % count
             return List(count) { index ->
-                cellSize + if (remainingPixels > 0 && index == 0) 1 else 0
+                cellSize + if (index < remainingPixels) 1 else 0
             }
         }
 
