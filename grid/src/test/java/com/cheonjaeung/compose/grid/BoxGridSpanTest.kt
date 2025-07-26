@@ -102,7 +102,7 @@ class BoxGridSpanTest {
                     modifier = Modifier
                         .size(100.dp)
                         .background(Color.Blue)
-                        .span { BoxGridItemSpan(row = 2, column = 1) }
+                        .span { BoxGridItemSpan(row = 2) }
                 )
                 Box(
                     modifier = Modifier
@@ -118,7 +118,7 @@ class BoxGridSpanTest {
                         .column(2)
                         .size(100.dp)
                         .background(Color.Yellow)
-                        .span { BoxGridItemSpan(row = 1, column = 2) }
+                        .span { BoxGridItemSpan(column = 2) }
                 )
             }
         }
@@ -138,7 +138,7 @@ class BoxGridSpanTest {
                     modifier = Modifier
                         .size(100.dp)
                         .background(Color.Blue)
-                        .span { BoxGridItemSpan(row = 2, column = 1) }
+                        .span { BoxGridItemSpan(row = 2) }
                 )
                 Box(
                     modifier = Modifier
@@ -154,7 +154,7 @@ class BoxGridSpanTest {
                         .column(2)
                         .size(100.dp)
                         .background(Color.Yellow)
-                        .span { BoxGridItemSpan(row = 1, column = 2) }
+                        .span { BoxGridItemSpan(column = 2) }
                 )
             }
         }
@@ -174,7 +174,7 @@ class BoxGridSpanTest {
                     modifier = Modifier
                         .size(100.dp)
                         .background(Color.Blue)
-                        .span { BoxGridItemSpan(row = maxRowSpan, column = 1) }
+                        .span { BoxGridItemSpan(row = maxRowSpan) }
                 )
                 Box(
                     modifier = Modifier
@@ -215,7 +215,7 @@ class BoxGridSpanTest {
                         .column(1)
                         .size(100.dp)
                         .background(Color.Green)
-                        .span { BoxGridItemSpan(row = maxCurrentRowSpan, column = 1) }
+                        .span { BoxGridItemSpan(row = maxCurrentRowSpan) }
                 )
                 Box(
                     modifier = Modifier
@@ -223,7 +223,7 @@ class BoxGridSpanTest {
                         .column(2)
                         .size(100.dp)
                         .background(Color.Yellow)
-                        .span { BoxGridItemSpan(row = 1, column = maxCurrentColumnSpan) }
+                        .span { BoxGridItemSpan(column = maxCurrentColumnSpan) }
                 )
             }
         }

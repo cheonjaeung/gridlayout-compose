@@ -147,7 +147,7 @@ private class BoxGridMeasureHelper(
             val span = if (spanFunction != null) {
                 with(spanScope) { spanFunction() }
             } else {
-                BoxGridItemSpan.Default
+                BoxGridItemSpan()
             }
             val (rowSpan, columnSpan) = span
 

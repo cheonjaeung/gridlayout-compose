@@ -10,7 +10,7 @@ import kotlin.jvm.JvmInline
 /**
  * Create a [BoxGridItemSpan] from the given [row] and [column] span size parameter..
  */
-fun BoxGridItemSpan(row: Int, column: Int): BoxGridItemSpan {
+fun BoxGridItemSpan(row: Int = 1, column: Int = 1): BoxGridItemSpan {
     require(row > 0) { "span must be bigger than zero but rowSpan is $row" }
     require(column > 0) { "span must be bigger than zero but columnSpan is $column" }
     return BoxGridItemSpan(packedValue = packInts(row, column))
@@ -35,11 +35,6 @@ value class BoxGridItemSpan internal constructor(private val packedValue: Long) 
 
     @Stable
     operator fun component2(): Int = columnSpan
-
-    companion object {
-        @Stable
-        internal val Default = BoxGridItemSpan(row = 1, column = 1)
-    }
 }
 
 /**
