@@ -1,5 +1,4 @@
 public final class com/cheonjaeung/compose/grid/BoxGridItemSpan {
-	public static final field Companion Lcom/cheonjaeung/compose/grid/BoxGridItemSpan$Companion;
 	public static final synthetic fun box-impl (J)Lcom/cheonjaeung/compose/grid/BoxGridItemSpan;
 	public static final fun component1-impl (J)I
 	public static final fun component2-impl (J)I
@@ -13,9 +12,6 @@ public final class com/cheonjaeung/compose/grid/BoxGridItemSpan {
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (J)Ljava/lang/String;
 	public final synthetic fun unbox-impl ()J
-}
-
-public final class com/cheonjaeung/compose/grid/BoxGridItemSpan$Companion {
 }
 
 public abstract interface class com/cheonjaeung/compose/grid/BoxGridItemSpanScope {
@@ -38,6 +34,7 @@ public final class com/cheonjaeung/compose/grid/BoxGridScope$DefaultImpls {
 
 public final class com/cheonjaeung/compose/grid/BoxGridSpanKt {
 	public static final fun BoxGridItemSpan (II)J
+	public static synthetic fun BoxGridItemSpan$default (IIILjava/lang/Object;)J
 }
 
 public abstract interface annotation class com/cheonjaeung/compose/grid/ExperimentalGridApi : java/lang/annotation/Annotation {
