@@ -24,6 +24,7 @@ public abstract interface class com/cheonjaeung/compose/grid/BoxGridItemSpanScop
 public abstract interface class com/cheonjaeung/compose/grid/BoxGridScope {
 	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;)Landroidx/compose/ui/Modifier;
 	public abstract fun column (Landroidx/compose/ui/Modifier;I)Landroidx/compose/ui/Modifier;
+	public abstract fun position (Landroidx/compose/ui/Modifier;II)Landroidx/compose/ui/Modifier;
 	public abstract fun row (Landroidx/compose/ui/Modifier;I)Landroidx/compose/ui/Modifier;
 	public abstract fun span (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 }

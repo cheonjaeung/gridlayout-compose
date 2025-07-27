@@ -36,15 +36,13 @@ class BoxGridSpanTest {
                 )
                 Box(
                     modifier = Modifier
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .size(100.dp)
                         .background(Color.Green)
                 )
                 Box(
                     modifier = Modifier
-                        .row(2)
-                        .column(2)
+                        .position(row = 2, column = 2)
                         .size(100.dp)
                         .background(Color.Yellow)
                 )
@@ -70,16 +68,14 @@ class BoxGridSpanTest {
                 )
                 Box(
                     modifier = Modifier
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .size(100.dp)
                         .background(Color.Green)
                         .span { BoxGridItemSpan(row = 1, column = 1) }
                 )
                 Box(
                     modifier = Modifier
-                        .row(2)
-                        .column(2)
+                        .position(row = 2, column = 2)
                         .size(100.dp)
                         .background(Color.Yellow)
                         .span { BoxGridItemSpan(row = 1, column = 1) }
@@ -106,16 +102,14 @@ class BoxGridSpanTest {
                 )
                 Box(
                     modifier = Modifier
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .size(100.dp)
                         .background(Color.Green)
                         .span { BoxGridItemSpan(row = 2, column = 2) }
                 )
                 Box(
                     modifier = Modifier
-                        .row(2)
-                        .column(2)
+                        .position(row = 2, column = 2)
                         .size(100.dp)
                         .background(Color.Yellow)
                         .span { BoxGridItemSpan(column = 2) }
@@ -142,16 +136,14 @@ class BoxGridSpanTest {
                 )
                 Box(
                     modifier = Modifier
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .size(100.dp)
                         .background(Color.Green)
                         .span { BoxGridItemSpan(row = maxRowSpan + 1, column = maxColumnSpan + 1) }
                 )
                 Box(
                     modifier = Modifier
-                        .row(2)
-                        .column(2)
+                        .position(row = 2, column = 2)
                         .size(100.dp)
                         .background(Color.Yellow)
                         .span { BoxGridItemSpan(column = 2) }
@@ -178,15 +170,13 @@ class BoxGridSpanTest {
                 )
                 Box(
                     modifier = Modifier
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .size(100.dp)
                         .background(Color.Green)
                 )
                 Box(
                     modifier = Modifier
-                        .row(2)
-                        .column(2)
+                        .position(row = 2, column = 2)
                         .size(100.dp)
                         .background(Color.Yellow)
                 )
@@ -211,16 +201,14 @@ class BoxGridSpanTest {
                 )
                 Box(
                     modifier = Modifier
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .size(100.dp)
                         .background(Color.Green)
                         .span { BoxGridItemSpan(row = maxCurrentRowSpan) }
                 )
                 Box(
                     modifier = Modifier
-                        .row(2)
-                        .column(2)
+                        .position(row = 2, column = 2)
                         .size(100.dp)
                         .background(Color.Yellow)
                         .span { BoxGridItemSpan(column = maxCurrentColumnSpan) }
