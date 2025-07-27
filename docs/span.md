@@ -12,10 +12,10 @@ BoxGrid(
     rows = SimpleGridCells.Fixed(3),
     columns = SimpleGridCells.Fixed(3)
 ) {
-    Item(modifier = Modifier.span { BoxGridItemSpan(rowSpan = 2, columnSpan = 1) })
+    Item(modifier = Modifier.span { BoxGridItemSpan(row = 2) })
     Item(modifier = Modifier.column(2))
-    Item(modifier = Modifier.row(1).column(1).span { BoxGridItemSpan(rowSpan = 1, columnSpan = 2) })
-    Item(modifier = Modifier.row(2)span { BoxGridItemSpan(rowSpan = 1, columnSpan = 2) })
+    Item(modifier = Modifier.row(1).column(1).span { BoxGridItemSpan(column = 2) })
+    Item(modifier = Modifier.row(2)span { BoxGridItemSpan(column = 2) })
 }
 ```
 
