@@ -49,8 +49,7 @@ class BoxGridAlignmentTest {
 
                             Box(
                                 modifier = Modifier
-                                    .row(row)
-                                    .column(column)
+                                    .position(row, column)
                                     .size(100.dp)
                                     .background(colors[index % 4])
                             )
@@ -73,8 +72,7 @@ class BoxGridAlignmentTest {
 
                                 Box(
                                     modifier = Modifier
-                                        .row(row)
-                                        .column(column)
+                                        .position(row, column)
                                         .size(100.dp)
                                         .background(colors[index % 4])
                                 )
@@ -124,8 +122,7 @@ class BoxGridAlignmentTest {
 
                             Box(
                                 modifier = Modifier
-                                    .row(row)
-                                    .column(column)
+                                    .position(row, column)
                                     .size(100.dp)
                                     .background(colors[index % 4])
                                     .align(alignment)
@@ -150,8 +147,7 @@ class BoxGridAlignmentTest {
 
                                 Box(
                                     modifier = Modifier
-                                        .row(row)
-                                        .column(column)
+                                        .position(row, column)
                                         .size(100.dp)
                                         .background(colors[index % 4])
                                         .align(alignment)
@@ -203,8 +199,7 @@ class BoxGridAlignmentTest {
 
                             Box(
                                 modifier = Modifier
-                                    .row(row)
-                                    .column(column)
+                                    .position(row, column)
                                     .size(100.dp)
                                     .background(colors[index % 4])
                                     .then(
@@ -236,8 +231,7 @@ class BoxGridAlignmentTest {
 
                                 Box(
                                     modifier = Modifier
-                                        .row(row)
-                                        .column(column)
+                                        .position(row, column)
                                         .size(100.dp)
                                         .background(colors[index % 4])
                                         .then(

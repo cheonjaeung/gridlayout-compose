@@ -114,8 +114,7 @@ class BoxGridTest {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .row(3)
-                        .column(3)
+                        .position(row = 3, column = 3)
                         .background(Color.Blue)
                 )
             }
@@ -135,29 +134,25 @@ class BoxGridTest {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .background(Color.Blue)
                 )
                 Box(
                     modifier = Modifier
                         .size(80.dp)
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .background(Color.Green)
                 )
                 Box(
                     modifier = Modifier
                         .size(60.dp)
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .background(Color.Yellow)
                 )
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .row(1)
-                        .column(1)
+                        .position(row = 1, column = 1)
                         .background(Color.Red)
                 )
             }
@@ -179,22 +174,18 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                 }
@@ -211,22 +202,18 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                     }
@@ -250,22 +237,18 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                 }
@@ -282,22 +265,18 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                     }
@@ -321,29 +300,24 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(3)
-                            .column(1)
+                            .position(row = 3, column = 1)
                             .background(Color.Red)
                     )
                 }
@@ -360,29 +334,24 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(3)
-                                .column(1)
+                                .position(row = 3, column = 1)
                                 .background(Color.Red)
                         )
                     }
@@ -406,29 +375,24 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(3)
-                            .column(1)
+                            .position(row = 3, column = 1)
                             .background(Color.Red)
                     )
                 }
@@ -445,29 +409,24 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(3)
-                                .column(1)
+                                .position(row = 3, column = 1)
                                 .background(Color.Red)
                         )
                     }
@@ -491,22 +450,18 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                 }
@@ -523,22 +478,18 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                     }
@@ -562,22 +513,18 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                 }
@@ -594,22 +541,18 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                     }
@@ -633,29 +576,24 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(3)
-                            .column(1)
+                            .position(row = 3, column = 1)
                             .background(Color.Red)
                     )
                 }
@@ -672,29 +610,24 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(3)
-                                .column(1)
+                                .position(row = 3, column = 1)
                                 .background(Color.Red)
                         )
                     }
@@ -718,29 +651,24 @@ class BoxGridTest {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(0)
-                            .column(0)
                             .background(Color.Blue)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(1)
-                            .column(1)
+                            .position(row = 1, column = 1)
                             .background(Color.Green)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(2)
-                            .column(2)
+                            .position(row = 2, column = 2)
                             .background(Color.Yellow)
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .row(3)
-                            .column(1)
+                            .position(row = 3, column = 1)
                             .background(Color.Red)
                     )
                 }
@@ -757,29 +685,24 @@ class BoxGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(0)
-                                .column(0)
                                 .background(Color.Blue)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(1)
-                                .column(1)
+                                .position(row = 1, column = 1)
                                 .background(Color.Green)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(2)
-                                .column(2)
+                                .position(row = 2, column = 2)
                                 .background(Color.Yellow)
                         )
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .row(3)
-                                .column(1)
+                                .position(row = 3, column = 1)
                                 .background(Color.Red)
                         )
                     }
@@ -814,8 +737,7 @@ class BoxGridTest {
 
                             Box(
                                 modifier = Modifier
-                                    .row(row)
-                                    .column(column)
+                                    .position(row, column)
                                     .size(100.dp)
                                     .background(colors[index % 4])
                             )

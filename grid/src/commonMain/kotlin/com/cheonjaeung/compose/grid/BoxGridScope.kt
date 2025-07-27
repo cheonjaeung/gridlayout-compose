@@ -31,6 +31,14 @@ interface BoxGridScope {
     fun Modifier.column(column: Int): Modifier
 
     /**
+     * Sets the row and column position of the cell. The position starts from 0 and
+     * the default is 0.
+     */
+    @Stable
+    @ExperimentalGridApi
+    fun Modifier.position(row: Int, column: Int): Modifier
+
+    /**
      * Sets the row and column span of the cell. The default span size is 1.
      *
      * @param span A span calculation lambda. If the result is null, it means that this item uses
@@ -71,6 +79,22 @@ internal object BoxGridScopeInstance : BoxGridScope {
                 inspectorInfo = debugInspectorInfo {
                     name = "column"
                     value = column
+                }
+            )
+        )
+    }
+
+    override fun Modifier.position(row: Int, column: Int): Modifier {
+        require(row >= 0) { "$row is invalid value, must be zero or positive" }
+        require(column >= 0) { "$column is invalid value, must be zero or positive" }
+        return this.then(
+            BoxGridCellPositionElement(
+                row = row,
+                column = column,
+                inspectorInfo = debugInspectorInfo {
+                    name = "position"
+                    properties["row"] = row
+                    properties["column"] = column
                 }
             )
         )
