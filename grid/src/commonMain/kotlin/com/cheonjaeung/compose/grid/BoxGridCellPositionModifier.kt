@@ -7,8 +7,8 @@ import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
 internal class BoxGridCellPositionElement(
-    val row: Int = BoxGridParentData.UNSPECIFIED_ROW,
-    val column: Int = BoxGridParentData.UNSPECIFIED_COLUMN,
+    val row: Int? = null,
+    val column: Int? = null,
     val inspectorInfo: InspectorInfo.() -> Unit
 ) : ModifierNodeElement<BoxGridCellPositionNode>() {
     override fun create(): BoxGridCellPositionNode {
@@ -39,15 +39,15 @@ internal class BoxGridCellPositionElement(
 }
 
 internal class BoxGridCellPositionNode(
-    var row: Int,
-    var column: Int
+    var row: Int?,
+    var column: Int?
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val p = parentData as? BoxGridParentData ?: BoxGridParentData()
-        if (row != BoxGridParentData.UNSPECIFIED_ROW) {
+        if (row != null) {
             p.row = row
         }
-        if (column != BoxGridParentData.UNSPECIFIED_COLUMN) {
+        if (column != null) {
             p.column = column
         }
         return p
