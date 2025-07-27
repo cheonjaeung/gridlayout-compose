@@ -53,7 +53,7 @@ internal object BoxGridScopeInstance : BoxGridScope {
     override fun Modifier.row(row: Int): Modifier {
         require(row >= 0) { "$row is invalid value, must be zero or positive" }
         return this.then(
-            BoxGridRowColumnElement(
+            BoxGridCellPositionElement(
                 row = row,
                 inspectorInfo = debugInspectorInfo {
                     name = "row"
@@ -66,7 +66,7 @@ internal object BoxGridScopeInstance : BoxGridScope {
     override fun Modifier.column(column: Int): Modifier {
         require(column >= 0) { "$column is invalid value, must be zero or positive" }
         return this.then(
-            BoxGridRowColumnElement(
+            BoxGridCellPositionElement(
                 column = column,
                 inspectorInfo = debugInspectorInfo {
                     name = "column"

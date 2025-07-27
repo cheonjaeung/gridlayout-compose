@@ -6,16 +6,16 @@ import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
-internal class BoxGridRowColumnElement(
+internal class BoxGridCellPositionElement(
     val row: Int = BoxGridParentData.UNSPECIFIED_ROW,
     val column: Int = BoxGridParentData.UNSPECIFIED_COLUMN,
     val inspectorInfo: InspectorInfo.() -> Unit
-) : ModifierNodeElement<BoxGridRowColumnNode>() {
-    override fun create(): BoxGridRowColumnNode {
-        return BoxGridRowColumnNode(row, column)
+) : ModifierNodeElement<BoxGridCellPositionNode>() {
+    override fun create(): BoxGridCellPositionNode {
+        return BoxGridCellPositionNode(row, column)
     }
 
-    override fun update(node: BoxGridRowColumnNode) {
+    override fun update(node: BoxGridCellPositionNode) {
         node.row = row
         node.column = column
     }
@@ -27,7 +27,7 @@ internal class BoxGridRowColumnElement(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false
-        if (other !is BoxGridRowColumnElement) return false
+        if (other !is BoxGridCellPositionElement) return false
         return this.row == other.row && this.column == other.column
     }
 
@@ -38,7 +38,7 @@ internal class BoxGridRowColumnElement(
     }
 }
 
-internal class BoxGridRowColumnNode(
+internal class BoxGridCellPositionNode(
     var row: Int,
     var column: Int
 ) : Modifier.Node(), ParentDataModifierNode {
