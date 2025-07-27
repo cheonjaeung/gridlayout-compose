@@ -24,7 +24,7 @@ BoxGrid(
     Item(modifier = Modifier.row(1))
 
     // It will be placed at 1, 2.
-    Item(modifier = Modifier.column(1).row(2))
+    Item(modifier = Modifier.position(row = 2, column = 1))
 
     // It will be placed at 2, 0.
     Itme(modifier = Modifier.column(2))
