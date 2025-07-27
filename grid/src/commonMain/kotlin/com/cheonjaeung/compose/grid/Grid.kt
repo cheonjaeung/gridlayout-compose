@@ -69,37 +69,6 @@ inline fun BoxGrid(
 }
 
 /**
- * A layout composable that places its children sequentially in a grid.
- *
- * @param rows The class that determines the sizes and the number of grid cells.
- * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the grid cells.
- * @param verticalArrangement The vertical arrangement of the grid cells.
- * @param alignment The default alignment of the grid cells.
- * @param content The children of this layout.
- */
-@Composable
-@Deprecated("Parameter 'alignment' is renamed to 'contentAlignment'.")
-inline fun HorizontalGrid(
-    rows: SimpleGridCells,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    alignment: Alignment = Alignment.TopStart,
-    conflictResolver: Unit = Unit,
-    content: @Composable GridScope.() -> Unit
-) {
-    HorizontalGrid(
-        rows = rows,
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement,
-        contentAlignment = alignment,
-        content = content
-    )
-}
-
-/**
  * A layout composable that places its children in a grid.
  *
  * @param rows The class that determines the sizes and the number of grid cells.
@@ -138,37 +107,6 @@ inline fun HorizontalGrid(
         content = { GridScopeInstance.content() },
         measurePolicy = measurePolicy,
         modifier = modifier,
-    )
-}
-
-/**
- * A layout composable that places its children sequentially in a grid.
- *
- * @param columns The class that determines the sizes and the number of grid cells.
- * @param modifier The modifier to be applied to this layout.
- * @param horizontalArrangement The horizontal arrangement of the grid cells.
- * @param verticalArrangement The vertical arrangement of the grid cells.
- * @param alignment The default alignment of the grid cells.
- * @param content The children of this layout.
- */
-@Composable
-@Deprecated("Parameter 'alignment' is renamed to 'contentAlignment'.")
-inline fun VerticalGrid(
-    columns: SimpleGridCells,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    alignment: Alignment = Alignment.TopStart,
-    conflictResolver: Unit = Unit,
-    content: @Composable GridScope.() -> Unit
-) {
-    VerticalGrid(
-        columns = columns,
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement,
-        contentAlignment = alignment,
-        content = content
     )
 }
 
