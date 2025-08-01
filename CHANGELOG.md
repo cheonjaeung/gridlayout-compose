@@ -1,8 +1,28 @@
 # Changelog
 
+## 2.4.0
+
+_2025.08.01_
+
+This release contains **breaking changes** for the experimental feature, `BoxGrid`.
+`BoxGridScope`'s `rowSpan` and `columnSpan` modifier is replaced to `span` modifier.
+And also `span` modifier's parameter now receive `BoxGridItemSpanScope` instead of `GridItemSpanScope`.
+It contains more information for calculating box grid item span.
+
+### Changed
+
+- Add `Modifier.position` to `BoxGridScope` for setting row/column cell position at the same time.
+- Add `Modifier.span` to `BoxGridScope` for setting row/column span at the same time.
+- Add `BoxGridItemSpanScope` for `span` modifier of `BoxGridScope`.
+- Add `BoxGridItemSpan`. It is a container represents row/column span size.
+- Remove `Modifier.rowSpan` and `Modifier.columnSpan` from `BoxGridScope`.
+- Remove deprecated `HorizontalGrid` and `VerticalGrid` with `alignment` parameter.
+  Replace it to composable with `contentAlignment` parameter.
+- Fix remaining cell size distribution of `SimpleGridCell` more properly.
+
 ## 2.3.2
 
-### Change
+### Changed
 
 _2025.07.05_
 
