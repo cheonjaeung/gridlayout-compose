@@ -255,10 +255,10 @@ private class HorizontalVerticalGridMeasureHelper(
         val crossAxisCount = measureResult.crossAxisCount
         val mainAxisLayoutSize = measureResult.mainAxisLayoutSize
         val crossAxisLayoutSize = measureResult.crossAxisLayoutSize
-        val mainAxisPositions = IntArray(mainAxisCount) { 0 }
-        val crossAxisPositions = IntArray(crossAxisCount) { 0 }
+        val mainAxisPositions = intArrayOfZeros(mainAxisCount)
+        val crossAxisPositions = intArrayOfZeros(crossAxisCount)
 
-        val mainAxisBiggestChildrenSizes = IntArray(mainAxisCount) { 0 }
+        val mainAxisBiggestChildrenSizes = intArrayOfZeros(mainAxisCount)
         for (m in 0 until mainAxisCount) {
             val currentLinePlaceables = placeableMeasureInfoTable[m]
             val currentLineChildrenSizes = IntArray(currentLinePlaceables.size) { index ->

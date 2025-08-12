@@ -3,6 +3,14 @@ package com.cheonjaeung.compose.grid
 import kotlin.math.max
 
 /**
+ * Returns a new [IntArray] with specified [size] filled with 0.
+ */
+@Suppress("NOTHING_TO_INLINE")
+internal inline fun intArrayOfZeros(size: Int): IntArray {
+    return IntArray(size) { 0 }
+}
+
+/**
  * Returns a new [MutableList] with specified [size] filled with `null`.
  */
 @Suppress("NOTHING_TO_INLINE")
