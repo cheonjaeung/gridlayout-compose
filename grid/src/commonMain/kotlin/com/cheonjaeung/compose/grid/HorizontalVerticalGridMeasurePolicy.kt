@@ -204,7 +204,7 @@ private class HorizontalVerticalGridMeasureHelper(
                 crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
                 placeableMainAxisSizeMax = max(
                     placeableMainAxisSizeMax,
-                    placeable.mainAxisSize()
+                    placeable.mainAxisSize(orientation)
                 )
                 crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
                 crossAxisIndex += span
@@ -255,15 +255,15 @@ private class HorizontalVerticalGridMeasureHelper(
         val crossAxisCount = measureResult.crossAxisCount
         val mainAxisLayoutSize = measureResult.mainAxisLayoutSize
         val crossAxisLayoutSize = measureResult.crossAxisLayoutSize
-        val mainAxisPositions = IntArray(mainAxisCount) { 0 }
-        val crossAxisPositions = IntArray(crossAxisCount) { 0 }
+        val mainAxisPositions = intArrayOfZeros(mainAxisCount)
+        val crossAxisPositions = intArrayOfZeros(crossAxisCount)
 
-        val mainAxisBiggestChildrenSizes = IntArray(mainAxisCount) { 0 }
+        val mainAxisBiggestChildrenSizes = intArrayOfZeros(mainAxisCount)
         for (m in 0 until mainAxisCount) {
             val currentLinePlaceables = placeableMeasureInfoTable[m]
             val currentLineChildrenSizes = IntArray(currentLinePlaceables.size) { index ->
                 val placeable = currentLinePlaceables[index].placeable
-                placeable.mainAxisSize()
+                placeable.mainAxisSize(orientation)
             }
             mainAxisBiggestChildrenSizes[m] = currentLineChildrenSizes.maxOrZero()
         }
@@ -354,38 +354,6 @@ private class HorizontalVerticalGridMeasureHelper(
                 }
             }
         }
-    }
-
-    /**
-     * Returns main axis size of this [Placeable] by current orientation.
-     */
-    private fun Placeable.mainAxisSize(): Int {
-        return if (orientation == LayoutOrientation.Horizontal) {
-            width
-        } else {
-            height
-        }
-    }
-
-    /**
-     * Returns the size of this [Placeable].
-     */
-    private fun Placeable.size(): IntSize {
-        return IntSize(width = width, height = height)
-    }
-
-    /**
-     * Returns the largest element or 0 if there are no elements.
-     */
-    private fun IntArray.maxOrZero(): Int {
-        if (this.isEmpty()) {
-            return 0
-        }
-        var maxValue = this[0]
-        for (i in 1 until this.size) {
-            maxValue = max(maxValue, this[i])
-        }
-        return maxValue
     }
 
     /**

@@ -248,22 +248,6 @@ private class BoxGridMeasureHelper(
         }
     }
 
-    private fun <T> mutableListOfNulls(size: Int): MutableList<T?> {
-        return MutableList(size) { null }
-    }
-
-    private fun Placeable.size(): IntSize {
-        return IntSize(width = width, height = height)
-    }
-
-    private fun <T> Iterable<T>.sumOfIndexed(selector: (Int, T) -> Int): Int {
-        var sum = 0
-        for ((index, element) in this.withIndex()) {
-            sum += selector(index, element)
-        }
-        return sum
-    }
-
     class GridMeasureResult(
         val layoutSize: Size,
         val placeableMeasureInfos: List<PlaceableMeasureInfo?>
