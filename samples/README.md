@@ -1,8 +1,6 @@
-# GridLayout for Compose Samples
+# Samples
 
-This directory contains sample apps for Android, iOS and Desktop.
-
-## Structure
+This directory contains sample apps for Android and iOS.
 
 - `android`: Module for Android sample application.
 - `ios`: XCode project for iOS sample application.
