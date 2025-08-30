@@ -41,9 +41,6 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.androidx.core)
-                implementation(libs.compose.android.runtime)
-                implementation(libs.compose.android.foundation)
-                implementation(libs.compose.android.ui.util)
             }
         }
     }
