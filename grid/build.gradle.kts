@@ -27,6 +27,8 @@ kotlin {
         }
     }
 
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
         commonMain {
             dependencies {
