@@ -27,8 +27,10 @@ kotlin {
         }
     }
 
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(libs.compose.multiplatform.runtime)
                 implementation(libs.compose.multiplatform.foundation)
@@ -36,12 +38,9 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(libs.androidx.core)
-                implementation(libs.compose.android.runtime)
-                implementation(libs.compose.android.foundation)
-                implementation(libs.compose.android.ui.util)
             }
         }
     }
