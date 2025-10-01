@@ -747,4 +747,41 @@ class BoxGridTest {
             }
         }
     }
+
+    @Test
+    fun testNegativeSpacing() {
+        val colors = listOf(
+            Color.Blue.copy(alpha = 0.5f),
+            Color.Green.copy(alpha = 0.5f),
+            Color.Yellow.copy(alpha = 0.5f),
+            Color.Red.copy(alpha = 0.5f)
+        )
+
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Fixed(3),
+                    columns = SimpleGridCells.Fixed(3),
+                    horizontalSpacing = (-8).dp,
+                    verticalSpacing = (-16).dp
+                ) {
+                    for (row in 0 until 3) {
+                        for (column in 0 until 3) {
+                            val index = row * 3 + column
+
+                            Box(
+                                modifier = Modifier
+                                    .position(row, column)
+                                    .size(100.dp)
+                                    .background(colors[index % 4])
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
