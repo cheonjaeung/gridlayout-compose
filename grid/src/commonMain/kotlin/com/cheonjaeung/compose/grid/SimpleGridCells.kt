@@ -101,7 +101,12 @@ interface SimpleGridCells {
             spacing: Int
         ): List<Int> {
             val minSizePx = minSize.roundToPx()
-            val count = max((availableSize + spacing) / (minSizePx + spacing), 1)
+            val minSizeWithSpacingPx = minSizePx + spacing
+            val count = if (minSizeWithSpacingPx != 0) {
+                max((availableSize + spacing) / minSizeWithSpacingPx, 1)
+            } else {
+                1
+            }
             val totalSpacing = spacing * (count - 1)
             val totalCellSize = availableSize - totalSpacing
             val cellSize = totalCellSize / count

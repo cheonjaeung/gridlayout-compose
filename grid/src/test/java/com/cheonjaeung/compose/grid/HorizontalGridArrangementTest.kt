@@ -434,4 +434,75 @@ class HorizontalGridArrangementTest {
             }
         }
     }
+
+    @Test
+    fun testNegativeSpacedBy() {
+        paparazzi.snapshot {
+            val colors = listOf(
+                Color.Blue.copy(alpha = 0.5f),
+                Color.Green.copy(alpha = 0.5f),
+                Color.Yellow.copy(alpha = 0.5f),
+                Color.Red.copy(alpha = 0.5f)
+            )
+
+            Column {
+                HorizontalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Fixed(3),
+                    horizontalArrangement = Arrangement.spacedBy((-8).dp),
+                    verticalArrangement = Arrangement.spacedBy((-16).dp)
+                ) {
+                    for (i in 0 until 9) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(colors[i % 4])
+                        )
+                    }
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    HorizontalGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.Fixed(3),
+                        horizontalArrangement = Arrangement.spacedBy((-8).dp),
+                        verticalArrangement = Arrangement.spacedBy((-16).dp)
+                    ) {
+                        for (i in 0 until 9) {
+                            Box(
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .background(colors[i % 4])
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testAdaptiveMinSizeEqualsNegativeSpacedBy() {
+        paparazzi.snapshot {
+            HorizontalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Adaptive(100.dp),
+                verticalArrangement = Arrangement.spacedBy((-100).dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                )
+            }
+        }
+    }
 }
