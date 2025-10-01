@@ -486,4 +486,23 @@ class HorizontalGridArrangementTest {
             }
         }
     }
+
+    @Test
+    fun testAdaptiveMinSizeEqualsNegativeSpacedBy() {
+        paparazzi.snapshot {
+            HorizontalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Adaptive(100.dp),
+                verticalArrangement = Arrangement.spacedBy((-100).dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                )
+            }
+        }
+    }
 }

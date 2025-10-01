@@ -784,4 +784,25 @@ class BoxGridTest {
             }
         }
     }
+
+    @Test
+    fun testAdaptiveMinSizeEqualsNegativeSpacing() {
+        paparazzi.snapshot {
+            BoxGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Adaptive(100.dp),
+                columns = SimpleGridCells.Adaptive(100.dp),
+                horizontalSpacing = (-100).dp,
+                verticalSpacing = (-100).dp,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                )
+            }
+        }
+    }
 }
