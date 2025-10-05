@@ -183,6 +183,24 @@ private class BoxGridMeasureHelper(
     ): GridArrangeResult = with(measureScope) {
         val placeableCount = measureResult.placeableMeasureInfos.size
         val placeablePositionInfos = mutableListOfNulls<PlaceablePositionInfo?>(placeableCount)
+        val rowCount = cellHeightConstraintList.size
+        val columnCount = cellWidthConstraintList.size
+
+        val horizontalSpacingPx = horizontalSpacing.roundToPx()
+        val verticalSpacingPx = verticalSpacing.roundToPx()
+
+        var currentX = 0
+        var currentY = 0
+        val xPositions = IntArray(columnCount)
+        val yPositions = IntArray(rowCount)
+        for (i in 0 until columnCount) {
+            xPositions[i] = currentX
+            currentX += cellWidthConstraintList[i] + horizontalSpacingPx
+        }
+        for (i in 0 until rowCount) {
+            yPositions[i] = currentY
+            currentY += cellHeightConstraintList[i] + verticalSpacingPx
+        }
 
         measureResult.placeableMeasureInfos.fastForEachIndexed { index, placeableMeasureInfo ->
             if (placeableMeasureInfo != null) {
@@ -196,25 +214,12 @@ private class BoxGridMeasureHelper(
                     height = placeableMeasureInfo.cellConstraints.maxHeight
                 )
 
-                val xPosition = if (layoutDirection == LayoutDirection.Ltr) {
-                    val xWithoutSpacing = cellWidthConstraintList.sumOfIndexed { i, c ->
-                        if (i < columnPosition) c else 0
-                    }
-                    xWithoutSpacing + horizontalSpacing.roundToPx() * columnPosition
+                val xPosition = xPositions[if (layoutDirection == LayoutDirection.Ltr) {
+                    columnPosition
                 } else {
-                    val layoutWidth = measureResult.layoutSize.width.roundToInt()
-                    val xWithoutSpacing = layoutWidth - cellWidthConstraintList.sumOfIndexed { i, c ->
-                        if (i <= columnPosition) c else 0
-                    }
-                    xWithoutSpacing - horizontalSpacing.roundToPx() * columnPosition
-                }
-
-                val yPosition = run {
-                    val yWithoutSpacing = cellHeightConstraintList.sumOfIndexed { i, c ->
-                        if (i < rowPosition) c else 0
-                    }
-                    yWithoutSpacing + verticalSpacing.roundToPx() * rowPosition
-                }
+                    columnCount - columnPosition - 1
+                }]
+                val yPosition = yPositions[rowPosition]
 
                 val alignedOffset = alignment.align(
                     size = placeable.size(),

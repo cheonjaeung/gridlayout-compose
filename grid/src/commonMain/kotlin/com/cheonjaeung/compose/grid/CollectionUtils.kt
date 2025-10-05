@@ -31,14 +31,3 @@ internal fun IntArray.maxOrZero(): Int {
     }
     return maxValue
 }
-
-/**
- * Returns the sum of the all values produced by [selector] function applied to each element.
- */
-internal inline fun <T> Iterable<T>.sumOfIndexed(selector: (Int, T) -> Int): Int {
-    var sum = 0
-    for ((index, element) in this.withIndex()) {
-        sum += selector(index, element)
-    }
-    return sum
-}
