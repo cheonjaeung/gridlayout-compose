@@ -216,4 +216,43 @@ class BoxGridSpanTest {
             }
         }
     }
+
+    @Test
+    fun testSpanWithSpacing() {
+        paparazzi.snapshot {
+            BoxGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Fixed(4),
+                columns = SimpleGridCells.Fixed(4),
+                horizontalSpacing = 32.dp,
+                verticalSpacing = 8.dp,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .position(row = 0, column = 0)
+                        .span { BoxGridItemSpan(row = 2) }
+                        .background(Color.Blue)
+                )
+                Box(
+                    modifier = Modifier
+                        .position(row = 1, column = 1)
+                        .span { BoxGridItemSpan(row = 2) }
+                        .background(Color.Green)
+                )
+                Box(
+                    modifier = Modifier
+                        .position(row = 2, column = 2)
+                        .span { BoxGridItemSpan(row = 2, column = 2) }
+                        .background(Color.Yellow)
+                )
+                Box(
+                    modifier = Modifier
+                        .position(row = 0, column = 1)
+                        .background(Color.Red)
+                )
+            }
+        }
+    }
 }

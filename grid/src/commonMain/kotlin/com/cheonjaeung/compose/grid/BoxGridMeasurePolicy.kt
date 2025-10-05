@@ -144,9 +144,9 @@ private class BoxGridMeasureHelper(
             }
 
             val cellWidthConstraints = cellWidthConstraintList[columnPosition] * columnSpan +
-                verticalSpacingPx * (columnSpan - 1)
+                horizontalSpacingPx * (columnSpan - 1)
             val cellHeightConstraints = cellHeightConstraintList[rowPosition] * rowSpan +
-                horizontalSpacingPx * (rowSpan - 1)
+                verticalSpacingPx * (rowSpan - 1)
 
             val placeableConstraints = Constraints(
                 minWidth = if (fillCellWidth) cellWidthConstraints else 0,
