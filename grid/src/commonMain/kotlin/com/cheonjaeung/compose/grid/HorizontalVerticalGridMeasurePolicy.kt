@@ -118,9 +118,6 @@ private class HorizontalVerticalGridMeasureHelper(
         measurables[it].parentData as? HorizontalVerticalGridParentData
     }
 
-    private val HorizontalVerticalGridParentData?.spanOrDefault: (GridItemSpanScope.() -> Int)
-        get() = this?.span ?: HorizontalVerticalGridParentData.DefaultSpan
-
     /**
      * Measures children composable constraints.
      */
@@ -158,9 +155,14 @@ private class HorizontalVerticalGridMeasureHelper(
                     maxCurrentLineSpan = maxSpan - spanSum,
                     maxLineSpan = maxSpan
                 )
-                val scopeFunction = gridParentDataArrays[measurableIndex].spanOrDefault
-                val span = scopeFunction(spanScope)
+                val spanFunction = gridParentDataArrays[measurableIndex]?.span
+                val span = if (spanFunction != null) {
+                    with(spanScope) { spanFunction() }
+                } else {
+                    1
+                }
                 require(span > 0) { "span must be bigger than zero, $span is zero or negative" }
+
                 if (span > maxSpan) {
                     measurableIndex++
                     continue
