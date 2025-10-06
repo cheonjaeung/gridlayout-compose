@@ -7,7 +7,8 @@ import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
 internal class HorizontalVerticalGridSpanElement(
-    val span: (GridItemSpanScope.() -> Int)?
+    val span: (GridItemSpanScope.() -> Int)?,
+    val inspectorInfo: InspectorInfo.() -> Unit
 ) : ModifierNodeElement<HorizontalVerticalGridSpanNode>() {
     override fun create(): HorizontalVerticalGridSpanNode {
         return HorizontalVerticalGridSpanNode(span)
@@ -18,8 +19,7 @@ internal class HorizontalVerticalGridSpanElement(
     }
 
     override fun InspectorInfo.inspectableProperties() {
-        name = "span"
-        value = span
+        inspectorInfo()
     }
 
     override fun equals(other: Any?): Boolean {
