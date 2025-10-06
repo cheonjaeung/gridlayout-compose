@@ -39,7 +39,9 @@ internal class HorizontalVerticalGridSpanNode(
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val p = parentData as? HorizontalVerticalGridParentData ?: HorizontalVerticalGridParentData()
-        p.span = span
+        if (p.span == HorizontalVerticalGridParentData.DefaultSpan) {
+            p.span = span
+        }
         return p
     }
 }
