@@ -255,4 +255,25 @@ class BoxGridSpanTest {
             }
         }
     }
+
+    @Test
+    fun testOverrideSpan() {
+        paparazzi.snapshot {
+            BoxGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Fixed(4),
+                columns = SimpleGridCells.Fixed(4)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                        .span { BoxGridItemSpan(row = 1, column = 1) }
+                        .span { BoxGridItemSpan(row = 2, column = 2) }
+                )
+            }
+        }
+    }
 }

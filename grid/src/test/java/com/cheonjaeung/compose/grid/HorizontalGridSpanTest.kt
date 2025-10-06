@@ -200,4 +200,24 @@ class HorizontalGridSpanTest {
             }
         }
     }
+
+    @Test
+    fun testOverrideSpan() {
+        paparazzi.snapshot {
+            HorizontalGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Fixed(3)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                        .span { 1 }
+                        .span { 2 }
+                )
+            }
+        }
+    }
 }
