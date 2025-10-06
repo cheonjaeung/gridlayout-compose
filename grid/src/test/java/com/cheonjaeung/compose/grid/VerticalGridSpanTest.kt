@@ -200,4 +200,24 @@ class VerticalGridSpanTest {
             }
         }
     }
+
+    @Test
+    fun testOverrideSpan() {
+        paparazzi.snapshot {
+            VerticalGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                columns = SimpleGridCells.Fixed(3)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                        .span { 1 }
+                        .span { 2 }
+                )
+            }
+        }
+    }
 }

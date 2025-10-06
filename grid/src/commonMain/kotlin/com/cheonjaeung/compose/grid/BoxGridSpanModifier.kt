@@ -39,8 +39,8 @@ internal class BoxGridSpanNode(
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val p = parentData as? BoxGridParentData ?: BoxGridParentData()
-        span?.let {
-            p.span = it
+        if (p.span == null) {
+            p.span = span
         }
         return p
     }
