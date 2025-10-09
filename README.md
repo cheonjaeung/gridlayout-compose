@@ -56,6 +56,55 @@ VerticalGrid(
 
 For more information, please visit [documentation](https://cheonjaeung.github.io/gridlayout-compose/) site.
 
+## Building
+
+This project is kotlin multiplatform project.
+It's recommended to setup kotlin multiplatform developement environment.
+
+### Samples
+
+This project contains sample app project in the `samples` directory.
+You can run sample app both Andorid and iOS (iOS sample app can run only on the macOS).
+
+### Testing
+
+This project uses snapshot testing.
+To run test, run following command:
+
+```shell
+./gradlew :grid:verifyPaparazziDebug
+```
+
+If you add test cases, run following command to create new snapshots:
+
+```shell
+./gradlew :grid:recordPaparazziDebug
+```
+
+If test is failed, you can check what is wrong from diff images.
+The diff images are generated in `grid/build/paparazzi/failures/` with `delta-*` name.
+
+### Binary Compatibility
+
+This project runs public binary API compatibility validation on CI.
+If you change public APIs, run following command before commit:
+
+```shell
+./gradlew apiDump
+```
+
+And you should commit api files with your code changes.
+
+## Contributing
+
+Welcome to contribute to this project!
+Feel free to create pull requests or issues.
+
+- **Patching**: If you want to change code, make a pull request.
+- **Bug Reporting**: If you think something is wrong, make an issue and add the **bug** label.
+- **Feature Requesting**: If you want to request some features, make an issue and add the **enhancement** label.
+- **Questions**: If you have some questions, make an issue and add the **question** label.
+
 ## Changelog
 
 Please see [changelog](./CHANGELOG.md) file.
