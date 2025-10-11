@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.debugInspectorInfo
 
 /**
  * A Scope for the children of [HorizontalGrid] or [VerticalGrid].
@@ -32,7 +33,11 @@ internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: (GridItemSpanScope.() -> Int)?): Modifier {
         return this.then(
             HorizontalVerticalGridSpanElement(
-                span ?: HorizontalVerticalGridParentData.DefaultSpan
+                span = span,
+                inspectorInfo = debugInspectorInfo {
+                    name = "span"
+                    value = span
+                }
             )
         )
     }
