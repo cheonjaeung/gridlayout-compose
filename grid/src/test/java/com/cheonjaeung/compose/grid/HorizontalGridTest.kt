@@ -17,6 +17,7 @@ import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalGridApi::class)
 class HorizontalGridTest {
     @get:Rule
     val paparazzi = Paparazzi(
@@ -299,6 +300,140 @@ class HorizontalGridTest {
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedSizeRows() {
+        paparazzi.snapshot {
+            Column {
+                HorizontalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.FixedSize(100.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    HorizontalGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.FixedSize(100.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedSizeRowsWithFillFalse() {
+        paparazzi.snapshot {
+            Column {
+                HorizontalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.FixedSize(100.dp, fill = false)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    HorizontalGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.FixedSize(100.dp, fill = false)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
                                 .background(Color.Red)
                         )
                     }
