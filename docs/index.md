@@ -11,7 +11,7 @@ This library can be simpler solution for small grid UI.
 There are benefits of this library:
 
 - **Similar API to LazyGrid**: The GridLayout's APIs are designed to provide similar development experience to LazyGrid.
-- **Easy to implement adaptive grid**: There are _"Fixed"_ and _"Adaptive"_ for grid layout management like LazyGrid.
+- **Easy to implement various grid**: There are _"Fixed"_, _"Adaptive"_ and _"FixedSize"_ for grid layout management like LazyGrid.
   Like LazyGrid, it eliminates dealing with different screen sizes.
 - **Simple to use as a part of LazyList**: The GridLayout is not lazy layout. It can be simply placed in lazy layouts.
   If only a portion of the full layout is grid, No need to use LazyGrid with span size for full layout.

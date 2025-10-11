@@ -3,8 +3,8 @@
 All grid layout composables take a cell strategy parameter called `SimpleGridCells`.
 `SimpleGridCells` defines the number of cells and the size of each cell.
 
-There are 2 types of cell strategy, `Fixed` and `Adaptive`.
-They are similar to LazyGrid's `Fixed` and `Adaptive`.
+There are several types of cell strategy, `Fixed`, `Adaptive` and `FixedSize`.
+They are similar to LazyGrid's `GridCells.Fixed`, `GridCells.Adaptive` and `GridCells.FixedSize`.
 
 ## Fixed
 
@@ -94,9 +94,51 @@ And each cells will have 1/3 of 400dp (about 133.333dp) width or height.
 If the grid size is expanded to 600dp, the number of cells on each line will be changed to 5
 and each cell's size will be 120dp.
 
+## FixedSize
+
+`SimpleGridCells.FixedSize` is a cell strategy for as many cells as possible with exact size.
+
+The API of `FixedSize` looks like this:
+
+```kotlin
+class FixedSize(
+    private val size: Dp,
+    private val fill: Boolean = true
+) : SimpleGridCells
+```
+
+There is a parameter called `size`. This is the size of each cell should have.
+The `size` must be a positive size. If the size is 0 or below, it occurs an exception.
+If the `size` is bigger than container's size, the cell will have the same size to the container.
+
+!!! note
+    For information about `fill` parameter, read [Fill Option](#fill-option) section.
+
+For example, a grid has 400dp width or height and `FixedSize(120.dp)` is applied.
+
+```kotlin
+HorizontalGrid(
+    rows = SimpleGridCells.FixedSize(120.dp),
+    modifier = Modifier.height(400.dp)
+) { /* content */ }
+
+VerticalGrid(
+    columns = SimpleGridCells.FixedSize(120.dp),
+    modifier = Modifier.width(400.dp)
+) { /* content */ }
+```
+
+![fixed-size-example](./images/fixedsize-example.png)
+
+The grid will have 3 cells on each line and the remaining space will not be used.
+If the grid size is expanded to 600dp, the number of cells on each line will be changed to 5.
+
+In other case, `FixedSize(300.dp)` for `VerticalGrid(Modifier.width(200.dp))` means that there
+will be only one column and the cell will have 200dp width.
+
 ## Fill Option
 
-Both `Fixed` and `Adaptive` have a optional parameter named `fill`.
+All cell strategy classes have a optional parameter named `fill`.
 The `fill` parameter determines that grid's item composable should fill grid cell's size.
 
 When `fill` is true, grid layout forces item composable to have width or height to fit cell's maximum width or height.

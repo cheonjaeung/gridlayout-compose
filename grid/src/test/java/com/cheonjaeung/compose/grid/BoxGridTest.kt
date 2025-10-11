@@ -712,6 +712,456 @@ class BoxGridTest {
     }
 
     @Test
+    fun testFixedRowsAndFixedSizeColumns() {
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Fixed(2),
+                    columns = SimpleGridCells.FixedSize(80.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 1, column = 1)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 2, column = 2)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 3, column = 1)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    BoxGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.Fixed(2),
+                        columns = SimpleGridCells.FixedSize(80.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 1, column = 1)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 2, column = 2)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 3, column = 1)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedRowsAndFixedSizeColumnsWithFillFalse() {
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Fixed(2, fill = false),
+                    columns = SimpleGridCells.FixedSize(80.dp, fill = false)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 1, column = 1)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 2, column = 2)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 3, column = 1)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    BoxGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.Fixed(2, fill = false),
+                        columns = SimpleGridCells.FixedSize(80.dp, fill = false)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 1, column = 1)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 2, column = 2)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 3, column = 1)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testAdaptiveRowsAndFixedSizeColumns() {
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Adaptive(60.dp),
+                    columns = SimpleGridCells.FixedSize(80.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 1, column = 1)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 2, column = 2)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 3, column = 1)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    BoxGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.Adaptive(60.dp),
+                        columns = SimpleGridCells.FixedSize(80.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 1, column = 1)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 2, column = 2)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 3, column = 1)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testAdaptiveRowsAndFixedSizeColumnsWithFillFalse() {
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Adaptive(60.dp, fill = false),
+                    columns = SimpleGridCells.FixedSize(80.dp, fill = false)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 1, column = 1)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 2, column = 2)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 3, column = 1)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    BoxGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.Adaptive(60.dp, fill = false),
+                        columns = SimpleGridCells.FixedSize(80.dp, fill = false)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 1, column = 1)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 2, column = 2)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 3, column = 1)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedSizeRowsAndFixedSizeColumns() {
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.FixedSize(60.dp),
+                    columns = SimpleGridCells.FixedSize(80.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 1, column = 1)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 2, column = 2)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 3, column = 1)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    BoxGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.FixedSize(60.dp),
+                        columns = SimpleGridCells.FixedSize(80.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 1, column = 1)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 2, column = 2)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 3, column = 1)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedSizeRowsAndFixedSizeColumnsWithFillFalse() {
+        paparazzi.snapshot {
+            Column {
+                BoxGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.FixedSize(60.dp, fill = false),
+                    columns = SimpleGridCells.FixedSize(80.dp, fill = false)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 1, column = 1)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 2, column = 2)
+                            .background(Color.Yellow)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .position(row = 3, column = 1)
+                            .background(Color.Red)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    BoxGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        rows = SimpleGridCells.FixedSize(60.dp, fill = false),
+                        columns = SimpleGridCells.FixedSize(80.dp, fill = false)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 1, column = 1)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 2, column = 2)
+                                .background(Color.Yellow)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .position(row = 3, column = 1)
+                                .background(Color.Red)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
     fun testSpacing() {
         val colors = listOf(
             Color.Blue,

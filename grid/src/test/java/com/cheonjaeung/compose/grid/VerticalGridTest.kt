@@ -17,6 +17,7 @@ import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalGridApi::class)
 class VerticalGridTest {
     @get:Rule
     val paparazzi = Paparazzi(
@@ -265,6 +266,120 @@ class VerticalGridTest {
                             .weight(1f)
                             .background(Color.Gray),
                         columns = SimpleGridCells.Adaptive(120.dp, false)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Yellow)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedSizeColumns() {
+        paparazzi.snapshot {
+            Column {
+                VerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    columns = SimpleGridCells.FixedSize(120.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Yellow)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    VerticalGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        columns = SimpleGridCells.FixedSize(120.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Blue)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Green)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color.Yellow)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testFixedSizeColumnsWithFillFalse() {
+        paparazzi.snapshot {
+            Column {
+                VerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    columns = SimpleGridCells.FixedSize(120.dp, fill = false)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Green)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Yellow)
+                    )
+                }
+
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    VerticalGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(Color.Gray),
+                        columns = SimpleGridCells.FixedSize(120.dp, fill = false)
                     ) {
                         Box(
                             modifier = Modifier
