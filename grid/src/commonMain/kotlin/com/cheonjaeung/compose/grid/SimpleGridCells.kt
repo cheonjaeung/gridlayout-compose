@@ -168,7 +168,11 @@ interface SimpleGridCells {
             val cellSizeWithSpacing = cellSize + spacing
 
             return if (cellSizeWithSpacing < availableSizeWithSpacing) {
-                val count = availableSizeWithSpacing / cellSizeWithSpacing
+                val count = if (cellSizeWithSpacing != 0) {
+                    availableSizeWithSpacing / cellSizeWithSpacing
+                } else {
+                    1
+                }
                 return List(count) { cellSize }
             } else {
                 List(1) { availableSize }
