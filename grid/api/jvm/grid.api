@@ -91,3 +91,13 @@ public final class com/cheonjaeung/compose/grid/SimpleGridCells$Fixed : com/cheo
 	public fun hashCode ()I
 }
 
+public final class com/cheonjaeung/compose/grid/SimpleGridCells$FixedSize : com/cheonjaeung/compose/grid/SimpleGridCells {
+	public static final field $stable I
+	public synthetic fun <init> (FZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun fillCellSize ()Z
+	public fun hashCode ()I
+}
+

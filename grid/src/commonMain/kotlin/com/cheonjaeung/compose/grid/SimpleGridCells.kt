@@ -134,4 +134,67 @@ interface SimpleGridCells {
             return hash
         }
     }
+
+    /**
+     * Make grid to have as many rows or columns as possible and each cell has exactly [size].
+     * If [size] is bigger than container's size, the cell will have the same size to the container.
+     *
+     * For example, `FixedSize(20.dp)` for `VerticalGrid(Modifier.width(66.dp)` means that there
+     * will be 3 columns and each cell will have 20dp width and 6dp is remained.
+     *
+     * In other case, `FixedSize(150.dp)` for `VerticalGrid(Modifier.width(100.dp)` means that there
+     * will be only one column and the cell will have 100dp width.
+     *
+     * @param size The size which each cell should have.
+     * @param fill When `true`, item composable fill cell's width or height.
+     */
+    @ExperimentalGridApi
+    class FixedSize(
+        private val size: Dp,
+        private val fill: Boolean = true,
+    ) : SimpleGridCells {
+        init {
+            if (size <= 0.dp) {
+                throw IllegalArgumentException("FixedSize size must be a positive, but $size")
+            }
+        }
+
+        override fun Density.calculateCrossAxisCellSizes(
+            availableSize: Int,
+            spacing: Int
+        ): List<Int> {
+            val cellSize = size.roundToPx()
+            val availableSizeWithSpacing = availableSize + spacing
+            val cellSizeWithSpacing = cellSize + spacing
+
+            return if (cellSizeWithSpacing < availableSizeWithSpacing) {
+                val count = if (cellSizeWithSpacing != 0) {
+                    availableSizeWithSpacing / cellSizeWithSpacing
+                } else {
+                    1
+                }
+                return List(count) { cellSize }
+            } else {
+                List(1) { availableSize }
+            }
+        }
+
+        override fun fillCellSize(): Boolean {
+            return fill
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (other !is FixedSize) return false
+            if (this.size != other.size) return false
+            if (this.fill != other.fill) return false
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var hash = 1
+            hash = hash * 31 + size.hashCode()
+            hash = hash * 31 + fill.hashCode()
+            return hash
+        }
+    }
 }

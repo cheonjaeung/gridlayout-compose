@@ -189,14 +189,22 @@ private class BoxGridMeasureHelper(
         val horizontalSpacingPx = horizontalSpacing.roundToPx()
         val verticalSpacingPx = verticalSpacing.roundToPx()
 
-        var currentX = 0
-        var currentY = 0
+        var currentX = if (layoutDirection == LayoutDirection.Rtl) {
+            val horizontalSpacingCount = (columnCount - 1).coerceAtLeast(0)
+            val horizontalSpacingSumPx = horizontalSpacingPx * horizontalSpacingCount
+            val contentWidth = cellWidthConstraintList.sum() + horizontalSpacingSumPx
+            measureResult.layoutSize.width.roundToInt() - contentWidth
+        } else {
+            0
+        }
         val xPositions = IntArray(columnCount)
-        val yPositions = IntArray(rowCount)
         for (i in 0 until columnCount) {
             xPositions[i] = currentX
             currentX += cellWidthConstraintList[i] + horizontalSpacingPx
         }
+
+        var currentY = 0
+        val yPositions = IntArray(rowCount)
         for (i in 0 until rowCount) {
             yPositions[i] = currentY
             currentY += cellHeightConstraintList[i] + verticalSpacingPx
