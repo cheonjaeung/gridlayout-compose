@@ -19,24 +19,25 @@ dependencies {
 GridLayout for Compose is a multiplatform library.
 The following table shows which platform is supported.
 
-| Platform | Status      |
-|----------|-------------|
-| Android  | ✅ Available |
-| iOS      | ✅ Available |
-| Desktop  | ✅ Available |
+| Platform | Status                     |
+|----------|----------------------------|
+| Android  | ✅ Available (All Versions) |
+| iOS      | ✅ Available (Since 2.0.0)  |
+| Desktop  | ✅ Available (All Versions) |
 
 ## Compose Version Dependency
 
 This library depends on Compose library.
 The following table shows Compose versions which each library version depends on.
 
-| GridLayout Version | Compose Version (Android) | Compose Version (Multiplatform) |
-|--------------------|---------------------------|---------------------------------|
-| 2.3.0 ~ current    | Jetpack Compose 1.8.0     | Compose Multiplatform 1.8.0     |
-| 2.1.0 ~ 2.2.1      | Jetpack Compose 1.7.0     | Compose Multiplatform 1.7.0     |
-| 1.2.2              | Jetpack Compose 1.6.0     | Compose Multiplatform 1.6.0     |
-| 1.0.0 ~ 1.2.1      | Jetpack Compose 1.5.0     | Compose Multiplatform 1.5.2     |
-| 0.1.0 ~ 0.2.0      | Jetpack Compose 1.4.3     | Compose Multiplatform 1.4.1     |
+| GridLayout Version | Compose Version (Multiplatform) | Compose Version (Android)        |
+|--------------------|---------------------------------|----------------------------------|
+| 2.5.0 ~ current    | Compose Multiplatform 1.9.0     | Depends on Compose Multiplatform |
+| 2.3.0 ~ 2.4.0      | Compose Multiplatform 1.8.0     | Jetpack Compose 1.8.0            |
+| 2.1.0 ~ 2.2.1      | Compose Multiplatform 1.7.0     | Jetpack Compose 1.7.0            |
+| 1.2.2              | Compose Multiplatform 1.6.0     | Jetpack Compose 1.6.0            |
+| 1.0.0 ~ 1.2.1      | Compose Multiplatform 1.5.2     | Jetpack Compose 1.5.0            |
+| 0.1.0 ~ 0.2.0      | Compose Multiplatform 1.4.1     | Jetpack Compose 1.4.3            |
 
 ## Android SDK Version
 

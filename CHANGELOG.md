@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.5.0
+
+_2025.10.16_
+
+This release introduces a new cell strategy, `SimpleGridCells.FixedSize`.
+`FixedSize` is a cell strategy class that make each cell to have exact size.
+This class is now experimental feature.
+You should opt-in to use it.
+
+### Changed
+
+- New experimental cell strategy `SimpleGridCells.FixedSize` is added.
+- Optimize arrangement performance of `BoxGrid`.
+- Fix crash when `minSize` of `Adaptive` grid cells is equal to negative spacing.
+- Spanned cell size calculation was incorrect when using `horizontalSpacing` and `verticalSpacing` with spanning in `BoxGrid`.
+
+### Dependencies
+
+Project dependencies are updated.
+
+- Kotlin 2.1.0 -> 2.2.20
+- Android Gradle Plugin 8.10.1 -> 8.13.0
+- Compose 1.8.0 -> 1.9.0
+- Target SDK (Android Only) 35 -> 36
+
 ## 2.4.0
 
 _2025.08.01_
