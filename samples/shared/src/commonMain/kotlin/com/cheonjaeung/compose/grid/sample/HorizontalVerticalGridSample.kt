@@ -18,14 +18,17 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.cheonjaeung.compose.grid.HorizontalGrid
 import com.cheonjaeung.compose.grid.SimpleGridCells
 import com.cheonjaeung.compose.grid.VerticalGrid
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,8 +71,20 @@ fun HorizontalVerticalGridSample(onBack: () -> Unit) {
     var verticalArrangement by remember { mutableStateOf(Arrangement.Top) }
     var verticalSpacing by remember { mutableStateOf(8.dp) }
 
+    val coroutineScope = rememberCoroutineScope()
+    val scaffoldState = rememberBottomSheetScaffoldState()
+
+    if (scaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+        PlatformBackHandler {
+            coroutineScope.launch {
+                scaffoldState.bottomSheetState.partialExpand()
+            }
+        }
+    }
+
     BottomSheetScaffold(
         modifier = Modifier.fillMaxSize(),
+        scaffoldState = scaffoldState,
         topBar = {
             SampleTopBar(
                 modifier = Modifier.fillMaxWidth(),

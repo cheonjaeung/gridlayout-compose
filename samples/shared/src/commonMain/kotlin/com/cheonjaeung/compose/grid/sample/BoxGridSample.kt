@@ -15,14 +15,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.cheonjaeung.compose.grid.BoxGrid
 import com.cheonjaeung.compose.grid.ExperimentalGridApi
 import com.cheonjaeung.compose.grid.SimpleGridCells
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,8 +76,20 @@ internal fun BoxGridSample(onBack: () -> Unit) {
     var horizontalSpacing by remember { mutableStateOf(0.dp) }
     var verticalSpacing by remember { mutableStateOf(0.dp) }
 
+    val coroutineScope = rememberCoroutineScope()
+    val scaffoldState = rememberBottomSheetScaffoldState()
+
+    if (scaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+        PlatformBackHandler {
+            coroutineScope.launch {
+                scaffoldState.bottomSheetState.partialExpand()
+            }
+        }
+    }
+
     BottomSheetScaffold(
         modifier = Modifier.fillMaxSize(),
+        scaffoldState = scaffoldState,
         topBar = {
             SampleTopBar(
                 modifier = Modifier.fillMaxWidth(),
