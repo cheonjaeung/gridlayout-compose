@@ -29,6 +29,10 @@ fun SampleList() {
     MaterialTheme {
         var currentSampleScreen: SampleListItemData? by remember { mutableStateOf(null) }
 
+        PlatformBackHandler(enabled = currentSampleScreen != null) {
+            currentSampleScreen = null
+        }
+
         Crossfade(targetState = currentSampleScreen) { screen ->
             if (screen == null) {
                 Scaffold(
