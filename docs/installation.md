@@ -45,6 +45,7 @@ It is recommended to use following target SDK version when using this library fo
 
 | GridLayout Version | Android Target SDK | Android Minimum SDK |
 |--------------------|--------------------|---------------------|
-| 2.3.0 ~ current    | Android 15 (35)    | Lollipop (21)       |
+| 2.5.0 ~ current    | Android 16 (36)    | Lollipop (21)       |
+| 2.3.0 ~ 2.4.0      | Android 15 (35)    | Lollipop (21)       |
 | 1.0.0 ~ 2.2.1      | Android 14 (34)    | Lollipop (21)       |
 | 0.1.0 ~ 0.2.0      | Android 13 (33)    | Lollipop (21)       |
