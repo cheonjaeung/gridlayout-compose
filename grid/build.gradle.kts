@@ -38,12 +38,6 @@ kotlin {
                 implementation(compose.uiUtil)
             }
         }
-
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.core)
-            }
-        }
     }
 }
 
