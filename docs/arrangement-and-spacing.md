@@ -1,4 +1,4 @@
-# Arrangement
+# Arrangement and Spacing
 
 `HorizontalGrid` and `VerticalGrid` have arrangement parameters called `horizontalArrangement` and `verticalArrangement`.
 `Arrangement` determines how the grid cells are arranged or the spacing between cells.
@@ -50,7 +50,9 @@ It places cells to the bottom of vertical axis.
 
 ## Spacing Between Cells
 
-Following graphics show some arrangement types for spacing between cells.
+The `BoxGrid` have `horizontalSpacing` and `verticalSpacing` parameter.
+However, `HorizontalGrid` and `VerticalGrid` do not have these parameters.
+They can have spacing with `Arrangement`.
 
 ### SpaceAround
 

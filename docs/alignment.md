@@ -1,11 +1,10 @@
 # Alignment
 
-The `content` lambda of `HorizontalGrid` and `VerticalGrid` is `GridScope`.
-And the `content` lambda of `BoxGrid` is `BoxGridScope`.
-In the `GridScope` and `BoxGridScope`, users can apply `align` modifier to item composable.
+All grid layout composables have a `content` lambda parameter.
+In this `content`, items can have the `align` modifier.
 
 The `align` modifier set the item composable's alignment in the cell.
-`align` takes an `Alignment` parameter likes `BoxScope`'s one.
+`align` takes an `Alignment` likes `BoxScope`'s one.
 For example, you can set an item composable at the bottom-center of the cell with following code:
 
 ```Kotlin

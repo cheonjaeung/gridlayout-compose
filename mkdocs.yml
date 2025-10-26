@@ -36,7 +36,7 @@ nav:
   - 'Installation': installation.md
   - 'Layout Composables': layout-composables.md
   - 'Cell Strategy': cell-strategy.md
-  - 'Arrangement': arrangement.md
+  - 'Arrangement and Spacing': arrangement-and-spacing.md
   - 'Alignment': alignment.md
   - 'Spanning Cells': span.md
   - 'Changelog': 'https://github.com/cheonjaeung/gridlayout-compose/blob/main/CHANGELOG.md'
