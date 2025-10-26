@@ -32,8 +32,8 @@ BoxGrid(
 ```
 
 !!! note
-    You can see `rows` and `columns` parameter for `HorizontalGrid` and `VerticalGrid`.
-    This parameter is required parameter for grid layout.
+    You can see `rows` and `columns` parameter for `BoxGrid`.
+    This parameters are required parameter for grid layout.
     For details, see [cell strategy](./cell-strategy.md) section.
 
 ## Sequential Grid

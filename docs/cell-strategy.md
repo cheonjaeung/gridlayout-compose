@@ -144,3 +144,4 @@ The `fill` parameter determines that grid's item composable should fill grid cel
 When `fill` is true, grid layout forces item composable to have width or height to fit cell's maximum width or height.
 (width when vertical grid, height when horizontal grid)
 But when false, item composable can have width or height from 0 to cell's maximum width or height.
+This allows an item to be aligned within a cell, instead of being forced to fill it.
