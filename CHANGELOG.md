@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.5.1
+
+_2025.11.02_
+
+### Changed
+
+- Optimize measurement performance of `HorizontalGrid` and `VerticalGrid` via reducing object memory allocation.
+- Compose dependencies are replaced with Compose Multiplatform plugin.
+- `androidx.core` dependency is removed from Android artifact.
+
 ## 2.5.0
 
 _2025.10.16_
