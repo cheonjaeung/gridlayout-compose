@@ -5,7 +5,9 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.Constraints
 import kotlin.jvm.JvmInline
 
-private const val MaxSize = 0xFFFF
+private const val Infinity = 0xFFFF
+
+private const val MaxSize = Infinity
 
 private const val MainAxisMinSizeBitOffset = 48
 private const val MainAxisMaxSizeBitOffset = 32
@@ -53,15 +55,18 @@ private fun packOrientationIndependentConstraints(
     crossAxisMinSize: Int,
     crossAxisMaxSize: Int
 ): OrientationIndependentConstraints {
+    val mainAxisMaxSizeValue = if (mainAxisMaxSize == Constraints.Infinity) Infinity else mainAxisMaxSize
+    val crossAxisMaxSizeValue = if (crossAxisMaxSize == Constraints.Infinity) Infinity else crossAxisMaxSize
+
     require(mainAxisMinSize >= 0 && crossAxisMinSize >= 0) {
         "size must be positive"
     }
 
-    require(mainAxisMinSize <= mainAxisMaxSize && crossAxisMinSize <= crossAxisMaxSize) {
+    require(mainAxisMinSize <= mainAxisMaxSizeValue && crossAxisMinSize <= crossAxisMaxSizeValue) {
         "minSize must be less than or equal to maxSize"
     }
 
-    require(mainAxisMaxSize <= MaxSize && crossAxisMaxSize <= MaxSize) {
+    require(mainAxisMaxSizeValue <= MaxSize && crossAxisMaxSizeValue <= MaxSize) {
         "size must be less than $MaxSize"
     }
 
@@ -70,9 +75,9 @@ private fun packOrientationIndependentConstraints(
     // | mainAxisMinSize | mainAxisMaxSize | crossAxisMinSize | crossAxisMaxSize |
     // | <---16 bits---> | <---16 bits---> | <----16 bits---> | <----16 bits---> |
     val packed = (mainAxisMinSize.toLong() shl MainAxisMinSizeBitOffset) or
-        (mainAxisMaxSize.toLong() shl MainAxisMaxSizeBitOffset) or
+        (mainAxisMaxSizeValue.toLong() shl MainAxisMaxSizeBitOffset) or
         (crossAxisMinSize.toLong() shl CrossAxisMinSizeBitOffset) or
-        crossAxisMaxSize.toLong()
+        crossAxisMaxSizeValue.toLong()
 
     return OrientationIndependentConstraints(packed)
 }
@@ -94,8 +99,8 @@ private fun packOrientationIndependentConstraints(
  * If the constraints instance is created frequently, it can cause GC pressure and laggy frame.
  * For inlining this constraints representation, this class uses a single [Long] to pack and
  * represent the four integer sizes: [mainAxisMinSize], [mainAxisMaxSize], [crossAxisMinSize], and
- * [crossAxisMaxSize]. Each size is allocated 16 bits, allowing a maximum value of 65535 (2^16 - 1)
- * for each individual constraint component.
+ * [crossAxisMaxSize]. Each size is allocated 16 bits, allowing a maximum value of 65534 (2^16 - 1)
+ * for each individual constraint component. 65535 is used to represent infinity.
  */
 @Immutable
 @JvmInline
@@ -128,6 +133,11 @@ internal value class OrientationIndependentConstraints(val value: Long) {
      * Convert this to original [Constraints] class based on the layout orientation.
      */
     fun toConstraints(orientation: LayoutOrientation): Constraints {
+        val mainAxisMinSize = if (mainAxisMinSize == Infinity) Constraints.Infinity else mainAxisMinSize
+        val mainAxisMaxSize = if (mainAxisMaxSize == Infinity) Constraints.Infinity else mainAxisMaxSize
+        val crossAxisMinSize = if (crossAxisMinSize == Infinity) Constraints.Infinity else crossAxisMinSize
+        val crossAxisMaxSize = if (crossAxisMaxSize == Infinity) Constraints.Infinity else crossAxisMaxSize
+
         return if (orientation == LayoutOrientation.Horizontal) {
             Constraints(
                 minWidth = mainAxisMinSize,
@@ -146,11 +156,16 @@ internal value class OrientationIndependentConstraints(val value: Long) {
     }
 
     override fun toString(): String {
+        val mainAxisMinStr = if (mainAxisMinSize == Infinity) "Infinity" else "$mainAxisMinSize"
+        val mainAxisMaxStr = if (mainAxisMaxSize == Infinity) "Infinity" else "$mainAxisMaxSize"
+        val crossAxisMinStr = if (crossAxisMinSize == Infinity) "Infinity" else "$crossAxisMinSize"
+        val crossAxisMaxStr = if (crossAxisMaxSize == Infinity) "Infinity" else "$crossAxisMaxSize"
+
         return "OrientationIndependentConstraints(" +
-            "mainAxisMinSize=$mainAxisMinSize, " +
-            "mainAxisMaxSize=$mainAxisMaxSize, " +
-            "crossAxisMinSize=$crossAxisMinSize, " +
-            "crossAxisMaxSize=$crossAxisMaxSize" +
+            "mainAxisMinSize=$mainAxisMinStr, " +
+            "mainAxisMaxSize=$mainAxisMaxStr, " +
+            "crossAxisMinSize=$crossAxisMinStr, " +
+            "crossAxisMaxSize=$crossAxisMaxStr" +
             ")"
     }
 }
