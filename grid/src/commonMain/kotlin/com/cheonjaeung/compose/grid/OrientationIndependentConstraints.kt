@@ -57,9 +57,8 @@ private fun packOrientationIndependentConstraints(
         "size must be positive"
     }
 
-    require(mainAxisMinSize <= mainAxisMaxSize || crossAxisMinSize <= crossAxisMaxSize) {
-        "mainAxisMinSize must be less than or equal to mainAxisMaxSize && " +
-            "crossAxisMinSize must be less than or equal to crossAxisMaxSize"
+    require(mainAxisMinSize <= mainAxisMaxSize && crossAxisMinSize <= crossAxisMaxSize) {
+        "minSize must be less than or equal to maxSize"
     }
 
     require(mainAxisMaxSize <= MaxSize && crossAxisMaxSize <= MaxSize) {
