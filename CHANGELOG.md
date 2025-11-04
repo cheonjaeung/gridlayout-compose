@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.5.2
+
+_2025.11.04_
+
+### Changed
+
+- Fix crash when an item composable has infinity constraints size in `HorizontalGrid` or `VerticalGrid`.
+- Fix incorrect min/max size validation when creating `OrientationIndependentConstraints`.
+
 ## 2.5.1
 
 _2025.11.02_
