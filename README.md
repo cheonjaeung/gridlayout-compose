@@ -4,13 +4,13 @@
 ![maven-central](https://img.shields.io/maven-central/v/com.cheonjaeung.compose.grid/grid)
 [![Static Badge](https://img.shields.io/badge/License-Apache%202.0-Green)](https://github.com/cheonjaeung/gridlayout-compose/blob/main/LICENSE.txt)
 
-GridLayout for Compose is a library that provides missing non lazy grid layout composables for Compose Multiplatform.
+GridLayout for Compose is a library that provides missing non-lazy grid layout composables for Compose Multiplatform.
 
 ![grid-examples](docs/images/grid-overview-examples.png)
 
-Jetpack Compose doesn't offer non lazy grid layout, there are only lazy grid layout and alternatives (for example, flow layout).
-But sometimes, we need to use grid layout for less complexity and more intuitive layout code.
-This library can be simpler solution for small grid UI.
+Jetpack Compose doesn't offer non-lazy grid layouts, providing only lazy grids and alternatives (e.g., flow layouts).
+However, sometimes we need a simple grid layout for less complexity and more intuitive layout code.
+This library offers sequential grid, and box grid as simpler solutions for small grid UIs.
 
 There are benefits of this library:
 
@@ -21,6 +21,7 @@ There are benefits of this library:
   If only a portion of the full layout is grid, No need to use LazyGrid with span size for full layout.
 - **Efficient for small datasets**: LazyGrid has complex logics for large datasets. But when datasets are small, it can be inefficient.
   The GridLayout is just a simple layout. It can be more efficient for smaller datasets.
+- **Flexible item placement**: This library provide `BoxGrid` layout to allow placing items at the specific row and column position.
 
 ## Installation
 
