@@ -32,7 +32,7 @@ interface GridScope {
 internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: (GridItemSpanScope.() -> Int)?): Modifier {
         return this.then(
-            HorizontalVerticalGridSpanElement(
+            SequentialGridSpanElement(
                 span = span,
                 inspectorInfo = debugInspectorInfo {
                     name = "span"
@@ -43,6 +43,6 @@ internal object GridScopeInstance : GridScope {
     }
 
     override fun Modifier.align(alignment: Alignment): Modifier {
-        return this.then(HorizontalVerticalGridAlignmentElement(alignment))
+        return this.then(SequentialGridAlignmentElement(alignment))
     }
 }

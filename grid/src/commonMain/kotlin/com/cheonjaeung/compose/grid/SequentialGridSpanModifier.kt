@@ -6,15 +6,15 @@ import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
-internal class HorizontalVerticalGridSpanElement(
+internal class SequentialGridSpanElement(
     val span: (GridItemSpanScope.() -> Int)?,
     val inspectorInfo: InspectorInfo.() -> Unit
-) : ModifierNodeElement<HorizontalVerticalGridSpanNode>() {
-    override fun create(): HorizontalVerticalGridSpanNode {
-        return HorizontalVerticalGridSpanNode(span)
+) : ModifierNodeElement<SequentialGridSpanNode>() {
+    override fun create(): SequentialGridSpanNode {
+        return SequentialGridSpanNode(span)
     }
 
-    override fun update(node: HorizontalVerticalGridSpanNode) {
+    override fun update(node: SequentialGridSpanNode) {
         node.span = span
     }
 
@@ -25,7 +25,7 @@ internal class HorizontalVerticalGridSpanElement(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false
-        if (other !is HorizontalVerticalGridSpanElement) return false
+        if (other !is SequentialGridSpanElement) return false
         return this.span == other.span
     }
 
@@ -34,11 +34,11 @@ internal class HorizontalVerticalGridSpanElement(
     }
 }
 
-internal class HorizontalVerticalGridSpanNode(
+internal class SequentialGridSpanNode(
     var span: (GridItemSpanScope.() -> Int)?
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
-        val p = parentData as? HorizontalVerticalGridParentData ?: HorizontalVerticalGridParentData()
+        val p = parentData as? SequentialGridParentData ?: SequentialGridParentData()
         if (p.span == null) {
             p.span = span
         }
