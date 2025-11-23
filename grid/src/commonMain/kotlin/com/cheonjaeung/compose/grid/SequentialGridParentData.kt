@@ -7,5 +7,6 @@ import androidx.compose.ui.Alignment
  */
 internal data class SequentialGridParentData(
     var span: (GridItemSpanScope.() -> Int)? = null,
-    var alignment: Alignment? = null
+    var alignment: Alignment? = null,
+    var mainAxisSizeFraction: Float? = null
 )

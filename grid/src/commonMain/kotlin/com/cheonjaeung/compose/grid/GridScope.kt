@@ -27,8 +27,18 @@ interface GridScope {
      */
     @Stable
     fun Modifier.align(alignment: Alignment): Modifier
+
+    /**
+     * Makes the item expand to fill the main axis of the line.
+     *
+     * @param fraction The fraction of the main axis size, from 0 to 1, inclusive.
+     */
+    @Stable
+    @ExperimentalGridApi
+    fun Modifier.fillMaxMainAxisSize(fraction: Float = 1.0f): Modifier
 }
 
+@OptIn(ExperimentalGridApi::class)
 internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: (GridItemSpanScope.() -> Int)?): Modifier {
         return this.then(
@@ -44,5 +54,12 @@ internal object GridScopeInstance : GridScope {
 
     override fun Modifier.align(alignment: Alignment): Modifier {
         return this.then(SequentialGridAlignmentElement(alignment))
+    }
+
+    override fun Modifier.fillMaxMainAxisSize(fraction: Float): Modifier {
+        require(fraction in 0.0f..1.0f) {
+            "Fraction must be between 0.0 and 1.0"
+        }
+        return this.then(SequentialGridFillMainAxisSizeElement(fraction))
     }
 }
