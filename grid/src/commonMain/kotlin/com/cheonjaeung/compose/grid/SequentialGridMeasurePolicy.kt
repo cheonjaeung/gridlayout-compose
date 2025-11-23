@@ -17,7 +17,7 @@ import androidx.compose.ui.util.fastForEachIndexed
 import kotlin.math.max
 import kotlin.math.min
 
-internal fun horizontalVerticalGridMeasurePolicy(
+internal fun sequentialGridMeasurePolicy(
     orientation: LayoutOrientation,
     calculateCrossAxisCellConstraints: Density.(Constraints) -> List<Int>,
     fillCellSize: Boolean,
@@ -27,7 +27,7 @@ internal fun horizontalVerticalGridMeasurePolicy(
     crossAxisSpacing: Dp,
     defaultAlignment: Alignment
 ): MeasurePolicy {
-    return HorizontalVerticalGridMeasurePolicy(
+    return SequentialGridMeasurePolicy(
         orientation,
         calculateCrossAxisCellConstraints,
         fillCellSize,
@@ -39,7 +39,7 @@ internal fun horizontalVerticalGridMeasurePolicy(
     )
 }
 
-private class HorizontalVerticalGridMeasurePolicy(
+private class SequentialGridMeasurePolicy(
     private val orientation: LayoutOrientation,
     private val calculateCrossAxisCellConstraints: Density.(Constraints) -> List<Int>,
     private val fillCellSize: Boolean,
@@ -56,7 +56,7 @@ private class HorizontalVerticalGridMeasurePolicy(
         val crossAxisCellConstraintsList = calculateCrossAxisCellConstraints(constraints)
         val crossAxisCellCount = crossAxisCellConstraintsList.size
 
-        val measureHelper = HorizontalVerticalGridMeasureHelper(
+        val measureHelper = SequentialGridMeasureHelper(
             orientation = orientation,
             measurables = measurables,
             crossAxisCellConstraintsList = crossAxisCellConstraintsList,
@@ -84,6 +84,7 @@ private class HorizontalVerticalGridMeasurePolicy(
                 layoutWidth = arrangeResult.mainAxisLayoutSize
                 layoutHeight = arrangeResult.crossAxisLayoutSize
             }
+
             LayoutOrientation.Vertical -> {
                 layoutWidth = arrangeResult.crossAxisLayoutSize
                 layoutHeight = arrangeResult.mainAxisLayoutSize
@@ -100,9 +101,9 @@ private class HorizontalVerticalGridMeasurePolicy(
 }
 
 /**
- * A class to help grid layout measuring and placing.
+ * A class to help horizontal/vertical grid layout measuring and placing.
  */
-private class HorizontalVerticalGridMeasureHelper(
+private class SequentialGridMeasureHelper(
     val orientation: LayoutOrientation,
     val measurables: List<Measurable>,
     val crossAxisCellConstraintsList: List<Int>,
@@ -114,8 +115,8 @@ private class HorizontalVerticalGridMeasureHelper(
     val crossAxisSpacing: Dp,
     val defaultAlignment: Alignment
 ) {
-    private val gridParentDataArrays: Array<HorizontalVerticalGridParentData?> = Array(measurables.size) {
-        measurables[it].parentData as? HorizontalVerticalGridParentData
+    private val gridParentDataArrays: Array<SequentialGridParentData?> = Array(measurables.size) {
+        measurables[it].parentData as? SequentialGridParentData
     }
 
     /**
@@ -359,7 +360,7 @@ private class HorizontalVerticalGridMeasureHelper(
     }
 
     /**
-     * Result data of [HorizontalVerticalGridMeasureHelper.measure].
+     * Result data of [SequentialGridMeasureHelper.measure].
      *
      * It contains basic layout information and placeables as 2-dimension table.
      */
@@ -379,7 +380,7 @@ private class HorizontalVerticalGridMeasureHelper(
     )
 
     /**
-     * Result data of [HorizontalVerticalGridMeasureHelper.arrange].
+     * Result data of [SequentialGridMeasureHelper.arrange].
      *
      * It contains layout size info and position of placeables.
      */

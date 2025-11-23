@@ -7,14 +7,14 @@ import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
-internal class HorizontalVerticalGridAlignmentElement(
+internal class SequentialGridAlignmentElement(
     val alignment: Alignment
-) : ModifierNodeElement<HorizontalVerticalGridAlignmentNode>() {
-    override fun create(): HorizontalVerticalGridAlignmentNode {
-        return HorizontalVerticalGridAlignmentNode(alignment)
+) : ModifierNodeElement<SequentialGridAlignmentNode>() {
+    override fun create(): SequentialGridAlignmentNode {
+        return SequentialGridAlignmentNode(alignment)
     }
 
-    override fun update(node: HorizontalVerticalGridAlignmentNode) {
+    override fun update(node: SequentialGridAlignmentNode) {
         node.alignment = alignment
     }
 
@@ -26,7 +26,7 @@ internal class HorizontalVerticalGridAlignmentElement(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false
-        if (other !is HorizontalVerticalGridAlignmentElement) return false
+        if (other !is SequentialGridAlignmentElement) return false
         return this.alignment == other.alignment
     }
 
@@ -35,11 +35,11 @@ internal class HorizontalVerticalGridAlignmentElement(
     }
 }
 
-internal class HorizontalVerticalGridAlignmentNode(
+internal class SequentialGridAlignmentNode(
     var alignment: Alignment
 ) : Modifier.Node(), ParentDataModifierNode {
     override fun Density.modifyParentData(parentData: Any?): Any {
-        val p = parentData as? HorizontalVerticalGridParentData ?: HorizontalVerticalGridParentData()
+        val p = parentData as? SequentialGridParentData ?: SequentialGridParentData()
         p.alignment = alignment
         return p
     }
