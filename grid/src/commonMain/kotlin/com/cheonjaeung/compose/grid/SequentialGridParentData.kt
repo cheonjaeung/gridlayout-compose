@@ -7,9 +7,5 @@ import androidx.compose.ui.Alignment
  */
 internal data class SequentialGridParentData(
     var span: (GridItemSpanScope.() -> Int)? = null,
-    var alignment: Alignment = DefaultAlignment
-) {
-    companion object Companion {
-        internal val DefaultAlignment: Alignment = Alignment.TopStart
-    }
-}
+    var alignment: Alignment? = null
+)
