@@ -32,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cheonjaeung.compose.grid.BoxGrid
-import com.cheonjaeung.compose.grid.ExperimentalGridApi
 import com.cheonjaeung.compose.grid.SimpleGridCells
 import kotlinx.coroutines.launch
 
@@ -160,7 +159,6 @@ private fun SampleTopBar(
     )
 }
 
-@OptIn(ExperimentalGridApi::class)
 @Composable
 private fun SampleContent(
     rows: SimpleGridCells,

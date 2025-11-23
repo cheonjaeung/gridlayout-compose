@@ -12,14 +12,12 @@ import androidx.compose.ui.platform.debugInspectorInfo
  */
 @Immutable
 @LayoutScopeMarker
-@ExperimentalGridApi
 interface BoxGridScope {
     /**
      * Sets the row position of the cell. The row position starts from 0 and
      * the default is 0.
      */
     @Stable
-    @ExperimentalGridApi
     fun Modifier.row(row: Int): Modifier
 
     /**
@@ -27,7 +25,6 @@ interface BoxGridScope {
      * the default is 0.
      */
     @Stable
-    @ExperimentalGridApi
     fun Modifier.column(column: Int): Modifier
 
     /**
@@ -35,7 +32,6 @@ interface BoxGridScope {
      * the default is 0.
      */
     @Stable
-    @ExperimentalGridApi
     fun Modifier.position(row: Int, column: Int): Modifier
 
     /**
@@ -45,18 +41,15 @@ interface BoxGridScope {
      * the default span size.
      */
     @Stable
-    @ExperimentalGridApi
     fun Modifier.span(span: ((BoxGridItemSpanScope).() -> BoxGridItemSpan)? = null): Modifier
 
     /**
      * Aligns the item to specific [Alignment] within the cell.
      */
     @Stable
-    @ExperimentalGridApi
     fun Modifier.align(alignment: Alignment): Modifier
 }
 
-@OptIn(ExperimentalGridApi::class)
 internal object BoxGridScopeInstance : BoxGridScope {
     override fun Modifier.row(row: Int): Modifier {
         require(row >= 0) { "$row is invalid value, must be zero or positive" }
