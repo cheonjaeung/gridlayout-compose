@@ -360,9 +360,7 @@ private class SequentialGridMeasureHelper(
     }
 
     /**
-     * Result data of [SequentialGridMeasureHelper.measure].
-     *
-     * It contains basic layout information and placeables as 2-dimension table.
+     * Result data of the measurement for the layout and children.
      */
     class GridMeasureResult(
         val mainAxisCount: Int,
@@ -372,6 +370,9 @@ private class SequentialGridMeasureHelper(
         val placeableMeasureInfoTable: List<List<PlaceableMeasureInfo>>
     )
 
+    /**
+     * Result data of measurement for an item placeable.
+     */
     class PlaceableMeasureInfo(
         val placeable: Placeable,
         val span: Int,
@@ -380,9 +381,7 @@ private class SequentialGridMeasureHelper(
     )
 
     /**
-     * Result data of [SequentialGridMeasureHelper.arrange].
-     *
-     * It contains layout size info and position of placeables.
+     * Result data of the arrangement for the layout and children.
      */
     class GridArrangeResult(
         val mainAxisLayoutSize: Int,
