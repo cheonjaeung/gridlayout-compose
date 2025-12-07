@@ -30,8 +30,8 @@ jobs:
       - name: Validate binary compatibility
         run: ./gradlew apiCheck
 
-      - name: Run UI tests
-        run: ./gradlew :grid:verifyPaparazziDebug
+      - name: Run tests
+        run: ./gradlew :grid:test
 
   release:
     name: Release
