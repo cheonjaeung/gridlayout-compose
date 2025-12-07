@@ -68,14 +68,20 @@ You can run sample app both Andorid and iOS (iOS sample app can run only on the 
 
 ### Testing
 
-This project uses snapshot testing.
-To run test, run following command:
+This project has unit tests and snapshot tests.
+Run following command to run all tests:
+
+```shell
+./gradlew :grid:test
+```
+
+To run only snapshot tests, run following command:
 
 ```shell
 ./gradlew :grid:verifyPaparazziDebug
 ```
 
-If you add test cases, run following command to create new snapshots:
+If you add or edit snapshot tests, run following command to create new snapshots:
 
 ```shell
 ./gradlew :grid:recordPaparazziDebug
