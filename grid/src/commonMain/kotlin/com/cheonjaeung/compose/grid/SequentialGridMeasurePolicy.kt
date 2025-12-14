@@ -143,10 +143,11 @@ private class SequentialGridMeasureHelper(
 
         while (measurableIndex < measurableCount) {
             val placeableLine = mutableListOf<PlaceableMeasureInfo>()
-            var spanSum = 0
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
-            var crossAxisIndex = 0
+
+            var spanSum = 0
             var placeableMainAxisSizeMax = 0
+            var crossAxisIndex = 0
             var crossAxisPlacedSpace = 0
             var crossAxisSpaceAfterLast: Int
             var crossAxisLineLayoutSize = 0
