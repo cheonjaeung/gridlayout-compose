@@ -48,8 +48,16 @@ interface SimpleGridCells {
             availableSize: Int,
             spacing: Int
         ): List<Int> {
+            if (availableSize <= 0) {
+                return emptyList()
+            }
+
             val totalSpacing = spacing * (count - 1)
             val totalCellSize = availableSize - totalSpacing
+            if (totalCellSize <= 0) {
+                return emptyList()
+            }
+
             val cellSize = totalCellSize / count
             val remainingPixels = totalCellSize % count
             return List(count) { index ->
@@ -100,15 +108,27 @@ interface SimpleGridCells {
             availableSize: Int,
             spacing: Int
         ): List<Int> {
+            if (availableSize <= 0) {
+                return emptyList()
+            }
+
             val minSizePx = minSize.roundToPx()
             val minSizeWithSpacingPx = minSizePx + spacing
-            val count = if (minSizeWithSpacingPx != 0) {
+            val count = if (minSizeWithSpacingPx > 0) {
                 max((availableSize + spacing) / minSizeWithSpacingPx, 1)
             } else {
-                1
+                0
             }
+            if (count == 0) {
+                return emptyList()
+            }
+
             val totalSpacing = spacing * (count - 1)
             val totalCellSize = availableSize - totalSpacing
+            if (totalCellSize <= 0) {
+                return emptyList()
+            }
+
             val cellSize = totalCellSize / count
             val remainingPixels = totalCellSize % count
             return List(count) { index ->
@@ -163,17 +183,20 @@ interface SimpleGridCells {
             availableSize: Int,
             spacing: Int
         ): List<Int> {
+            if (availableSize <= 0) {
+                return emptyList()
+            }
+
             val cellSize = size.roundToPx()
             val availableSizeWithSpacing = availableSize + spacing
             val cellSizeWithSpacing = cellSize + spacing
+            if (cellSizeWithSpacing <= 0) {
+                return emptyList()
+            }
 
             return if (cellSizeWithSpacing < availableSizeWithSpacing) {
-                val count = if (cellSizeWithSpacing != 0) {
-                    availableSizeWithSpacing / cellSizeWithSpacing
-                } else {
-                    1
-                }
-                return List(count) { cellSize }
+                val count = availableSizeWithSpacing / cellSizeWithSpacing
+                List(count) { cellSize }
             } else {
                 List(1) { availableSize }
             }
