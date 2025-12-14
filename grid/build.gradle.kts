@@ -62,6 +62,12 @@ android {
     }
 }
 
+afterEvaluate {
+    tasks.named("test").configure {
+        dependsOn("verifyPaparazzi")
+    }
+}
+
 mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
