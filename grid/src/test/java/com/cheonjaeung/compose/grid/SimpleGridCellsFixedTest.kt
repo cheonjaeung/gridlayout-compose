@@ -106,4 +106,34 @@ class SimpleGridCellsFixedTest {
 
         assertEquals(listOf(33, 33, 32, 32), cellSizes)
     }
+
+    @Test
+    fun testZeroAvailableSize() {
+        val fixed = SimpleGridCells.Fixed(4)
+        val availableSize = 0
+        val spacing = 0
+
+        val cellSizes = with(fixed) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize, spacing)
+            }
+        }
+
+        assertEquals(emptyList<Int>(), cellSizes)
+    }
+
+    @Test
+    fun testZeroCellSize() {
+        val fixed = SimpleGridCells.Fixed(3)
+        val availableSize = 100
+        val spacing = 50
+
+        val cellSizes = with(fixed) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize, spacing)
+            }
+        }
+
+        assertEquals(emptyList<Int>(), cellSizes)
+    }
 }

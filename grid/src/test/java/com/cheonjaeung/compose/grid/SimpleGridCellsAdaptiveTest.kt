@@ -158,4 +158,34 @@ class SimpleGridCellsAdaptiveTest {
 
         assertEquals(listOf(25, 25, 25, 25, 25, 25), cellSizes)
     }
+
+    @Test
+    fun testZeroAvailableSize() {
+        val adaptive = SimpleGridCells.Adaptive(25.dp)
+        val availableSize = 0
+        val spacing = 0
+
+        val cellSizes = with(adaptive) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize, spacing)
+            }
+        }
+
+        assertEquals(emptyList<Int>(), cellSizes)
+    }
+
+    @Test
+    fun testMinSizePlusSpacingIsZero() {
+        val adaptive = SimpleGridCells.Adaptive(50.dp)
+        val availableSize = 100
+        val spacing = -50
+
+        val cellSizes = with(adaptive) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize, spacing)
+            }
+        }
+
+        assertEquals(emptyList<Int>(), cellSizes)
+    }
 }
