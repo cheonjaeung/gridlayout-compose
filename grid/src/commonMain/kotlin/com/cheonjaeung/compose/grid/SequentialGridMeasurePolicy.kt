@@ -14,8 +14,10 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
+import androidx.compose.ui.util.fastMaxOfOrNull
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 internal fun sequentialGridMeasurePolicy(
     orientation: LayoutOrientation,
@@ -142,11 +144,15 @@ private class SequentialGridMeasureHelper(
         var crossAxisTotalLayoutSize = 0
 
         while (measurableIndex < measurableCount) {
-            val placeableLine = mutableListOf<PlaceableMeasureInfo>()
-            var spanSum = 0
+            val measurableOriginalIndices = mutableListOf<Int>()
+            val spanLine = mutableListOf<Int>()
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
-            var crossAxisIndex = 0
+            val mainAxisMaxIntrinsicSizes = mutableListOf<Int?>()
+
+            var spanSum = 0
             var placeableMainAxisSizeMax = 0
+            var containsFillMaxMainAxisSize = false
+            var crossAxisIndex = 0
             var crossAxisPlacedSpace = 0
             var crossAxisSpaceAfterLast: Int
             var crossAxisLineLayoutSize = 0
@@ -173,15 +179,60 @@ private class SequentialGridMeasureHelper(
                     break
                 }
                 spanSum += span
+                spanLine.add(span)
 
                 val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
                 val measurable = measurables[measurableIndex]
-                val crossAxisCellConstraints = crossAxisCellConstraintsList[crossAxisIndex] * span +
-                    crossAxisSpacingPx * (span - 1)
+                measurableOriginalIndices.add(measurableIndex)
+                val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
+
+                val mainAxisSizeFraction = gridParentDataArrays[measurableIndex]?.mainAxisSizeFraction
+                val mainAxisMaxIntrinsicSize = if (mainAxisSizeFraction == null) {
+                    measurable.maxIntrinsicSize(orientation, crossAxisCellConstraints)
+                } else {
+                    containsFillMaxMainAxisSize = true
+                    null
+                }
+
+                mainAxisMaxIntrinsicSizes.add(mainAxisMaxIntrinsicSize)
+
+                crossAxisSpaceAfterLast = min(
+                    crossAxisSpacingPx,
+                    crossAxisMaxLayoutSize + crossAxisSpacingPx - crossAxisPlacedSpace - crossAxisCellConstraints
+                )
+                crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
+                placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, mainAxisMaxIntrinsicSize ?: 0)
+                crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
+                crossAxisIndex += span
+                measurableIndex++
+            }
+
+            val placeableLine = mutableListOf<PlaceableMeasureInfo>()
+            val maxMainAxisIntrinsicSize = if (containsFillMaxMainAxisSize) {
+                mainAxisMaxIntrinsicSizes.fastMaxOfOrNull { it ?: 0 }
+            } else {
+                null
+            }
+
+            // Reset crossAxisIndex for the second loop
+            crossAxisIndex = 0
+
+            measurableOriginalIndices.fastForEachIndexed { index, originalIndex ->
+                val span = spanLine[index]
+                val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
+
+                val measurable = measurables[originalIndex]
+                val parentData = gridParentDataArrays[originalIndex]
+                val alignment = parentData?.alignment ?: defaultAlignment
+                val fraction = parentData?.mainAxisSizeFraction
 
                 val placeable = measurable.measure(
                     constraints = OrientationIndependentConstraints(
-                        mainAxisMinSize = 0,
+                        mainAxisMinSize = if (fraction != null) {
+                            ((maxMainAxisIntrinsicSize ?: 0) * fraction).roundToInt()
+                        } else {
+                            0
+                        },
                         mainAxisMaxSize = if (mainAxisMaxLayoutSize == Constraints.Infinity) {
                             Constraints.Infinity
                         } else {
@@ -195,28 +246,17 @@ private class SequentialGridMeasureHelper(
                     PlaceableMeasureInfo(
                         placeable = placeable,
                         span = span,
-                        alignment = gridParentDataArrays[measurableIndex]?.alignment ?: defaultAlignment,
+                        alignment = alignment,
                         crossAxisCellSize = crossAxisCellConstraints
                     )
                 )
-
-                crossAxisSpaceAfterLast = min(
-                    crossAxisSpacingPx,
-                    crossAxisMaxLayoutSize + crossAxisSpacingPx - crossAxisPlacedSpace - crossAxisCellConstraints
-                )
-                crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
-                placeableMainAxisSizeMax = max(
-                    placeableMainAxisSizeMax,
-                    placeable.mainAxisSize(orientation)
-                )
-                crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
+                placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, placeable.mainAxisSize(orientation))
                 crossAxisIndex += span
-                measurableIndex++
             }
+            placeableTable.add(placeableLine)
+
             crossAxisLineLayoutSize -= crossAxisSpacingPx
             crossAxisTotalLayoutSize = max(crossAxisTotalLayoutSize, crossAxisLineLayoutSize)
-
-            placeableTable.add(placeableLine)
 
             mainAxisSpaceAfterLast = min(
                 mainAxisSpacingPx,
@@ -244,6 +284,10 @@ private class SequentialGridMeasureHelper(
             crossAxisLayoutSize = crossAxisLayoutSize,
             placeableMeasureInfoTable = placeableTable
         )
+    }
+
+    private fun calculateCrossAxisCellConstraints(crossAxisIndex: Int, crossAxisSpacingPx: Int, span: Int): Int {
+        return crossAxisCellConstraintsList[crossAxisIndex] * span + crossAxisSpacingPx * (span - 1)
     }
 
     /**
@@ -360,9 +404,7 @@ private class SequentialGridMeasureHelper(
     }
 
     /**
-     * Result data of [SequentialGridMeasureHelper.measure].
-     *
-     * It contains basic layout information and placeables as 2-dimension table.
+     * Result data of the measurement for the layout and children.
      */
     class GridMeasureResult(
         val mainAxisCount: Int,
@@ -372,6 +414,9 @@ private class SequentialGridMeasureHelper(
         val placeableMeasureInfoTable: List<List<PlaceableMeasureInfo>>
     )
 
+    /**
+     * Result data of measurement for an item placeable.
+     */
     class PlaceableMeasureInfo(
         val placeable: Placeable,
         val span: Int,
@@ -380,9 +425,7 @@ private class SequentialGridMeasureHelper(
     )
 
     /**
-     * Result data of [SequentialGridMeasureHelper.arrange].
-     *
-     * It contains layout size info and position of placeables.
+     * Result data of the arrangement for the layout and children.
      */
     class GridArrangeResult(
         val mainAxisLayoutSize: Int,

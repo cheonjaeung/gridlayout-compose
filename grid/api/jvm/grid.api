@@ -58,11 +58,14 @@ public final class com/cheonjaeung/compose/grid/GridKt {
 
 public abstract interface class com/cheonjaeung/compose/grid/GridScope {
 	public abstract fun align (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;)Landroidx/compose/ui/Modifier;
+	public abstract fun fillMaxMainAxisSize (Landroidx/compose/ui/Modifier;F)Landroidx/compose/ui/Modifier;
+	public static synthetic fun fillMaxMainAxisSize$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;FILjava/lang/Object;)Landroidx/compose/ui/Modifier;
 	public abstract fun span (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 	public static synthetic fun span$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
 }
 
 public final class com/cheonjaeung/compose/grid/GridScope$DefaultImpls {
+	public static synthetic fun fillMaxMainAxisSize$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;FILjava/lang/Object;)Landroidx/compose/ui/Modifier;
 	public static synthetic fun span$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
 }
 
