@@ -46,6 +46,24 @@ class HorizontalGridFillMainAxisSizeTest {
                         .size(50.dp)
                         .background(Color.Yellow)
                 )
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Green)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(75.dp)
+                        .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Blue)
+                )
             }
         }
     }
@@ -75,6 +93,24 @@ class HorizontalGridFillMainAxisSizeTest {
                     modifier = Modifier
                         .size(50.dp)
                         .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Green)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(75.dp)
+                        .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Blue)
                 )
             }
         }
@@ -106,6 +142,24 @@ class HorizontalGridFillMainAxisSizeTest {
                     modifier = Modifier
                         .size(50.dp)
                         .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Green)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(75.dp)
+                        .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Blue)
                 )
             }
         }
