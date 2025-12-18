@@ -7,7 +7,7 @@ _2025.12.18_
 This release introduces a new experimental modifier, `fillMaxMainAxisSize`.
 It makes the item have the same size to the maximum of the main axis sizes.
 
-## Changed
+### Changed
 
 - `BoxGrid` is now stable API.
 - New experimental modifier `fillMaxMainAxisSize` is added.
