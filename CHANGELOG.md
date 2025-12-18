@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.6.0
+
+_2025.12.18_
+
+This release introduces a new experimental modifier, `fillMaxMainAxisSize`.
+It makes the item have the same size to the maximum of the main axis sizes.
+
+## Changed
+
+- `BoxGrid` is now stable API.
+- New experimental modifier `fillMaxMainAxisSize` is added.
+- All grids now skip item measurement and placement when there is no available space or calculated cell size is invalid.
+
 ## 2.5.2
 
 _2025.11.04_
