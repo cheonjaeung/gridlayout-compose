@@ -187,11 +187,9 @@ private class SequentialGridMeasureHelper(
                 val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
 
                 val mainAxisSizeFraction = gridParentDataArrays[measurableIndex]?.mainAxisSizeFraction
-                val mainAxisMaxIntrinsicSize = if (mainAxisSizeFraction == null) {
-                    measurable.maxIntrinsicSize(orientation, crossAxisCellConstraints)
-                } else {
+                val mainAxisMaxIntrinsicSize = measurable.maxIntrinsicSize(orientation, crossAxisCellConstraints)
+                if (mainAxisSizeFraction != null) {
                     containsFillMaxMainAxisSize = true
-                    null
                 }
 
                 mainAxisMaxIntrinsicSizes.add(mainAxisMaxIntrinsicSize)
@@ -201,7 +199,7 @@ private class SequentialGridMeasureHelper(
                     crossAxisMaxLayoutSize + crossAxisSpacingPx - crossAxisPlacedSpace - crossAxisCellConstraints
                 )
                 crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
-                placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, mainAxisMaxIntrinsicSize ?: 0)
+                placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, mainAxisMaxIntrinsicSize)
                 crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
                 crossAxisIndex += span
                 measurableIndex++
