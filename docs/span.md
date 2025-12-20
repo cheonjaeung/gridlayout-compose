@@ -71,7 +71,7 @@ BoxGrid(
     Item(modifier = Modifier.span { BoxGridItemSpan(row = 2) })
     Item(modifier = Modifier.column(2))
     Item(modifier = Modifier.position(row = 1, column = 1).span { BoxGridItemSpan(column = 2) })
-    Item(modifier = Modifier.row(2)span { BoxGridItemSpan(column = 2) })
+    Item(modifier = Modifier.row(2).span { BoxGridItemSpan(column = 2) })
 }
 ```
 
