@@ -94,6 +94,25 @@ VerticalGrid(
     This parameter is required parameter for grid layout.
     For details, see [cell strategy](./cell-strategy.md) section.
 
+### Fill Max Main Axis Size
+
+`HorizontalGrid` and `VerticalGrid` support `fillMaxMainAxisSize` modifier.
+This modifier makes the item have the same size to the maximum of the main axis sizes in the line.
+It is useful when you want to make all items in the same line have the same size.
+
+!!! example "Experimental"
+    This modifier is currently **experimental**. You should use it with `@ExperimentalGridApi` annotation to opt-in.
+
+```kotlin
+HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
+    // This item determines the max size of the column.
+    Item(modifier = Modifier.size(100.dp))
+
+    // This item will be expanded to 100.dp height.
+    Item(modifier = Modifier.fillMaxMainAxisSize())
+}
+```
+
 ## RTL (Right to Left) Supports
 
 ![layout-directions](./images/layout-direction.png)

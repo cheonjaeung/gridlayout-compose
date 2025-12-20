@@ -5,7 +5,7 @@
 `HorizontalGrid` and `VerticalGrid` are also available to set span size.
 The `content` composable lambda of grid layout extends `GridScope`.
 To apply span size, you can set `span` modifier in the `GridScope`.
-Like `BoxGridScope`'s `rowSpan` and `columnSpan`, the `span` modifier takes a lambda to calculate span.
+The `span` modifier takes a lambda to calculate span.
 
 !!! warning
     If returned span size is bigger than maximum cell count of the axis, the cell will be undisplayed.
@@ -57,9 +57,9 @@ VerticalGrid(columns = SimpleGridCells.Adaptive(30.dp)) {
 ## Box Grid
 
 The `content` composable lambda of grid layout extends `BoxGridScope`.
-In the `BoxGridScope`, you can use `rowSpan` and `columnSpan` modifier to set span size of cell.
+In the `BoxGridScope`, you can use `span` modifier to set span size of cell.
 
-The `span` modifiers take a lambda to calculate spans.
+The `span` modifier takes a lambda to calculate spans.
 The lambda returns a `BoxGridItemSpan` which represents row and column span size.
 Or you can just pass `null` instead of lambda to use default span size, which is 1.
 
@@ -71,7 +71,7 @@ BoxGrid(
     Item(modifier = Modifier.span { BoxGridItemSpan(row = 2) })
     Item(modifier = Modifier.column(2))
     Item(modifier = Modifier.position(row = 1, column = 1).span { BoxGridItemSpan(column = 2) })
-    Item(modifier = Modifier.row(2)span { BoxGridItemSpan(column = 2) })
+    Item(modifier = Modifier.row(2).span { BoxGridItemSpan(column = 2) })
 }
 ```
 
