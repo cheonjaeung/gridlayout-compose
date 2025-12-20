@@ -1,7 +1,20 @@
 # Alignment
 
-All grid layout composables have a `content` lambda parameter.
-In this `content`, items can have the `align` modifier.
+All grid layout composables have a `contentAlignment` parameter.
+This parameter sets the default alignment of all items within their grid cells.
+
+```kotlin
+VerticalGrid(
+    columns = SimpleGridCells.Fixed(3),
+    contentAlignment = Alignment.Center
+) {
+    // These items will be centered in their cells by default.
+    Item()
+    Item()
+}
+```
+
+In the `content` lambda, each items can also have the `align` modifier to override the default alignment.
 
 The `align` modifier set the item composable's alignment in the cell.
 `align` takes an `Alignment` likes `BoxScope`'s one.
