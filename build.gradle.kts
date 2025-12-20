@@ -19,10 +19,6 @@ allprojects {
     version = "2.6.0"
 
     repositories {
-        maven {
-            name = "JetBrains"
-            url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        }
         google()
         mavenCentral()
     }
