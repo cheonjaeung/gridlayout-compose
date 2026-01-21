@@ -17,41 +17,30 @@ There are benefits of this library:
   If only a portion of the full layout is grid, No need to use LazyGrid with span size for full layout.
 - **Efficient for small datasets**: LazyGrid has complex logics for large datasets. But when datasets are small, it can be inefficient.
   The GridLayout is just a simple layout. It can be more efficient for smaller datasets.
-- **Flexible item placement**: This library provide box grid layout to allow placing items at the specific row and column position.
+- **Flexible item placement**: This library provide `BoxGrid` layout to allow placing items at the specific row and column position.
+
+## Features
+
+- **Non-Lazy Grid Layouts**: Lightweight grid layouts optimized for small datasets, avoiding the overhead of lazy-loading logic.
+  - **Box Grid**: Place items at specific row and column positions.
+  - **Sequential Grids**: `VerticalGrid` and `HorizontalGrid` for simple sequential item placement.
+  - **Cell Management Support**: Support for `Fixed`, `Adaptive`, and `FixedSize` cell management.
+  - **Spanning**: Allow items to span across multiple rows or columns in both Box and Sequential grids.
+  - **RTL Support**: Full support for Right-to-Left layout directions.
+- **Multiplatform**: Compatible with Compose Multiplatform.
 
 ## Overview
 
 GridLayout for Compose provides a simple layout composables for building grid UI.
 
-This library provides 2 types of grid, **box grid** and **sequential grid**.
+This library provides 2 types of grid, **Box Grid** and **Sequential Grid**.
 
 `BoxGrid` is a grid layout that allows you to place items in grid format.
 Items in `BoxGrid` can be placed in any position, and multiple items can placed in the same cell like `Box` composable.
 
 Sequential grid is a layout that arranges items in a grid format, either horizontally or vertically.
 There are 2 composables for each direction: `HorizontalGrid` and `VerticalGrid`.
-Its API is similar to `LazyGrid`.
-For example to draw grid like this:
-
-![usage-example](images/usage-example.png)
-
-You can write code like this:
-
-```kotlin
-VerticalGrid(
-    columns = SimpleGridCells.Fixed(3),
-    modifier = Modifier.fillMaxWidth(),
-) {
-    for ((index, color) in colors.withIndex()) {
-        ColorBox(
-            color = color,
-            text = (index + 1).toString(),
-        )
-    }
-}
-```
-
-To read more detail documentation, please read [documentation](./installation.md).
+Its API is designed to be familiar to anyone who has used `LazyGrid`.
 
 ## License
 
