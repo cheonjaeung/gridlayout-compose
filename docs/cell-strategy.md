@@ -25,7 +25,7 @@ each line. The `count` must be a positive number. If 0 or negative number is pro
 an exception.
 
 !!! note
-    For information about `fill` parameter, read [Fill Optoin](#fill-option) section.
+    For information about `fill` parameter, read [Fill Option](#fill-option) section.
 
 For example, a grid has 400dp width or height, and `Fixed(4)` is applied.
 

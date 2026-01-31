@@ -23,6 +23,15 @@ There are benefits of this library:
   The GridLayout is just a simple layout. It can be more efficient for smaller datasets.
 - **Flexible item placement**: This library provide `BoxGrid` layout to allow placing items at the specific row and column position.
 
+## Features
+
+- **Non-Lazy Grid Layouts**: Lightweight grid layouts optimized for small datasets, avoiding the overhead of lazy-loading logic.
+  - **Box Grid**: Place items at specific row and column positions.
+  - **Sequential Grids**: `VerticalGrid` and `HorizontalGrid` for simple sequential item placement.
+  - **Cell Management Support**: Support for `Fixed`, `Adaptive`, and `FixedSize` cell management.
+  - **Spanning**: Allow items to span across multiple rows or columns in both Box and Sequential grids.
+  - **RTL Support**: Full support for Right-to-Left layout directions.
+
 ## Installation
 
 To download this library, add dependency to your gradle:
@@ -36,22 +45,58 @@ dependencies {
 **After the 2.0.0 version, the group id and package name is changed from**
 **`io.woong.compose.grid` to `com.cheonjaeung.compose.grid`.**
 
-## Usage
+## Getting Started
 
-![usage-example](docs/images/usage-example.png)
+### Box Grid
+
+`BoxGrid` is a grid layout composable that allows you to place items in grid format.
+Items in `BoxGrid` can be placed in any position.
+
+![boxgrid-layout](docs/images/boxgrid-layout.png)
 
 ```kotlin
+BoxGrid(
+    modifier = Modifier.fillMaxSize(),
+    rows = SimpleGridCells.Fixed(3),
+    columns = SimpleGridCells.Fixed(3),
+) {
+    // It will be placed at 0, 0.
+    Item()
+    // It will be placed at 0, 1.
+    Item(modifier = Modifier.row(1))
+    // It will be placed at 1, 2.
+    Item(modifier = Modifier.position(row = 2, column = 1))
+    // It will be placed at 2, 0.
+    Itme(modifier = Modifier.column(2))
+}
+```
+
+### Sequential Grid
+
+`VerticalGrid` and `HorizontalGrid` are sequential grid layout composables.
+They place items sequentially in a grid format.
+
+![sequentialgrid-layout](docs/images/grid-increasing.png)
+
+```kotlin
+HorizontalGrid(
+    rows = SimpleGridCells.Fixed(3),
+    modifier = Modifier.fillMaxHeight()
+) {
+    Item() // It will be placed at 0, 0.
+    Item() // It will be placed at 0, 1.
+    Item() // It will be placed at 0, 2.
+    Item() // It will be placed at 1, 0.
+}
+
 VerticalGrid(
     columns = SimpleGridCells.Fixed(3),
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth()
 ) {
-    for ((index, color) in colors.withIndex()) {
-        ColorBox(
-            modifier = Modifier,
-            color = color,
-            text = (index + 1).toString(),
-        )
-    }
+    Item() // It will be placed at 0, 0.
+    Item() // It will be placed at 1, 0.
+    Item() // It will be placed at 2, 0.
+    Item() // It will be placed at 0, 1.
 }
 ```
 
