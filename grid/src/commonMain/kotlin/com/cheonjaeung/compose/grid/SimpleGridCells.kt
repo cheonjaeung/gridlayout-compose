@@ -220,4 +220,55 @@ interface SimpleGridCells {
             return hash
         }
     }
+
+    /**
+     * Make grid to switch cell management strategy based on layout's available size.
+     *
+     * For example, `Responsive { if (it > 600.dp) Fixed(3) else Adaptive(120.dp) }` means that
+     * the grid will have 3 columns when the available size is greater than 600dp. Otherwise, it will
+     * have as many columns as possible where each cell has at least 120dp width.
+     *
+     * @param fill When `true`, item composable fill cell's width or height.
+     * @param factory The factory lambda that determines the cell management strategy based on
+     * the available size.
+     */
+    @ExperimentalGridApi
+    class Responsive(
+        private val fill: Boolean = true,
+        private val factory: Density.(availableSize: Dp) -> SimpleGridCells,
+    ) : SimpleGridCells {
+        override fun Density.calculateCrossAxisCellSizes(
+            availableSize: Int,
+            spacing: Int
+        ): List<Int> {
+            if (availableSize <= 0) {
+                return emptyList()
+            }
+
+            val availableSizeDp = availableSize.toDp()
+            val cells = factory(availableSizeDp)
+
+            return with(cells) {
+                calculateCrossAxisCellSizes(availableSize, spacing)
+            }
+        }
+
+        override fun fillCellSize(): Boolean {
+            return fill
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (other !is Responsive) return false
+            if (this.fill != other.fill) return false
+            if (this.factory != other.factory) return false
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var hash = 1
+            hash = hash * 31 + fill.hashCode()
+            hash = hash * 31 + factory.hashCode()
+            return hash
+        }
+    }
 }
