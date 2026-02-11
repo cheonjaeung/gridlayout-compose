@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.dp
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-@OptIn(ExperimentalGridApi::class)
 class SimpleGridCellsFixedSizeTest {
 
     private val testDensity = Density(density = 1f, fontScale = 1f)
