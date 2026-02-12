@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "${project.group}.sample.android"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
         versionCode = 1
         versionName = "${project.version}"
