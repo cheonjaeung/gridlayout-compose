@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.3.10"
-androidGradlePlugin = "8.13.0"
+androidGradlePlugin = "8.13.2"
 composeMultiplatform = "1.10.0"
 
 [plugins]
