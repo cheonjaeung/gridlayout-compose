@@ -98,9 +98,6 @@ and each cell's size will be 120dp.
 
 `SimpleGridCells.FixedSize` is a cell strategy for as many cells as possible with exact size.
 
-!!! example "Experimental"
-    This cell strategy is currently **experimental**. You should use it with `@ExperimentalGridApi` annotation to opt-in.
-
 The API of `FixedSize` looks like this:
 
 ```kotlin

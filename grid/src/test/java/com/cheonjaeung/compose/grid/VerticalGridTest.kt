@@ -17,7 +17,6 @@ import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalGridApi::class)
 class VerticalGridTest {
     @get:Rule
     val paparazzi = Paparazzi(
