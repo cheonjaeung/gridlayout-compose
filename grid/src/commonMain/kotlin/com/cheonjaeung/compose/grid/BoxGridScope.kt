@@ -50,6 +50,7 @@ interface BoxGridScope {
     fun Modifier.align(alignment: Alignment): Modifier
 }
 
+@PublishedApi
 internal object BoxGridScopeInstance : BoxGridScope {
     override fun Modifier.row(row: Int): Modifier {
         require(row >= 0) { "$row is invalid value, must be zero or positive" }

@@ -38,6 +38,7 @@ interface GridScope {
     fun Modifier.fillMaxMainAxisSize(fraction: Float = 1.0f): Modifier
 }
 
+@PublishedApi
 @OptIn(ExperimentalGridApi::class)
 internal object GridScopeInstance : GridScope {
     override fun Modifier.span(span: (GridItemSpanScope.() -> Int)?): Modifier {
