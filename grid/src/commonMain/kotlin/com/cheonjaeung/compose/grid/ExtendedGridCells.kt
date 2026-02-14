@@ -41,56 +41,7 @@ interface ExtendedGridCells {
                 availableSize: Int,
                 spacing: Int
             ): List<Int> {
-                if (availableSize <= 0 || tracks.isEmpty()) {
-                    return emptyList()
-                }
-
-                val totalSpacing = spacing * (tracks.size - 1)
-
-                var totalFixedSize = 0
-                var totalWeight = 0f
-                for (track in tracks) {
-                    when (track) {
-                        is GridTrack.Fixed -> {
-                            totalFixedSize += track.size.roundToPx()
-                        }
-
-                        is GridTrack.Weight -> {
-                            totalWeight += track.weight
-                        }
-                    }
-                }
-
-                val spaceForWeight = max(0, availableSize - totalSpacing - totalFixedSize)
-
-                val cellSizes = MutableList(tracks.size) { 0 }
-                var accumulatedWeight = 0f
-
-                for ((index, track) in tracks.withIndex()) {
-                    when (track) {
-                        is GridTrack.Fixed -> {
-                            cellSizes[index] = track.size.roundToPx()
-                        }
-
-                        is GridTrack.Weight -> {
-                            cellSizes[index] = if (totalWeight > 0) {
-                                val weight = track.weight
-                                val prevWeightSize =
-                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
-
-                                accumulatedWeight += weight
-                                val currentWeightSize =
-                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
-
-                                currentWeightSize - prevWeightSize
-                            } else {
-                                0
-                            }
-                        }
-                    }
-                }
-
-                return cellSizes
+                return calculateTrackCrossAxisCellSizes(availableSize, spacing, tracks).toList()
             }
 
             override fun fillCellSize(): Boolean {
@@ -132,15 +83,15 @@ interface ExtendedGridCells {
                 availableSize: Int,
                 spacing: Int
             ): List<Int> {
-                if (availableSize <= 0) {
-                    return emptyList()
-                }
-
-                val availableSizeDp = availableSize.toDp()
-                val cells = factory(availableSizeDp)
-
-                return with(cells) {
-                    calculateCrossAxisCellSizes(availableSize, spacing)
+                return calculateResponsiveCrossAxisCellSizes(
+                    availableSize = availableSize,
+                    spacing = spacing,
+                    factory = factory,
+                    empty = { emptyList() },
+                ) { cells, size, space ->
+                    with(cells) {
+                        calculateCrossAxisCellSizes(size, space)
+                    }
                 }
             }
 
@@ -189,56 +140,7 @@ interface ExtendedGridCells {
                 availableSize: Int,
                 spacing: Int
             ): List<Int> {
-                if (availableSize <= 0 || tracks.isEmpty()) {
-                    return emptyList()
-                }
-
-                val totalSpacing = spacing * (tracks.size - 1)
-
-                var totalFixedSize = 0
-                var totalWeight = 0f
-                for (track in tracks) {
-                    when (track) {
-                        is GridTrack.Fixed -> {
-                            totalFixedSize += track.size.roundToPx()
-                        }
-
-                        is GridTrack.Weight -> {
-                            totalWeight += track.weight
-                        }
-                    }
-                }
-
-                val spaceForWeight = max(0, availableSize - totalSpacing - totalFixedSize)
-
-                val cellSizes = MutableList(tracks.size) { 0 }
-                var accumulatedWeight = 0f
-
-                for ((index, track) in tracks.withIndex()) {
-                    when (track) {
-                        is GridTrack.Fixed -> {
-                            cellSizes[index] = track.size.roundToPx()
-                        }
-
-                        is GridTrack.Weight -> {
-                            cellSizes[index] = if (totalWeight > 0) {
-                                val weight = track.weight
-                                val prevWeightSize =
-                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
-
-                                accumulatedWeight += weight
-                                val currentWeightSize =
-                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
-
-                                currentWeightSize - prevWeightSize
-                            } else {
-                                0
-                            }
-                        }
-                    }
-                }
-
-                return cellSizes
+                return calculateTrackCrossAxisCellSizes(availableSize, spacing, tracks).toList()
             }
 
             override fun equals(other: Any?): Boolean {
@@ -272,15 +174,15 @@ interface ExtendedGridCells {
                 availableSize: Int,
                 spacing: Int
             ): List<Int> {
-                if (availableSize <= 0) {
-                    return emptyList()
-                }
-
-                val availableSizeDp = availableSize.toDp()
-                val cells = factory(availableSizeDp)
-
-                return with(cells) {
-                    calculateCrossAxisCellSizes(availableSize, spacing)
+                return calculateResponsiveCrossAxisCellSizes(
+                    availableSize = availableSize,
+                    spacing = spacing,
+                    factory = factory,
+                    empty = { emptyList() },
+                ) { cells, size, space ->
+                    with(cells) {
+                        calculateCrossAxisCellSizes(size, space)
+                    }
                 }
             }
 
@@ -322,56 +224,7 @@ interface ExtendedGridCells {
                 availableSize: Int,
                 spacing: Int
             ): IntArray {
-                if (availableSize <= 0 || tracks.isEmpty()) {
-                    return intArrayOf()
-                }
-
-                val totalSpacing = spacing * (tracks.size - 1)
-
-                var totalFixedSize = 0
-                var totalWeight = 0f
-                for (track in tracks) {
-                    when (track) {
-                        is GridTrack.Fixed -> {
-                            totalFixedSize += track.size.roundToPx()
-                        }
-
-                        is GridTrack.Weight -> {
-                            totalWeight += track.weight
-                        }
-                    }
-                }
-
-                val spaceForWeight = max(0, availableSize - totalSpacing - totalFixedSize)
-
-                val cellSizes = IntArray(tracks.size) { 0 }
-                var accumulatedWeight = 0f
-
-                for ((index, track) in tracks.withIndex()) {
-                    when (track) {
-                        is GridTrack.Fixed -> {
-                            cellSizes[index] = track.size.roundToPx()
-                        }
-
-                        is GridTrack.Weight -> {
-                            cellSizes[index] = if (totalWeight > 0) {
-                                val weight = track.weight
-                                val prevWeightSize =
-                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
-
-                                accumulatedWeight += weight
-                                val currentWeightSize =
-                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
-
-                                currentWeightSize - prevWeightSize
-                            } else {
-                                0
-                            }
-                        }
-                    }
-                }
-
-                return cellSizes
+                return calculateTrackCrossAxisCellSizes(availableSize, spacing, tracks)
             }
 
             override fun equals(other: Any?): Boolean {
@@ -405,15 +258,15 @@ interface ExtendedGridCells {
                 availableSize: Int,
                 spacing: Int
             ): IntArray {
-                if (availableSize <= 0) {
-                    return intArrayOf()
-                }
-
-                val availableSizeDp = availableSize.toDp()
-                val cells = factory(availableSizeDp)
-
-                return with(cells) {
-                    calculateCrossAxisCellSizes(availableSize, spacing)
+                return calculateResponsiveCrossAxisCellSizes(
+                    availableSize = availableSize,
+                    spacing = spacing,
+                    factory = factory,
+                    empty = { intArrayOf() },
+                ) { cells, size, space ->
+                    with(cells) {
+                        calculateCrossAxisCellSizes(size, space)
+                    }
                 }
             }
 
@@ -430,4 +283,78 @@ interface ExtendedGridCells {
             }
         }
     }
+}
+
+private fun Density.calculateTrackCrossAxisCellSizes(
+    availableSize: Int,
+    spacing: Int,
+    tracks: List<GridTrack>,
+): IntArray {
+    if (availableSize <= 0 || tracks.isEmpty()) {
+        return IntArray(0)
+    }
+
+    val totalSpacing = spacing * (tracks.size - 1)
+
+    var totalFixedSize = 0
+    var totalWeight = 0f
+    for (track in tracks) {
+        when (track) {
+            is GridTrack.Fixed -> {
+                totalFixedSize += track.size.roundToPx()
+            }
+
+            is GridTrack.Weight -> {
+                totalWeight += track.weight
+            }
+        }
+    }
+
+    val spaceForWeight = max(0, availableSize - totalSpacing - totalFixedSize)
+
+    val cellSizes = IntArray(tracks.size) { 0 }
+    var accumulatedWeight = 0f
+
+    for ((index, track) in tracks.withIndex()) {
+        when (track) {
+            is GridTrack.Fixed -> {
+                cellSizes[index] = track.size.roundToPx()
+            }
+
+            is GridTrack.Weight -> {
+                cellSizes[index] = if (totalWeight > 0) {
+                    val weight = track.weight
+                    val prevWeightSize =
+                        (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
+
+                    accumulatedWeight += weight
+                    val currentWeightSize =
+                        (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
+
+                    currentWeightSize - prevWeightSize
+                } else {
+                    0
+                }
+            }
+        }
+    }
+
+    return cellSizes
+}
+
+private inline fun <T, R> Density.calculateResponsiveCrossAxisCellSizes(
+    availableSize: Int,
+    spacing: Int,
+    factory: Density.(availableSize: Dp) -> T,
+    empty: () -> R,
+    calculate: Density.(cells: T, size: Int, space: Int) -> R,
+): R {
+    if (availableSize <= 0) {
+        return empty()
+    }
+
+    val availableSizeDp = availableSize.toDp()
+    val cells = factory(availableSizeDp)
+
+    return calculate(cells, availableSize, spacing)
 }
