@@ -169,7 +169,6 @@ interface SimpleGridCells {
      * @param size The size which each cell should have.
      * @param fill When `true`, item composable fill cell's width or height.
      */
-    @ExperimentalGridApi
     class FixedSize(
         private val size: Dp,
         private val fill: Boolean = true,
