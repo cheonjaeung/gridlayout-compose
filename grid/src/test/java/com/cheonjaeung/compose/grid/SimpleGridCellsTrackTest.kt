@@ -12,7 +12,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackNoTracks() {
-        val track = SimpleGridCells.Track(emptyList())
+        val track = ExtendedGridCells.SimpleGridCells.Track(emptyList())
         val result = with(track) {
             with(testDensity) {
                 calculateCrossAxisCellSizes(availableSize = 100, spacing = 0)
@@ -23,7 +23,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackOnlyFixed() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Fixed(20.dp),
             GridTrack.Fixed(30.dp),
             GridTrack.Fixed(50.dp)
@@ -38,7 +38,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackOnlyWeight() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Weight(1f),
             GridTrack.Weight(2f),
             GridTrack.Weight(1f)
@@ -53,7 +53,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackOnlyWeightsWithRemainingPixels() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Weight(1f),
             GridTrack.Weight(1f),
             GridTrack.Weight(1f)
@@ -69,7 +69,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackMixed() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Fixed(100.dp),
             GridTrack.Weight(1f),
             GridTrack.Weight(1f)
@@ -84,7 +84,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackMixedWithRemainingPixels() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Fixed(95.dp),
             GridTrack.Weight(1f),
             GridTrack.Weight(1f)
@@ -99,7 +99,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackWithSpacing() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Fixed(100.dp),
             GridTrack.Weight(1f),
             GridTrack.Weight(1f)
@@ -114,7 +114,7 @@ class SimpleGridCellsTrackTest {
 
     @Test
     fun testTrackInsufficientSpace() {
-        val track = SimpleGridCells.Track(
+        val track = ExtendedGridCells.SimpleGridCells.Track(
             GridTrack.Fixed(200.dp),
             GridTrack.Weight(1f)
         )

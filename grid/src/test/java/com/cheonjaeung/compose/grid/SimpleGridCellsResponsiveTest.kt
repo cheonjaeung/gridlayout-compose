@@ -12,7 +12,7 @@ class SimpleGridCellsResponsiveTest {
 
     @Test
     fun testResponsive() {
-        val responsive = SimpleGridCells.Responsive { availableWidth ->
+        val responsive = ExtendedGridCells.SimpleGridCells.Responsive { availableWidth ->
             if (availableWidth < 150.dp) {
                 SimpleGridCells.Fixed(1)
             } else {
@@ -40,7 +40,7 @@ class SimpleGridCellsResponsiveTest {
 
     @Test
     fun testResponsiveFactoryDensityReceiver() {
-        val responsive = SimpleGridCells.Responsive { availableWidth ->
+        val responsive = ExtendedGridCells.SimpleGridCells.Responsive { availableWidth ->
             val availablePx = availableWidth.toPx()
             if (availablePx < 500f) {
                 SimpleGridCells.Fixed(1)
@@ -60,7 +60,7 @@ class SimpleGridCellsResponsiveTest {
     @Test
     fun testZeroAvailableSize() {
         var factoryCalled = false
-        val responsive = SimpleGridCells.Responsive {
+        val responsive = ExtendedGridCells.SimpleGridCells.Responsive {
             factoryCalled = true
             SimpleGridCells.Fixed(1)
         }
