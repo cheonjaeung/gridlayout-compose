@@ -45,6 +45,26 @@ public abstract interface annotation class com/cheonjaeung/compose/grid/Experime
 public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells {
 }
 
+public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells : androidx/compose/foundation/lazy/grid/GridCells {
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells$Responsive : com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells {
+	public static final field $stable I
+	public fun <init> (Lkotlin/jvm/functions/Function2;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells$Track : com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lcom/cheonjaeung/compose/grid/GridTrack;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
 public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCells : com/cheonjaeung/compose/grid/ExtendedGridCells, com/cheonjaeung/compose/grid/SimpleGridCells {
 }
 
@@ -67,6 +87,26 @@ public final class com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCell
 	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun fillCellSize ()Z
+	public fun hashCode ()I
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells : androidx/compose/foundation/lazy/staggeredgrid/StaggeredGridCells {
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells$Responsive : com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells {
+	public static final field $stable I
+	public fun <init> (Lkotlin/jvm/functions/Function2;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)[I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells$Track : com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lcom/cheonjaeung/compose/grid/GridTrack;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)[I
+	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 }
 

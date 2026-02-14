@@ -163,4 +163,271 @@ interface ExtendedGridCells {
             }
         }
     }
+
+    /**
+     * Extended cell management for [androidx.compose.foundation.lazy.grid.GridCells].
+     */
+    @Stable
+    @ExperimentalGridApi
+    interface GridCells : androidx.compose.foundation.lazy.grid.GridCells {
+        /**
+         * Make grid to have rows or columns with individually defined sizes, allowing a mix of
+         * fixed and weighted sizes.
+         *
+         * For example, `Track(listOf(GridTrack.Fixed(100.dp), GridTrack.Weight(1f)))` for
+         * `LazyVerticalGrid(columns = Track(...), modifier = Modifier.width(300.dp))` means that
+         * there will be 2 columns. The first column will have 100dp width and the second column
+         * will have remaining width (200dp).
+         *
+         * @param tracks The list of tracks.
+         */
+        @ExperimentalGridApi
+        class Track(private val tracks: List<GridTrack>) : GridCells {
+            constructor(vararg tracks: GridTrack) : this(tracks.toList())
+
+            override fun Density.calculateCrossAxisCellSizes(
+                availableSize: Int,
+                spacing: Int
+            ): List<Int> {
+                if (availableSize <= 0 || tracks.isEmpty()) {
+                    return emptyList()
+                }
+
+                val totalSpacing = spacing * (tracks.size - 1)
+
+                var totalFixedSize = 0
+                var totalWeight = 0f
+                for (track in tracks) {
+                    when (track) {
+                        is GridTrack.Fixed -> {
+                            totalFixedSize += track.size.roundToPx()
+                        }
+
+                        is GridTrack.Weight -> {
+                            totalWeight += track.weight
+                        }
+                    }
+                }
+
+                val spaceForWeight = max(0, availableSize - totalSpacing - totalFixedSize)
+
+                val cellSizes = MutableList(tracks.size) { 0 }
+                var accumulatedWeight = 0f
+
+                for ((index, track) in tracks.withIndex()) {
+                    when (track) {
+                        is GridTrack.Fixed -> {
+                            cellSizes[index] = track.size.roundToPx()
+                        }
+
+                        is GridTrack.Weight -> {
+                            cellSizes[index] = if (totalWeight > 0) {
+                                val weight = track.weight
+                                val prevWeightSize =
+                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
+
+                                accumulatedWeight += weight
+                                val currentWeightSize =
+                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
+
+                                currentWeightSize - prevWeightSize
+                            } else {
+                                0
+                            }
+                        }
+                    }
+                }
+
+                return cellSizes
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (other !is Track) return false
+                if (this.tracks != other.tracks) return false
+                return true
+            }
+
+            override fun hashCode(): Int {
+                var hash = 1
+                hash = hash * 31 + tracks.hashCode()
+                return hash
+            }
+        }
+
+        /**
+         * Make grid to switch cell management strategy based on layout's available size.
+         *
+         * For example, `Responsive { if (it > 600.dp) Fixed(3) else Adaptive(120.dp) }` means that
+         * the grid will have 3 columns when the available size is greater than 600dp. Otherwise,
+         * it will have as many columns as possible where each cell has at least 120dp width.
+         *
+         * @param factory The factory lambda that determines the cell management strategy based on
+         * the available size.
+         */
+        @ExperimentalGridApi
+        class Responsive(
+            private val factory: Density.(availableSize: Dp) -> androidx.compose.foundation.lazy.grid.GridCells,
+        ) : GridCells {
+            override fun Density.calculateCrossAxisCellSizes(
+                availableSize: Int,
+                spacing: Int
+            ): List<Int> {
+                if (availableSize <= 0) {
+                    return emptyList()
+                }
+
+                val availableSizeDp = availableSize.toDp()
+                val cells = factory(availableSizeDp)
+
+                return with(cells) {
+                    calculateCrossAxisCellSizes(availableSize, spacing)
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (other !is Responsive) return false
+                if (this.factory != other.factory) return false
+                return true
+            }
+
+            override fun hashCode(): Int {
+                var hash = 1
+                hash = hash * 31 + factory.hashCode()
+                return hash
+            }
+        }
+    }
+
+    /**
+     * Extended cell management for [androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells].
+     */
+    @ExperimentalGridApi
+    interface StaggeredGridCells : androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells {
+        /**
+         * Make grid to have rows or columns with individually defined sizes, allowing a mix of
+         * fixed and weighted sizes.
+         *
+         * For example, `Track(listOf(GridTrack.Fixed(100.dp), GridTrack.Weight(1f)))` for
+         * `LazyVerticalStaggeredGrid(columns = Track(...), modifier = Modifier.width(300.dp))`
+         * means that there will be 2 columns. The first column will have 100dp width and the
+         * second column will have remaining width (200dp).
+         *
+         * @param tracks The list of tracks.
+         */
+        @ExperimentalGridApi
+        class Track(private val tracks: List<GridTrack>) : StaggeredGridCells {
+            constructor(vararg tracks: GridTrack) : this(tracks.toList())
+
+            override fun Density.calculateCrossAxisCellSizes(
+                availableSize: Int,
+                spacing: Int
+            ): IntArray {
+                if (availableSize <= 0 || tracks.isEmpty()) {
+                    return intArrayOf()
+                }
+
+                val totalSpacing = spacing * (tracks.size - 1)
+
+                var totalFixedSize = 0
+                var totalWeight = 0f
+                for (track in tracks) {
+                    when (track) {
+                        is GridTrack.Fixed -> {
+                            totalFixedSize += track.size.roundToPx()
+                        }
+
+                        is GridTrack.Weight -> {
+                            totalWeight += track.weight
+                        }
+                    }
+                }
+
+                val spaceForWeight = max(0, availableSize - totalSpacing - totalFixedSize)
+
+                val cellSizes = IntArray(tracks.size) { 0 }
+                var accumulatedWeight = 0f
+
+                for ((index, track) in tracks.withIndex()) {
+                    when (track) {
+                        is GridTrack.Fixed -> {
+                            cellSizes[index] = track.size.roundToPx()
+                        }
+
+                        is GridTrack.Weight -> {
+                            cellSizes[index] = if (totalWeight > 0) {
+                                val weight = track.weight
+                                val prevWeightSize =
+                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
+
+                                accumulatedWeight += weight
+                                val currentWeightSize =
+                                    (spaceForWeight * (accumulatedWeight / totalWeight)).roundToInt()
+
+                                currentWeightSize - prevWeightSize
+                            } else {
+                                0
+                            }
+                        }
+                    }
+                }
+
+                return cellSizes
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (other !is Track) return false
+                if (this.tracks != other.tracks) return false
+                return true
+            }
+
+            override fun hashCode(): Int {
+                var hash = 1
+                hash = hash * 31 + tracks.hashCode()
+                return hash
+            }
+        }
+
+        /**
+         * Make grid to switch cell management strategy based on layout's available size.
+         *
+         * For example, `Responsive { if (it > 600.dp) Fixed(3) else Adaptive(120.dp) }` means that
+         * the grid will have 3 columns when the available size is greater than 600dp. Otherwise,
+         * it will have as many columns as possible where each cell has at least 120dp width.
+         *
+         * @param factory The factory lambda that determines the cell management strategy based on
+         * the available size.
+         */
+        @ExperimentalGridApi
+        class Responsive(
+            private val factory: Density.(availableSize: Dp) -> androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells,
+        ) : StaggeredGridCells {
+            override fun Density.calculateCrossAxisCellSizes(
+                availableSize: Int,
+                spacing: Int
+            ): IntArray {
+                if (availableSize <= 0) {
+                    return intArrayOf()
+                }
+
+                val availableSizeDp = availableSize.toDp()
+                val cells = factory(availableSizeDp)
+
+                return with(cells) {
+                    calculateCrossAxisCellSizes(availableSize, spacing)
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (other !is Responsive) return false
+                if (this.factory != other.factory) return false
+                return true
+            }
+
+            override fun hashCode(): Int {
+                var hash = 1
+                hash = hash * 31 + factory.hashCode()
+                return hash
+            }
+        }
+    }
 }
