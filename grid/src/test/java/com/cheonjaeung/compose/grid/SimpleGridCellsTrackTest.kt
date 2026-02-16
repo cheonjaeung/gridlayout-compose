@@ -38,6 +38,16 @@ class SimpleGridCellsTrackTest {
         assertArrayEquals(intArrayOf(), staggeredGridCellsResult)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun testTrackNegativeSize() {
+        GridTrack.Fixed((-1).dp)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testTrackZeroWeight() {
+        GridTrack.Weight(0f)
+    }
+
     @Test
     fun testTrackOnlyFixed() {
         val simpleGridCellsTrack = ExtendedGridCells.SimpleGridCells.Track(
@@ -311,5 +321,32 @@ class SimpleGridCellsTrackTest {
         assertEquals(listOf(200, 0), simpleGridCellsResult)
         assertEquals(listOf(200, 0), gridCellsResult)
         assertArrayEquals(intArrayOf(200, 0), staggeredGridCellsResult)
+    }
+
+    @Test
+    fun testTrackZeroAvailableSize() {
+        val simpleGridCellsTrack = ExtendedGridCells.SimpleGridCells.Track(GridTrack.Fixed(100.dp))
+        val gridCellsTrack = ExtendedGridCells.GridCells.Track(GridTrack.Fixed(100.dp))
+        val staggeredGridCellsTrack = ExtendedGridCells.StaggeredGridCells.Track(GridTrack.Fixed(100.dp))
+
+        val simpleGridCellsResult = with(simpleGridCellsTrack) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize = 0, spacing = 0)
+            }
+        }
+        val gridCellsResult = with(gridCellsTrack) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize = 0, spacing = 0)
+            }
+        }
+        val staggeredGridCellsResult = with(staggeredGridCellsTrack) {
+            with(testDensity) {
+                calculateCrossAxisCellSizes(availableSize = 0, spacing = 0)
+            }
+        }
+
+        assertEquals(emptyList<Int>(), simpleGridCellsResult)
+        assertEquals(emptyList<Int>(), gridCellsResult)
+        assertArrayEquals(intArrayOf(), staggeredGridCellsResult)
     }
 }
