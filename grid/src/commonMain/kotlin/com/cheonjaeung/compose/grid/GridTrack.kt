@@ -5,7 +5,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Defines the size of a track in [SimpleGridCells.Track].
+ * Defines the size of a track in `ExtendedGridCells.Track`.
+ *
+ * @see ExtendedGridCells.SimpleGridCells.Track
+ * @see ExtendedGridCells.GridCells.Track
+ * @see ExtendedGridCells.StaggeredGridCells.Track
  */
 @Stable
 sealed interface GridTrack {
