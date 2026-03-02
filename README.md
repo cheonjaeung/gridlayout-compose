@@ -28,9 +28,12 @@ There are benefits of this library:
 - **Non-Lazy Grid Layouts**: Lightweight grid layouts optimized for small datasets, avoiding the overhead of lazy-loading logic.
   - **Box Grid**: Place items at specific row and column positions.
   - **Sequential Grids**: `VerticalGrid` and `HorizontalGrid` for simple sequential item placement.
-  - **Cell Management Support**: Support for `Fixed`, `Adaptive`, and `FixedSize` cell management.
+  - **Cell Management Support**: Support for standard `Fixed`, `Adaptive`, and `FixedSize` cell management.
   - **Spanning**: Allow items to span across multiple rows or columns in both Box and Sequential grids.
   - **RTL Support**: Full support for Right-to-Left layout directions.
+- **Extended Cell Management**: Extended cell management options for more advanced use cases. Available for both non-lazy and lazy grids.
+  - **Responsive**: Dynamically switch cell management strategy based on available layout size.
+  - **Track**: Define each row or column's size individually using fixed and weighted sizes.
 
 ## Installation
 
@@ -67,7 +70,7 @@ BoxGrid(
     // It will be placed at 1, 2.
     Item(modifier = Modifier.position(row = 2, column = 1))
     // It will be placed at 2, 0.
-    Itme(modifier = Modifier.column(2))
+    Item(modifier = Modifier.column(2))
 }
 ```
 

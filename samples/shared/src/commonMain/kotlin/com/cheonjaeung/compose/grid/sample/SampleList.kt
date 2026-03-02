@@ -62,6 +62,36 @@ fun SampleList() {
                                         currentSampleScreen = null
                                     })
                                 },
+                                SampleListItemData("Track Grid Cells") {
+                                    TrackSample(onBack = {
+                                        currentSampleScreen = null
+                                    })
+                                },
+                                SampleListItemData("Responsive Grid Cells") {
+                                    ResponsiveSample(onBack = {
+                                        currentSampleScreen = null
+                                    })
+                                },
+                                SampleListItemData("Lazy Grid Track Cells") {
+                                    LazyGridTrackSample(onBack = {
+                                        currentSampleScreen = null
+                                    })
+                                },
+                                SampleListItemData("Lazy Grid Responsive Cells") {
+                                    LazyGridResponsiveSample(onBack = {
+                                        currentSampleScreen = null
+                                    })
+                                },
+                                SampleListItemData("Lazy Staggered Grid Track Cells") {
+                                    LazyStaggeredGridTrackSample(onBack = {
+                                        currentSampleScreen = null
+                                    })
+                                },
+                                SampleListItemData("Lazy Staggered Grid Responsive Cells") {
+                                    LazyStaggeredGridResponsiveSample(onBack = {
+                                        currentSampleScreen = null
+                                    })
+                                },
                             )
                         ) { item ->
                             SampleListItem(

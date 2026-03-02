@@ -136,6 +136,13 @@ If the grid size is expanded to 600dp, the number of cells on each line will be 
 In other case, `FixedSize(300.dp)` for `VerticalGrid(Modifier.width(200.dp))` means that there
 will be only one column and the cell will have 200dp width.
 
+## Extended Strategies
+
+This library provides extended cell strategies for more advanced use cases.
+The extended strategies are available for the non-lazy grids and also for the lazy grids (`LazyGrid` and `LazyStaggeredGrid`).
+
+Checkout the [Extended Cell Strategy](./extended-cell-strategy.md) page for more information.
+
 ## Fill Option
 
 All cell strategy classes have a optional parameter named `fill`.

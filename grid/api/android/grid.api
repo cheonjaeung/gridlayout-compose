@@ -42,6 +42,74 @@ public final class com/cheonjaeung/compose/grid/BoxGridSpanKt {
 public abstract interface annotation class com/cheonjaeung/compose/grid/ExperimentalGridApi : java/lang/annotation/Annotation {
 }
 
+public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells {
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells : androidx/compose/foundation/lazy/grid/GridCells {
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells$Responsive : com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells {
+	public static final field $stable I
+	public fun <init> (Lkotlin/jvm/functions/Function2;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells$Track : com/cheonjaeung/compose/grid/ExtendedGridCells$GridCells {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lcom/cheonjaeung/compose/grid/GridTrack;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCells : com/cheonjaeung/compose/grid/ExtendedGridCells, com/cheonjaeung/compose/grid/SimpleGridCells {
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCells$Responsive : com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCells {
+	public static final field $stable I
+	public fun <init> (ZLkotlin/jvm/functions/Function2;)V
+	public synthetic fun <init> (ZLkotlin/jvm/functions/Function2;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun fillCellSize ()Z
+	public fun hashCode ()I
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCells$Track : com/cheonjaeung/compose/grid/ExtendedGridCells$SimpleGridCells {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;Z)V
+	public synthetic fun <init> (Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> ([Lcom/cheonjaeung/compose/grid/GridTrack;Z)V
+	public synthetic fun <init> ([Lcom/cheonjaeung/compose/grid/GridTrack;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun fillCellSize ()Z
+	public fun hashCode ()I
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells : androidx/compose/foundation/lazy/staggeredgrid/StaggeredGridCells {
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells$Responsive : com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells {
+	public static final field $stable I
+	public fun <init> (Lkotlin/jvm/functions/Function2;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)[I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells$Track : com/cheonjaeung/compose/grid/ExtendedGridCells$StaggeredGridCells {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lcom/cheonjaeung/compose/grid/GridTrack;)V
+	public fun calculateCrossAxisCellSizes (Landroidx/compose/ui/unit/Density;II)[I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
 public abstract interface annotation class com/cheonjaeung/compose/grid/GridItemScopeMarker : java/lang/annotation/Annotation {
 }
 
@@ -67,6 +135,33 @@ public abstract interface class com/cheonjaeung/compose/grid/GridScope {
 public final class com/cheonjaeung/compose/grid/GridScope$DefaultImpls {
 	public static synthetic fun fillMaxMainAxisSize$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;FILjava/lang/Object;)Landroidx/compose/ui/Modifier;
 	public static synthetic fun span$default (Lcom/cheonjaeung/compose/grid/GridScope;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+}
+
+public abstract interface class com/cheonjaeung/compose/grid/GridTrack {
+}
+
+public final class com/cheonjaeung/compose/grid/GridTrack$Fixed : com/cheonjaeung/compose/grid/GridTrack {
+	public static final field $stable I
+	public synthetic fun <init> (FLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-D9Ej5fM ()F
+	public final fun copy-0680j_4 (F)Lcom/cheonjaeung/compose/grid/GridTrack$Fixed;
+	public static synthetic fun copy-0680j_4$default (Lcom/cheonjaeung/compose/grid/GridTrack$Fixed;FILjava/lang/Object;)Lcom/cheonjaeung/compose/grid/GridTrack$Fixed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSize-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/cheonjaeung/compose/grid/GridTrack$Weight : com/cheonjaeung/compose/grid/GridTrack {
+	public static final field $stable I
+	public fun <init> (F)V
+	public final fun component1 ()F
+	public final fun copy (F)Lcom/cheonjaeung/compose/grid/GridTrack$Weight;
+	public static synthetic fun copy$default (Lcom/cheonjaeung/compose/grid/GridTrack$Weight;FILjava/lang/Object;)Lcom/cheonjaeung/compose/grid/GridTrack$Weight;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getWeight ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class com/cheonjaeung/compose/grid/SimpleGridCells {
