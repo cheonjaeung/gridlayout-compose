@@ -5,6 +5,7 @@
 - Update documentation when the feature is added, removed or changed.
 - Verify changes by running tests after making changes.
 - Run `./gradlew apiDump` when the public API is changed.
+- Annotate new public APIs with `@ExperimentalGridApi`.
 
 ## Project Structure
 
@@ -23,11 +24,7 @@
 
 - `./gradlew build`: Build project.
 - `./gradlew test`: Run all test cases.
+- `./gradlew testDebugUnitTest --tests "TestClassName"`: Run specific tests.
 - `./gradlew verifyPaparazziDebug`: Run only snapshot tests.
 - `./gradlew recordPaparazziDebug`: Update and create new snapshots.
 - `./gradlew apiDump`: Update public API binary compatibility.
-
-## Commit Style
-
-- Use concise, atomic commit message.
-- Start with capitalized imperative verb.
