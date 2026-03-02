@@ -1,5 +1,60 @@
 # Changelog
 
+## 2.7.0
+
+_2026.03.02_
+
+This release introduces new grid cell managements called `ExtendedGridCells` for advanced use cases.
+
+For example, you can switch cell management strategy responsively:
+
+```kotlin
+VerticalGrid(
+    columns = ExtendedGridCells.SimpleGridCells.Responsive { availableWidth ->
+        if (availableWidth < 600.dp) {
+            SimpleGridCells.Fixed(3)
+        } else {
+            SimpleGridCells.Adaptive(150.dp)
+        }
+    },
+    modifier = Modifier.fillMaxWidth()
+) { /* content */ }
+```
+
+And you can define cell size individually:
+
+```kotlin
+VerticalGrid(
+    columns = ExtendedGridCells.SimpleGridCells.Track(
+        GridTrack.Fixed(100.dp),
+        GridTrack.Weight(2f),
+        GridTrack.Weight(1f)
+    ),
+    modifier = Modifier.width(400.dp)
+) { /* content */ }
+```
+
+For more information, see the documentation.
+
+### Changed
+
+- Add `ExtendedGridCells` for more advanced grid cell management.
+  - Add `Responsive` for switching cell management strategy based on layout size.
+  - Add `Track` for defining cell size individually by list of `GridTrack`s. Each cell can have a fixed or weighted size.
+  - Add `GridTrack` to define each cell size with `ExtendedGridCells.Track`.
+- `SimpleGridCells.FixedSize` is now stable API.
+- The minimum SDK version is updated to 23 for the Android artifact.
+
+### Dependencies
+
+Project dependencies are updated.
+
+- Kotlin 2.2.20 -> 2.3.10
+- Compose 1.9.0 -> 1.10.0
+- Gradle 8.14.3 -> 8.14.4
+- Android Gradle Plugin 8.13.0 -> 8.13.2
+- Android Minimum SDK 21 -> 23
+
 ## 2.6.0
 
 _2025.12.18_

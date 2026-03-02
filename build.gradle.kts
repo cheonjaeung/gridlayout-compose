@@ -16,7 +16,7 @@ plugins {
 
 allprojects {
     group = "com.cheonjaeung.compose.grid"
-    version = "2.6.0"
+    version = "2.7.0"
 
     repositories {
         google()
