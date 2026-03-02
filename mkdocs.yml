@@ -36,6 +36,7 @@ nav:
   - 'Installation': installation.md
   - 'Layout Composables': layout-composables.md
   - 'Cell Strategy': cell-strategy.md
+  - 'Extended Cell Strategy': extended-cell-strategy.md
   - 'Arrangement and Spacing': arrangement-and-spacing.md
   - 'Alignment': alignment.md
   - 'Spanning Cells': span.md
