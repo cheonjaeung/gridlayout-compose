@@ -3,16 +3,21 @@
 This library is published to Maven Central.
 To download this library, just add it to your dependencies.
 
-```groovy
+```kotlin
 dependencies {
     implementation("com.cheonjaeung.compose.grid:grid:<version>")
 }
 ```
 
-**After the 2.0.0 version, the group id and package name is changed from**
-**`io.woong.compose.grid` to `com.cheonjaeung.compose.grid`.**
+If you want to download before 2.0.0, use following:
+```kotlin
+dependencies {
+    implementation("io.woong.compose.grid:grid:<version>")
+}
+```
 
-> Checkout the latest version in [GitHub Releases](https://github.com/cheonjaeung/gridlayout-compose/releases).
+
+Checkout the latest version in [GitHub Releases](https://github.com/cheonjaeung/gridlayout-compose/releases).
 
 ## Platform Supports
 

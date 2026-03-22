@@ -39,14 +39,19 @@ There are benefits of this library:
 
 To download this library, add dependency to your gradle:
 
-```groovy
+```kotlin
 dependencies {
     implementation("com.cheonjaeung.compose.grid:grid:<version>")
 }
 ```
 
-**After the 2.0.0 version, the group id and package name is changed from**
-**`io.woong.compose.grid` to `com.cheonjaeung.compose.grid`.**
+If you want to download before 2.0.0, use following:
+
+```kotlin
+dependencies {
+    implementation("io.woong.compose.grid:grid:<version>")
+}
+```
 
 ## Getting Started
 
