@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.7.1
+
+_2026.04.05_
+
+### Changed
+
+- Fix incorrect span size calculation when using non-uniform cell sizes like `ExtendedGridCells.Track` in `HorizontalGrid`, `VerticalGrid`, and `BoxGrid`.
+- Fix incorrect x position of spanned items in `BoxGrid` when layout direction is RTL.
+
 ## 2.7.0
 
 _2026.03.02_
