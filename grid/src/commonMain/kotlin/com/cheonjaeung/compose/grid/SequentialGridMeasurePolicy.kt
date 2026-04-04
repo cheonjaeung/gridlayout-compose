@@ -285,7 +285,11 @@ private class SequentialGridMeasureHelper(
     }
 
     private fun calculateCrossAxisCellConstraints(crossAxisIndex: Int, crossAxisSpacingPx: Int, span: Int): Int {
-        return crossAxisCellConstraintsList[crossAxisIndex] * span + crossAxisSpacingPx * (span - 1)
+        var total = 0
+        for (i in crossAxisIndex until crossAxisIndex + span) {
+            total += crossAxisCellConstraintsList[i]
+        }
+        return total + crossAxisSpacingPx * (span - 1)
     }
 
     /**

@@ -3,6 +3,7 @@ package com.cheonjaeung.compose.grid
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -216,6 +217,40 @@ class VerticalGridSpanTest {
                         .background(Color.Blue)
                         .span { 1 }
                         .span { 2 }
+                )
+            }
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalGridApi::class)
+    fun testSpanSizeWithTrackColumns() {
+        paparazzi.snapshot {
+            VerticalGrid(
+                modifier = Modifier
+                    .size(300.dp, 200.dp)
+                    .background(Color.LightGray),
+                columns = ExtendedGridCells.SimpleGridCells.Track(
+                    GridTrack.Fixed(100.dp),
+                    GridTrack.Fixed(200.dp)
+                )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(100.dp)
+                        .span { maxLineSpan }
+                        .background(Color.Blue)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .height(100.dp)
+                        .background(Color.Green)
+                )
+                Box(
+                    modifier = Modifier
+                        .height(100.dp)
+                        .background(Color.Red)
                 )
             }
         }
