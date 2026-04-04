@@ -346,4 +346,25 @@ class BoxGridSpanTest {
             }
         }
     }
+
+    @Test
+    fun testMultiColumnSpanPositionWithRtlLayout() {
+        paparazzi.snapshot {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                BoxGrid(
+                    modifier = Modifier
+                        .size(400.dp, 100.dp)
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Fixed(1),
+                    columns = SimpleGridCells.Fixed(4)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .span { BoxGridItemSpan(column = 2) }
+                            .background(Color.Blue)
+                    )
+                }
+            }
+        }
+    }
 }
