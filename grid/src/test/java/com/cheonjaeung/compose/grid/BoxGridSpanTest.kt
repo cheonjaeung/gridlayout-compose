@@ -4,8 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
@@ -271,6 +274,74 @@ class BoxGridSpanTest {
                         .background(Color.Blue)
                         .span { BoxGridItemSpan(row = 1, column = 1) }
                         .span { BoxGridItemSpan(row = 2, column = 2) }
+                )
+            }
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalGridApi::class)
+    fun testRowSpanSizeWithTrackRows() {
+        paparazzi.snapshot {
+            BoxGrid(
+                modifier = Modifier
+                    .size(200.dp, 300.dp)
+                    .background(Color.LightGray),
+                rows = ExtendedGridCells.SimpleGridCells.Track(
+                    GridTrack.Fixed(100.dp),
+                    GridTrack.Fixed(200.dp)
+                ),
+                columns = SimpleGridCells.Fixed(2)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .span { BoxGridItemSpan(row = maxRowSpan) }
+                        .background(Color.Blue)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .position(row = 0, column = 1)
+                        .background(Color.Green)
+                )
+                Box(
+                    modifier = Modifier
+                        .position(row = 1, column = 1)
+                        .background(Color.Red)
+                )
+            }
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalGridApi::class)
+    fun testColumnSpanSizeWithTrackColumns() {
+        paparazzi.snapshot {
+            BoxGrid(
+                modifier = Modifier
+                    .size(300.dp, 200.dp)
+                    .background(Color.LightGray),
+                rows = SimpleGridCells.Fixed(2),
+                columns = ExtendedGridCells.SimpleGridCells.Track(
+                    GridTrack.Fixed(100.dp),
+                    GridTrack.Fixed(200.dp)
+                )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .span { BoxGridItemSpan(column = maxColumnSpan) }
+                        .background(Color.Blue)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .position(row = 1, column = 0)
+                        .background(Color.Green)
+                )
+                Box(
+                    modifier = Modifier
+                        .position(row = 1, column = 1)
+                        .background(Color.Red)
                 )
             }
         }

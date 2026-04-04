@@ -143,10 +143,17 @@ private class BoxGridMeasureHelper(
                 return@fastForEachIndexed
             }
 
-            val cellWidthConstraints = cellWidthConstraintList[columnPosition] * columnSpan +
-                horizontalSpacingPx * (columnSpan - 1)
-            val cellHeightConstraints = cellHeightConstraintList[rowPosition] * rowSpan +
-                verticalSpacingPx * (rowSpan - 1)
+            var cellWidthSum = 0
+            for (i in columnPosition until columnPosition + columnSpan) {
+                cellWidthSum += cellWidthConstraintList[i]
+            }
+            val cellWidthConstraints = cellWidthSum + horizontalSpacingPx * (columnSpan - 1)
+
+            var cellHeightSum = 0
+            for (i in rowPosition until rowPosition + rowSpan) {
+                cellHeightSum += cellHeightConstraintList[i]
+            }
+            val cellHeightConstraints = cellHeightSum + verticalSpacingPx * (rowSpan - 1)
 
             val placeableConstraints = Constraints(
                 minWidth = if (fillCellWidth) cellWidthConstraints else 0,

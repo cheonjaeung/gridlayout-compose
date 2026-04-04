@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -216,6 +217,40 @@ class HorizontalGridSpanTest {
                         .background(Color.Blue)
                         .span { 1 }
                         .span { 2 }
+                )
+            }
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalGridApi::class)
+    fun testSpanSizeWithTrackRows() {
+        paparazzi.snapshot {
+            HorizontalGrid(
+                modifier = Modifier
+                    .size(200.dp, 300.dp)
+                    .background(Color.LightGray),
+                rows = ExtendedGridCells.SimpleGridCells.Track(
+                    GridTrack.Fixed(100.dp),
+                    GridTrack.Fixed(200.dp)
+                )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .span { maxLineSpan }
+                        .background(Color.Blue)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .background(Color.Green)
+                )
+                Box(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .background(Color.Red)
                 )
             }
         }
