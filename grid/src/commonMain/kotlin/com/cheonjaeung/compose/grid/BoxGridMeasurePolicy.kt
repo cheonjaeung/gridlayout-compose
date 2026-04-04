@@ -170,6 +170,7 @@ private class BoxGridMeasureHelper(
                 placeable = placeable,
                 rowPosition = rowPosition,
                 columnPosition = columnPosition,
+                columnSpan = columnSpan,
                 cellConstraints = placeableConstraints,
                 alignment = parentDataArray[index].alignmentOrDefault
             )
@@ -229,10 +230,11 @@ private class BoxGridMeasureHelper(
                     height = placeableMeasureInfo.cellConstraints.maxHeight
                 )
 
+                val columnSpan = placeableMeasureInfo.columnSpan
                 val xPosition = xPositions[if (layoutDirection == LayoutDirection.Ltr) {
                     columnPosition
                 } else {
-                    columnCount - columnPosition - 1
+                    columnCount - columnPosition - columnSpan
                 }]
                 val yPosition = yPositions[rowPosition]
 
@@ -277,6 +279,7 @@ private class BoxGridMeasureHelper(
         val placeable: Placeable,
         val rowPosition: Int,
         val columnPosition: Int,
+        val columnSpan: Int,
         val cellConstraints: Constraints,
         val alignment: Alignment
     )
