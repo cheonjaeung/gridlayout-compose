@@ -28,8 +28,8 @@ jobs:
           distribution: "zulu"
           java-version: '17'
 
-      - name: Validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v6
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Validate binary compatibility
         run: ./gradlew apiCheck
@@ -51,6 +51,9 @@ jobs:
         with:
           distribution: "zulu"
           java-version: '17'
+
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Publish to Maven Central
         run: ./gradlew publish --stacktrace
