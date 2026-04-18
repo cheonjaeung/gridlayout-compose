@@ -205,6 +205,11 @@ private class SequentialGridMeasureHelper(
                 measurableIndex++
             }
 
+            // Skip calculation because all items in the line have too much span (span > maxSpan).
+            if (spanLine.isEmpty()) {
+                continue
+            }
+
             val placeableLine = mutableListOf<PlaceableMeasureInfo>()
             val maxMainAxisIntrinsicSize = if (containsFillMaxMainAxisSize) {
                 mainAxisMaxIntrinsicSizes.fastMaxOfOrNull { it ?: 0 }

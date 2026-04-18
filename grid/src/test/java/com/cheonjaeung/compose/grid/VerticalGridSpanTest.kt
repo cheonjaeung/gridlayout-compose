@@ -1,8 +1,10 @@
 package com.cheonjaeung.compose.grid
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
@@ -198,6 +200,38 @@ class VerticalGridSpanTest {
                         .size(100.dp)
                         .background(Color.Green)
                 )
+            }
+        }
+    }
+
+    @Test
+    fun testAllOverSpanItemsAreNotPlaced() {
+        paparazzi.snapshot {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.DarkGray)
+            ) {
+                VerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.LightGray),
+                    columns = SimpleGridCells.Fixed(3),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                            .span { maxLineSpan + 1 }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Green)
+                            .span { maxLineSpan + 2 }
+                    )
+                }
             }
         }
     }

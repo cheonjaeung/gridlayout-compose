@@ -1,7 +1,9 @@
 package com.cheonjaeung.compose.grid
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -198,6 +200,38 @@ class HorizontalGridSpanTest {
                         .size(100.dp)
                         .background(Color.Green)
                 )
+            }
+        }
+    }
+
+    @Test
+    fun testAllOverSpanItemsAreNotPlaced() {
+        paparazzi.snapshot {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.DarkGray)
+            ) {
+                HorizontalGrid(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .background(Color.LightGray),
+                    rows = SimpleGridCells.Fixed(3),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Blue)
+                            .span { maxLineSpan + 1 }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Green)
+                            .span { maxLineSpan + 2 }
+                    )
+                }
             }
         }
     }
