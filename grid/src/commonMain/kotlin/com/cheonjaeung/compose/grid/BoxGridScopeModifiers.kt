@@ -7,6 +7,13 @@ import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
+internal data class BoxGridParentData(
+    var row: Int? = null,
+    var column: Int? = null,
+    var span: (BoxGridItemSpanScope.() -> BoxGridItemSpan)? = null,
+    var alignment: Alignment? = null
+)
+
 internal class BoxGridCellPositionElement(
     val row: Int? = null,
     val column: Int? = null,

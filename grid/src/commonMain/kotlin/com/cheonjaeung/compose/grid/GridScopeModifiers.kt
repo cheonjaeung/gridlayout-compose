@@ -7,6 +7,12 @@ import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Density
 
+internal data class SequentialGridParentData(
+    var span: (GridItemSpanScope.() -> Int)? = null,
+    var alignment: Alignment? = null,
+    var mainAxisSizeFraction: Float? = null
+)
+
 internal class SequentialGridSpanElement(
     val span: (GridItemSpanScope.() -> Int)?,
     val inspectorInfo: InspectorInfo.() -> Unit
