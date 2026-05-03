@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cheonjaeung.compose.grid.SimpleGridCells
@@ -27,19 +24,23 @@ import com.cheonjaeung.compose.grid.VerticalGrid
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.math.ceil
+
+private const val COLUMNS = 3
+private val ITEM_HEIGHT = 50.dp
+private val SPACING = 8.dp
 
 /**
- * Benchmarks comparing [VerticalGrid], [LazyVerticalGrid], and a [Row]+[Column] grid.
+ * Benchmarks for first-composition cost: [VerticalGrid] vs [LazyVerticalGrid] vs [Row]+[Column].
  *
- * Three comparisons:
- * - A) [VerticalGrid] (no spacing) vs [RowColumnGridWithoutSpacing]
- * - B) [VerticalGrid] with spacing vs [RowColumnGridWithSpacing]
- * - C) [LazyVerticalGrid] vs [VerticalGrid] in two scenarios:
- *   - `_bounded`: both grids placed in [fillMaxSize] viewport; [LazyVerticalGrid] virtualizes items
- *     outside the viewport while [VerticalGrid] measures all items eagerly.
- *   - `_allVisible`: [LazyVerticalGrid] given a fixed height large enough to show every item,
- *     forcing full composition for a pure composition/measure cost comparison.
+ * It can answer to two questions:
+ * - How does [VerticalGrid] compare to [Row]+[Column] grid?
+ * - How does [VerticalGrid] compare to [LazyVerticalGrid] when both must compose all items?
+ *
+ * [LazyVerticalGrid] is given an exact height that fits every item (all-visible),
+ * so it cannot virtualize and the comparison is like-for-like on composition + measure cost.
+ *
+ * All item counts are multiples of [COLUMNS] so no placeholder Spacers are needed
+ * in [RowColumnCase] — both contestants see exactly the same number of composables.
  *
  * Run with:
  * ```
@@ -50,7 +51,6 @@ import kotlin.math.ceil
  * ```
  * benchmark/build/outputs/connected_android_test_additional_output/releaseAndroidTest/connected/<device>/
  * ```
- * as a JSON file.
  */
 @RunWith(AndroidJUnit4::class)
 class GridBenchmark {
@@ -62,285 +62,48 @@ class GridBenchmark {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun verticalGrid_fixed3_9items() {
-        benchmarkContent {
-            VerticalGrid(
-                columns = SimpleGridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                repeat(9) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
+    fun verticalGrid_9() {
+        benchmarkContent { VerticalGridCase(itemCount = 9) }
     }
 
     @Test
-    fun verticalGrid_fixed3_30items() {
-        benchmarkContent {
-            VerticalGrid(
-                columns = SimpleGridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                repeat(30) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
+    fun verticalGrid_30() {
+        benchmarkContent { VerticalGridCase(itemCount = 30) }
     }
 
     @Test
-    fun verticalGrid_fixed3_100items() {
-        benchmarkContent {
-            VerticalGrid(
-                columns = SimpleGridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                repeat(100) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
+    fun verticalGrid_60() {
+        benchmarkContent { VerticalGridCase(itemCount = 60) }
     }
 
     @Test
-    fun rowColumnNoSpacer_3cols_9items() {
-        benchmarkContent {
-            RowColumnGridWithoutSpacing(itemCount = 9, columnCount = 3)
-        }
+    fun lazyVerticalGrid_9() {
+        benchmarkContent { LazyVerticalGridCase(itemCount = 9) }
     }
 
     @Test
-    fun rowColumnNoSpacer_3cols_30items() {
-        benchmarkContent {
-            RowColumnGridWithoutSpacing(itemCount = 30, columnCount = 3)
-        }
+    fun lazyVerticalGrid_30() {
+        benchmarkContent { LazyVerticalGridCase(itemCount = 30) }
     }
 
     @Test
-    fun rowColumnNoSpacer_3cols_100items() {
-        benchmarkContent {
-            RowColumnGridWithoutSpacing(itemCount = 100, columnCount = 3)
-        }
+    fun lazyVerticalGrid_60() {
+        benchmarkContent { LazyVerticalGridCase(itemCount = 60) }
     }
 
     @Test
-    fun verticalGridWithSpacing_fixed3_9items() {
-        benchmarkContent {
-            VerticalGrid(
-                columns = SimpleGridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                repeat(9) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
+    fun rowColumn_9() {
+        benchmarkContent { RowColumnCase(itemCount = 9) }
     }
 
     @Test
-    fun verticalGridWithSpacing_fixed3_30items() {
-        benchmarkContent {
-            VerticalGrid(
-                columns = SimpleGridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                repeat(30) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
+    fun rowColumn_30() {
+        benchmarkContent { RowColumnCase(itemCount = 30) }
     }
 
     @Test
-    fun verticalGridWithSpacing_fixed3_100items() {
-        benchmarkContent {
-            VerticalGrid(
-                columns = SimpleGridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                repeat(100) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGrid_fixed3_9items_bounded() {
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                items(List(9) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGrid_fixed3_30items_bounded() {
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                items(List(30) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGrid_fixed3_100items_bounded() {
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                items(List(100) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGrid_fixed3_9items_allVisible() {
-        // 3 rows × 50.dp
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.height(150.dp),
-            ) {
-                items(List(9) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGrid_fixed3_30items_allVisible() {
-        // 10 rows × 50.dp
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.height(500.dp),
-            ) {
-                items(List(30) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGrid_fixed3_100items_allVisible() {
-        // 34 rows × 50.dp
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.height(1700.dp),
-            ) {
-                items(List(100) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGridWithSpacing_fixed3_9items_bounded() {
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(List(9) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGridWithSpacing_fixed3_30items_bounded() {
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(List(30) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGridWithSpacing_fixed3_100items_bounded() {
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(List(100) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGridWithSpacing_fixed3_9items_allVisible() {
-        // 3 rows × 50.dp + 2 gaps × 8.dp = 166.dp
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.height(166.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(List(9) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGridWithSpacing_fixed3_30items_allVisible() {
-        // 10 rows × 50.dp + 9 gaps × 8.dp = 572.dp
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.height(572.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(List(30) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun lazyVerticalGridWithSpacing_fixed3_100items_allVisible() {
-        // 34 rows × 50.dp + 33 gaps × 8.dp = 1964.dp
-        benchmarkContent {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.height(1964.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(List(100) { it }) { Box(modifier = Modifier.height(50.dp)) }
-            }
-        }
-    }
-
-    @Test
-    fun rowColumnWithSpacing_3cols_9items() {
-        benchmarkContent {
-            RowColumnGridWithSpacing(itemCount = 9, columnCount = 3)
-        }
-    }
-
-    @Test
-    fun rowColumnWithSpacing_3cols_30items() {
-        benchmarkContent {
-            RowColumnGridWithSpacing(itemCount = 30, columnCount = 3)
-        }
-    }
-
-    @Test
-    fun rowColumnWithSpacing_3cols_100items() {
-        benchmarkContent {
-            RowColumnGridWithSpacing(itemCount = 100, columnCount = 3)
-        }
+    fun rowColumn_60() {
+        benchmarkContent { RowColumnCase(itemCount = 60) }
     }
 
     private fun benchmarkContent(content: @Composable () -> Unit) {
@@ -364,56 +127,45 @@ class GridBenchmark {
 }
 
 @Composable
-private fun RowColumnGridWithoutSpacing(
-    itemCount: Int,
-    columnCount: Int,
-) {
-    val rowCount = ceil(itemCount.toDouble() / columnCount).toInt()
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        for (rowIndex in 0 until rowCount) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                for (colIndex in 0 until columnCount) {
-                    val itemIndex = rowIndex * columnCount + colIndex
-                    if (itemIndex < itemCount) {
-                        Box(modifier = Modifier
-                            .weight(1f)
-                            .height(50.dp))
-                    } else {
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                }
-            }
-        }
+private fun VerticalGridCase(itemCount: Int) {
+    VerticalGrid(
+        columns = SimpleGridCells.Fixed(COLUMNS),
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(SPACING),
+        verticalArrangement = Arrangement.spacedBy(SPACING),
+    ) {
+        repeat(itemCount) { Box(modifier = Modifier.height(ITEM_HEIGHT)) }
     }
 }
 
 @Composable
-private fun RowColumnGridWithSpacing(
-    itemCount: Int,
-    columnCount: Int,
-    spacing: Dp = 8.dp,
-) {
-    val rowCount = ceil(itemCount.toDouble() / columnCount).toInt()
+private fun LazyVerticalGridCase(itemCount: Int) {
+    val rows = itemCount / COLUMNS
+    val gridHeight = ITEM_HEIGHT * rows + SPACING * (rows - 1)
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(COLUMNS),
+        modifier = Modifier.height(gridHeight),
+        horizontalArrangement = Arrangement.spacedBy(SPACING),
+        verticalArrangement = Arrangement.spacedBy(SPACING),
+    ) {
+        items(List(itemCount) { it }) { Box(modifier = Modifier.height(ITEM_HEIGHT)) }
+    }
+}
 
+@Composable
+private fun RowColumnCase(itemCount: Int) {
+    val rowCount = itemCount / COLUMNS
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(spacing),
+        verticalArrangement = Arrangement.spacedBy(SPACING),
     ) {
-        for (rowIndex in 0 until rowCount) {
+        (0 until rowCount).forEach { _ ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(spacing),
+                horizontalArrangement = Arrangement.spacedBy(SPACING),
             ) {
-                for (colIndex in 0 until columnCount) {
-                    val itemIndex = rowIndex * columnCount + colIndex
-                    if (itemIndex < itemCount) {
-                        Box(modifier = Modifier
-                            .weight(1f)
-                            .height(50.dp))
-                    } else {
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
+                (0 until COLUMNS).forEach { _ ->
+                    Box(modifier = Modifier.weight(1f).height(ITEM_HEIGHT))
                 }
             }
         }
