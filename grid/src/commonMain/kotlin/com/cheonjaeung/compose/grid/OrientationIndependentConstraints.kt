@@ -7,8 +7,6 @@ import kotlin.jvm.JvmInline
 
 private const val Infinity = 0xFFFF
 
-private const val MaxSize = Infinity
-
 private const val MainAxisMinSizeBitOffset = 48
 private const val MainAxisMaxSizeBitOffset = 32
 private const val CrossAxisMinSizeBitOffset = 16
@@ -66,8 +64,8 @@ private fun packOrientationIndependentConstraints(
         "minSize must be less than or equal to maxSize"
     }
 
-    require(mainAxisMaxSizeValue <= MaxSize && crossAxisMaxSizeValue <= MaxSize) {
-        "size must be less than $MaxSize"
+    require(mainAxisMaxSizeValue < Infinity && crossAxisMaxSizeValue < Infinity) {
+        "size must be less than $Infinity"
     }
 
     // Pack 4 integer sizes into 64 bits.
@@ -99,7 +97,7 @@ private fun packOrientationIndependentConstraints(
  * If the constraints instance is created frequently, it can cause GC pressure and laggy frame.
  * For inlining this constraints representation, this class uses a single [Long] to pack and
  * represent the four integer sizes: [mainAxisMinSize], [mainAxisMaxSize], [crossAxisMinSize], and
- * [crossAxisMaxSize]. Each size is allocated 16 bits, allowing a maximum value of 65534 (2^16 - 1)
+ * [crossAxisMaxSize]. Each size is allocated 16 bits, allowing a maximum value of 65534
  * for each individual constraint component. 65535 is used to represent infinity.
  */
 @Immutable
