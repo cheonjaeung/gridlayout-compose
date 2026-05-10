@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.7.2
+
+_2026.05.10_
+
+### Changed
+
+- Fix `HorizontalGrid` and `VerticalGrid` not skipping items whose span exceeds the maximum span of the grid.
+- Fix `HorizontalGrid` and `VerticalGrid` incorrectly accepting infinity size in constraints.
+
 ## 2.7.1
 
 _2026.04.05_
