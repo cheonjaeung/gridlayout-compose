@@ -33,8 +33,8 @@ subprojects {
 }
 
 apiValidation {
-    // :samples:android, :samples:shared
-    ignoredProjects.addAll(listOf("android", "shared"))
+    // :samples:android, :samples:shared, :benchmark
+    ignoredProjects.addAll(listOf("android", "shared", "benchmark"))
 
     nonPublicMarkers.add("kotlin.PublishedApi")
 }

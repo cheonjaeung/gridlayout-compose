@@ -110,6 +110,39 @@ VerticalGrid(
 
 For more information, please visit [documentation](https://cheonjaeung.github.io/gridlayout-compose/) site.
 
+## Performance
+
+Benchmarks measure first-composition cost across three grid implementations.
+
+> [!NOTE]
+> Measured on Galaxy S23 (SM-S911N), Android 16, CPU locked at 3.36 GHz.
+>
+> The measured library version is 2.7.2
+
+### First Composition Time (Median)
+
+|                             | 9 items        | 30 items       | 60 items       |
+|-----------------------------|----------------|----------------|----------------|
+| **VerticalGrid (Baseline)** | 33.4 ms        | 33.6 ms        | 41.4 ms        |
+| **RowColumn**               | 33.4 ms (+0%)  | 33.4 ms (−1%)  | 41.5 ms (+0%)  |
+| **LazyVerticalGrid**        | 46.7 ms (+40%) | 43.8 ms (+30%) | 49.8 ms (+20%) |
+
+### Allocation Count (Median)
+
+|                             | 9 items      | 30 items      | 60 items      |
+|-----------------------------|--------------|---------------|---------------|
+| **VerticalGrid (Baseline)** | 3,079        | 3,735         | 5,287         |
+| **RowColumn**               | 3,499 (1.1×) | 4,512 (1.2×)  | 7,058 (1.3×)  |
+| **LazyVerticalGrid**        | 6,682 (2.2×) | 16,522 (4.4×) | 19,125 (3.6×) |
+
+- **VerticalGrid ≈ RowColumn**: No performance overhead over manually written `Row`+`Column` code, meaning the simpler API comes for free.
+- **VerticalGrid is faster than LazyVerticalGrid**: 20 ~ 40% faster on first composition for fully-visible grids, meaning this library is more efficient than LazyGrid for simple grids.
+- **VerticalGrid allocates less than LazyVerticalGrid**: 2 ~ 4 times fewer allocations than LazyVerticalGrid, meaning lower GC pressure in allocation-sensitive scenarios.
+
+> [!NOTE]
+> This benchmark shows only the first composition cost.
+> If the dataset is large, `LazyVerticalGrid` is the right choice.
+
 ## Building
 
 This project is kotlin multiplatform project.
