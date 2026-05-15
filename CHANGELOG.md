@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.7.3
+
+_2026.05.15_
+
+### Changed
+
+- Fix `IllegalArgumentException` when using `HorizontalGrid` or `VerticalGrid` inside an unbounded container such as `Column` or `LazyColumn`.
+
 ## 2.7.2
 
 _2026.05.10_
