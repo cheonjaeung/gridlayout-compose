@@ -64,8 +64,11 @@ private fun packOrientationIndependentConstraints(
         "minSize must be less than or equal to maxSize"
     }
 
-    require(mainAxisMaxSizeValue < Infinity && crossAxisMaxSizeValue < Infinity) {
-        "size must be less than $Infinity"
+    require(
+        (mainAxisMaxSize == Constraints.Infinity || mainAxisMaxSize < Infinity) &&
+            (crossAxisMaxSize == Constraints.Infinity || crossAxisMaxSize < Infinity)
+    ) {
+        "size must be less than $Infinity or be Constraints.Infinity"
     }
 
     // Pack 4 integer sizes into 64 bits.
@@ -107,35 +110,34 @@ internal value class OrientationIndependentConstraints(val value: Long) {
      * The minimum size of the main axis in pixels.
      */
     val mainAxisMinSize: Int
-        get() = (value shr MainAxisMinSizeBitOffset).toInt() and UnpackMask
+        get() = unpackedSizeOrInfinity((value shr MainAxisMinSizeBitOffset).toInt() and UnpackMask)
 
     /**
      * The maximum size of the main axis in pixels.
      */
     val mainAxisMaxSize: Int
-        get() = (value shr MainAxisMaxSizeBitOffset).toInt() and UnpackMask
+        get() = unpackedSizeOrInfinity((value shr MainAxisMaxSizeBitOffset).toInt() and UnpackMask)
 
     /**
      * The minimum size of the cross axis in pixels.
      */
     val crossAxisMinSize: Int
-        get() = (value shr CrossAxisMinSizeBitOffset).toInt() and UnpackMask
+        get() = unpackedSizeOrInfinity((value shr CrossAxisMinSizeBitOffset).toInt() and UnpackMask)
 
     /**
      * The maximum size of the cross axis in pixels.
      */
     val crossAxisMaxSize: Int
-        get() = (value and UnpackMask.toLong()).toInt()
+        get() = unpackedSizeOrInfinity((value and UnpackMask.toLong()).toInt())
+
+    private fun unpackedSizeOrInfinity(value: Int): Int {
+        return if (value == Infinity) Constraints.Infinity else value
+    }
 
     /**
      * Convert this to original [Constraints] class based on the layout orientation.
      */
     fun toConstraints(orientation: LayoutOrientation): Constraints {
-        val mainAxisMinSize = if (mainAxisMinSize == Infinity) Constraints.Infinity else mainAxisMinSize
-        val mainAxisMaxSize = if (mainAxisMaxSize == Infinity) Constraints.Infinity else mainAxisMaxSize
-        val crossAxisMinSize = if (crossAxisMinSize == Infinity) Constraints.Infinity else crossAxisMinSize
-        val crossAxisMaxSize = if (crossAxisMaxSize == Infinity) Constraints.Infinity else crossAxisMaxSize
-
         return if (orientation == LayoutOrientation.Horizontal) {
             Constraints(
                 minWidth = mainAxisMinSize,
@@ -154,10 +156,10 @@ internal value class OrientationIndependentConstraints(val value: Long) {
     }
 
     override fun toString(): String {
-        val mainAxisMinStr = if (mainAxisMinSize == Infinity) "Infinity" else "$mainAxisMinSize"
-        val mainAxisMaxStr = if (mainAxisMaxSize == Infinity) "Infinity" else "$mainAxisMaxSize"
-        val crossAxisMinStr = if (crossAxisMinSize == Infinity) "Infinity" else "$crossAxisMinSize"
-        val crossAxisMaxStr = if (crossAxisMaxSize == Infinity) "Infinity" else "$crossAxisMaxSize"
+        val mainAxisMinStr = if (mainAxisMinSize == Constraints.Infinity) "Infinity" else "$mainAxisMinSize"
+        val mainAxisMaxStr = if (mainAxisMaxSize == Constraints.Infinity) "Infinity" else "$mainAxisMaxSize"
+        val crossAxisMinStr = if (crossAxisMinSize == Constraints.Infinity) "Infinity" else "$crossAxisMinSize"
+        val crossAxisMaxStr = if (crossAxisMaxSize == Constraints.Infinity) "Infinity" else "$crossAxisMaxSize"
 
         return "OrientationIndependentConstraints(" +
             "mainAxisMinSize=$mainAxisMinStr, " +
