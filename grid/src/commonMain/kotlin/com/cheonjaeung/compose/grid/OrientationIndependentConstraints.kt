@@ -57,18 +57,22 @@ private fun packOrientationIndependentConstraints(
     val crossAxisMaxSizeValue = if (crossAxisMaxSize == Constraints.Infinity) Infinity else crossAxisMaxSize
 
     require(mainAxisMinSize >= 0 && crossAxisMinSize >= 0) {
-        "size must be positive"
+        "size must be positive: " +
+            "mainAxisMinSize=$mainAxisMinSize, crossAxisMinSize=$crossAxisMinSize"
     }
 
     require(mainAxisMinSize <= mainAxisMaxSizeValue && crossAxisMinSize <= crossAxisMaxSizeValue) {
-        "minSize must be less than or equal to maxSize"
+        "minSize must be less than or equal to maxSize: " +
+            "mainAxisSize=(min=$mainAxisMinSize, max=$mainAxisMaxSize), " +
+            "crossAxisSize=(min=$crossAxisMinSize, max=$crossAxisMaxSize)"
     }
 
     require(
         (mainAxisMaxSize == Constraints.Infinity || mainAxisMaxSize < Infinity) &&
             (crossAxisMaxSize == Constraints.Infinity || crossAxisMaxSize < Infinity)
     ) {
-        "size must be less than $Infinity or be Constraints.Infinity"
+        "size must be less than $Infinity or equal to Infinity: " +
+            "mainAxisMaxSize=$mainAxisMaxSize, crossAxisMaxSize=$crossAxisMaxSize"
     }
 
     // Pack 4 integer sizes into 64 bits.
