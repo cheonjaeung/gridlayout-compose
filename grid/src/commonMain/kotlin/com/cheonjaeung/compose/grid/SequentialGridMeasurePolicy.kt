@@ -141,10 +141,11 @@ private class SequentialGridMeasureHelper(
         var mainAxisSpaceAfterLast: Int
         var mainAxisTotalLayoutSize = 0
         var crossAxisTotalLayoutSize = 0
+        val measurableOriginalIndices = IntArray(maxSpan)
+        val spans = IntArray(maxSpan)
 
         while (measurableIndex < measurableCount) {
-            val measurableOriginalIndices = mutableListOf<Int>()
-            val spanLine = mutableListOf<Int>()
+            var lineIndex = 0
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
 
             var spanSum = 0
@@ -177,11 +178,11 @@ private class SequentialGridMeasureHelper(
                     break
                 }
                 spanSum += span
-                spanLine.add(span)
+                spans[lineIndex] = span
+                measurableOriginalIndices[lineIndex] = measurableIndex
 
                 val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
                 val measurable = measurables[measurableIndex]
-                measurableOriginalIndices.add(measurableIndex)
                 val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
 
                 val mainAxisSizeFraction = gridParentDataArrays[measurableIndex]?.mainAxisSizeFraction
@@ -199,10 +200,11 @@ private class SequentialGridMeasureHelper(
                 crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
                 crossAxisIndex += span
                 measurableIndex++
+                lineIndex++
             }
 
-            // Skip calculation because all items in the line have too much span (span > maxSpan).
-            if (spanLine.isEmpty()) {
+            // Skip calculation when there are no items to measure in this line.
+            if (lineIndex == 0) {
                 continue
             }
 
@@ -216,8 +218,10 @@ private class SequentialGridMeasureHelper(
             // Reset crossAxisIndex for the second loop
             crossAxisIndex = 0
 
-            measurableOriginalIndices.fastForEachIndexed { index, originalIndex ->
-                val span = spanLine[index]
+            @Suppress("EmptyRange") // Suppress false positive warning: lineIndex is always positive at this statement.
+            for (index in 0 until lineIndex) {
+                val originalIndex = measurableOriginalIndices[index]
+                val span = spans[index]
                 val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
 
                 val measurable = measurables[originalIndex]
