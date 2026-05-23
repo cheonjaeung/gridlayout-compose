@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
-import androidx.compose.ui.util.fastMaxOfOrNull
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -147,7 +146,6 @@ private class SequentialGridMeasureHelper(
             val measurableOriginalIndices = mutableListOf<Int>()
             val spanLine = mutableListOf<Int>()
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
-            val mainAxisMaxIntrinsicSizes = mutableListOf<Int?>()
 
             var spanSum = 0
             var placeableMainAxisSizeMax = 0
@@ -192,8 +190,6 @@ private class SequentialGridMeasureHelper(
                     containsFillMaxMainAxisSize = true
                 }
 
-                mainAxisMaxIntrinsicSizes.add(mainAxisMaxIntrinsicSize)
-
                 crossAxisSpaceAfterLast = min(
                     crossAxisSpacingPx,
                     crossAxisMaxLayoutSize + crossAxisSpacingPx - crossAxisPlacedSpace - crossAxisCellConstraints
@@ -212,7 +208,7 @@ private class SequentialGridMeasureHelper(
 
             val placeableLine = mutableListOf<PlaceableMeasureInfo>()
             val maxMainAxisIntrinsicSize = if (containsFillMaxMainAxisSize) {
-                mainAxisMaxIntrinsicSizes.fastMaxOfOrNull { it ?: 0 }
+                placeableMainAxisSizeMax
             } else {
                 null
             }
