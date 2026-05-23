@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
-import androidx.compose.ui.util.fastMaxOfOrNull
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -61,7 +60,7 @@ private class SequentialGridMeasurePolicy(
         val measureHelper = SequentialGridMeasureHelper(
             orientation = orientation,
             measurables = measurables,
-            crossAxisCellConstraintsList = crossAxisCellConstraintsList,
+            crossAxisCellConstraintsList = crossAxisCellConstraintsList.toIntArray(),
             fillCellSize = fillCellSize,
             crossAxisCount = crossAxisCellCount,
             mainAxisArrangement = mainAxisArrangement,
@@ -108,7 +107,7 @@ private class SequentialGridMeasurePolicy(
 private class SequentialGridMeasureHelper(
     val orientation: LayoutOrientation,
     val measurables: List<Measurable>,
-    val crossAxisCellConstraintsList: List<Int>,
+    val crossAxisCellConstraintsList: IntArray,
     val fillCellSize: Boolean,
     val crossAxisCount: Int,
     val mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
@@ -142,12 +141,12 @@ private class SequentialGridMeasureHelper(
         var mainAxisSpaceAfterLast: Int
         var mainAxisTotalLayoutSize = 0
         var crossAxisTotalLayoutSize = 0
+        val measurableOriginalIndices = IntArray(maxSpan)
+        val spans = IntArray(maxSpan)
 
         while (measurableIndex < measurableCount) {
-            val measurableOriginalIndices = mutableListOf<Int>()
-            val spanLine = mutableListOf<Int>()
+            var lineIndex = 0
             val mainAxisMaxLayoutSize = constraints.mainAxisMaxSize
-            val mainAxisMaxIntrinsicSizes = mutableListOf<Int?>()
 
             var spanSum = 0
             var placeableMainAxisSizeMax = 0
@@ -179,11 +178,11 @@ private class SequentialGridMeasureHelper(
                     break
                 }
                 spanSum += span
-                spanLine.add(span)
+                spans[lineIndex] = span
+                measurableOriginalIndices[lineIndex] = measurableIndex
 
                 val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
                 val measurable = measurables[measurableIndex]
-                measurableOriginalIndices.add(measurableIndex)
                 val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
 
                 val mainAxisSizeFraction = gridParentDataArrays[measurableIndex]?.mainAxisSizeFraction
@@ -191,8 +190,6 @@ private class SequentialGridMeasureHelper(
                 if (mainAxisSizeFraction != null) {
                     containsFillMaxMainAxisSize = true
                 }
-
-                mainAxisMaxIntrinsicSizes.add(mainAxisMaxIntrinsicSize)
 
                 crossAxisSpaceAfterLast = min(
                     crossAxisSpacingPx,
@@ -203,16 +200,17 @@ private class SequentialGridMeasureHelper(
                 crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
                 crossAxisIndex += span
                 measurableIndex++
+                lineIndex++
             }
 
-            // Skip calculation because all items in the line have too much span (span > maxSpan).
-            if (spanLine.isEmpty()) {
+            // Skip calculation when there are no items to measure in this line.
+            if (lineIndex == 0) {
                 continue
             }
 
             val placeableLine = mutableListOf<PlaceableMeasureInfo>()
             val maxMainAxisIntrinsicSize = if (containsFillMaxMainAxisSize) {
-                mainAxisMaxIntrinsicSizes.fastMaxOfOrNull { it ?: 0 }
+                placeableMainAxisSizeMax
             } else {
                 null
             }
@@ -220,8 +218,10 @@ private class SequentialGridMeasureHelper(
             // Reset crossAxisIndex for the second loop
             crossAxisIndex = 0
 
-            measurableOriginalIndices.fastForEachIndexed { index, originalIndex ->
-                val span = spanLine[index]
+            @Suppress("EmptyRange") // Suppress false positive warning: lineIndex is always positive at this statement.
+            for (index in 0 until lineIndex) {
+                val originalIndex = measurableOriginalIndices[index]
+                val span = spans[index]
                 val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
 
                 val measurable = measurables[originalIndex]
@@ -331,7 +331,7 @@ private class SequentialGridMeasureHelper(
 
         crossAxisArrangement(
             crossAxisLayoutSize,
-            crossAxisCellConstraintsList.toIntArray(),
+            crossAxisCellConstraintsList,
             this.layoutDirection,
             this,
             crossAxisPositions,
