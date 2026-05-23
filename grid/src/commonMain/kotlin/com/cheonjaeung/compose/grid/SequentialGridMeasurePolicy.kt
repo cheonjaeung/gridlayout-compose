@@ -61,7 +61,7 @@ private class SequentialGridMeasurePolicy(
         val measureHelper = SequentialGridMeasureHelper(
             orientation = orientation,
             measurables = measurables,
-            crossAxisCellConstraintsList = crossAxisCellConstraintsList,
+            crossAxisCellConstraintsList = crossAxisCellConstraintsList.toIntArray(),
             fillCellSize = fillCellSize,
             crossAxisCount = crossAxisCellCount,
             mainAxisArrangement = mainAxisArrangement,
@@ -108,7 +108,7 @@ private class SequentialGridMeasurePolicy(
 private class SequentialGridMeasureHelper(
     val orientation: LayoutOrientation,
     val measurables: List<Measurable>,
-    val crossAxisCellConstraintsList: List<Int>,
+    val crossAxisCellConstraintsList: IntArray,
     val fillCellSize: Boolean,
     val crossAxisCount: Int,
     val mainAxisArrangement: (Int, IntArray, LayoutDirection, Density, IntArray) -> Unit,
@@ -331,7 +331,7 @@ private class SequentialGridMeasureHelper(
 
         crossAxisArrangement(
             crossAxisLayoutSize,
-            crossAxisCellConstraintsList.toIntArray(),
+            crossAxisCellConstraintsList,
             this.layoutDirection,
             this,
             crossAxisPositions,
