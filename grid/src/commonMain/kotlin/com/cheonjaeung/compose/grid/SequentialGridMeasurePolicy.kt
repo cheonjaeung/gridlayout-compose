@@ -182,11 +182,9 @@ private class SequentialGridMeasureHelper(
                 measurableOriginalIndices[lineIndex] = measurableIndex
 
                 val crossAxisMaxLayoutSize = constraints.crossAxisMaxSize
-                val measurable = measurables[measurableIndex]
                 val crossAxisCellConstraints = calculateCrossAxisCellConstraints(crossAxisIndex, crossAxisSpacingPx, span)
 
                 val mainAxisSizeFraction = gridParentDataArrays[measurableIndex]?.mainAxisSizeFraction
-                val mainAxisMaxIntrinsicSize = measurable.maxIntrinsicSize(orientation, crossAxisCellConstraints)
                 if (mainAxisSizeFraction != null) {
                     containsFillMaxMainAxisSize = true
                 }
@@ -196,7 +194,6 @@ private class SequentialGridMeasureHelper(
                     crossAxisMaxLayoutSize + crossAxisSpacingPx - crossAxisPlacedSpace - crossAxisCellConstraints
                 )
                 crossAxisPlacedSpace += crossAxisCellConstraints + crossAxisSpaceAfterLast
-                placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, mainAxisMaxIntrinsicSize)
                 crossAxisLineLayoutSize = max(crossAxisLineLayoutSize, crossAxisPlacedSpace)
                 crossAxisIndex += span
                 measurableIndex++
@@ -206,6 +203,20 @@ private class SequentialGridMeasureHelper(
             // Skip calculation when there are no items to measure in this line.
             if (lineIndex == 0) {
                 continue
+            }
+
+            // Calculate max intrinsic size when Modifier.fillMaxMainAxisSize is applied.
+            if (containsFillMaxMainAxisSize) {
+                var intrinsicCrossAxisIndex = 0
+
+                @Suppress("EmptyRange") // Suppress false positive warning: lineIndex is always positive at this statement.
+                for (index in 0 until lineIndex) {
+                    val span = spans[index]
+                    val crossAxisCellConstraints = calculateCrossAxisCellConstraints(intrinsicCrossAxisIndex, crossAxisSpacingPx, span)
+                    val intrinsicSize = measurables[measurableOriginalIndices[index]].maxIntrinsicSize(orientation, crossAxisCellConstraints)
+                    placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, intrinsicSize)
+                    intrinsicCrossAxisIndex += span
+                }
             }
 
             val placeableLine = mutableListOf<PlaceableMeasureInfo>()
