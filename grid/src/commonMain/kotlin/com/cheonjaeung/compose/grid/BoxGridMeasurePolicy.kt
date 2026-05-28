@@ -58,8 +58,8 @@ private class BoxGridMeasurePolicy(
 
         val measureHelper = BoxGridMeasureHelper(
             measurables = measurables,
-            cellWidthConstraintList = cellWidthConstraintList,
-            cellHeightConstraintList = cellHeightConstraintList,
+            cellWidthConstraintList = cellWidthConstraintList.toIntArray(),
+            cellHeightConstraintList = cellHeightConstraintList.toIntArray(),
             fillCellWidth = fillCellWidth,
             fillCellHeight = fillCellHeight,
             horizontalSpacing = horizontalSpacing,
@@ -80,8 +80,8 @@ private class BoxGridMeasurePolicy(
 
 private class BoxGridMeasureHelper(
     val measurables: List<Measurable>,
-    val cellWidthConstraintList: List<Int>,
-    val cellHeightConstraintList: List<Int>,
+    val cellWidthConstraintList: IntArray,
+    val cellHeightConstraintList: IntArray,
     val fillCellWidth: Boolean,
     val fillCellHeight: Boolean,
     val horizontalSpacing: Dp,
