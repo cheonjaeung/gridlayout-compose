@@ -11,14 +11,6 @@ internal inline fun intArrayOfZeros(size: Int): IntArray {
 }
 
 /**
- * Returns a new [MutableList] with specified [size] filled with `null`.
- */
-@Suppress("NOTHING_TO_INLINE")
-internal inline fun <T> mutableListOfNulls(size: Int): MutableList<T?> {
-    return MutableList(size) { null }
-}
-
-/**
  * Returns the largest element or 0 if there are no elements.
  */
 internal fun IntArray.maxOrZero(): Int {
