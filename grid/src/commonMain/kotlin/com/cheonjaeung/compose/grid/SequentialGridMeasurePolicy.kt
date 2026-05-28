@@ -129,7 +129,7 @@ private class SequentialGridMeasureHelper(
     ): GridMeasureResult = with(measureScope) {
         @Suppress("NAME_SHADOWING")
         val constraints = OrientationIndependentConstraints(orientation, constraints)
-        val placeableTable = mutableListOf<List<PlaceableMeasureInfo>>()
+        val placeableTable = mutableListOf<Array<PlaceableMeasureInfo>>()
         val mainAxisSpacingPx = mainAxisSpacing.roundToPx()
         val crossAxisSpacingPx = crossAxisSpacing.roundToPx()
         val measurableCount = measurables.size
@@ -219,7 +219,7 @@ private class SequentialGridMeasureHelper(
                 }
             }
 
-            val placeableLine = mutableListOf<PlaceableMeasureInfo>()
+            val placeableLine = arrayOfNulls<PlaceableMeasureInfo>(lineIndex)
             val maxMainAxisIntrinsicSize = if (containsFillMaxMainAxisSize) {
                 placeableMainAxisSizeMax
             } else {
@@ -256,18 +256,19 @@ private class SequentialGridMeasureHelper(
                         crossAxisMaxSize = crossAxisCellConstraints,
                     ).toConstraints(orientation)
                 )
-                placeableLine.add(
-                    PlaceableMeasureInfo(
-                        placeable = placeable,
-                        span = span,
-                        alignment = alignment,
-                        crossAxisCellSize = crossAxisCellConstraints
-                    )
+                placeableLine[index] = PlaceableMeasureInfo(
+                    placeable = placeable,
+                    span = span,
+                    alignment = alignment,
+                    crossAxisCellSize = crossAxisCellConstraints
                 )
                 placeableMainAxisSizeMax = max(placeableMainAxisSizeMax, placeable.mainAxisSize(orientation))
                 crossAxisIndex += span
             }
-            placeableTable.add(placeableLine)
+
+            // Cast to nonnull array cause all elements must be filled in this place.
+            @Suppress("UNCHECKED_CAST")
+            placeableTable.add(placeableLine as Array<PlaceableMeasureInfo>)
 
             crossAxisLineLayoutSize -= crossAxisSpacingPx
             crossAxisTotalLayoutSize = max(crossAxisTotalLayoutSize, crossAxisLineLayoutSize)
@@ -353,7 +354,8 @@ private class SequentialGridMeasureHelper(
             val placeableInfoLine = mutableListOf<PlaceablePositionInfo>()
             var crossAxisIndex = 0
             val currentLineMainAxisCellSize = mainAxisBiggestChildrenSizes[mainAxisIndex]
-            placeableLine.fastForEach { placeableMeasureInfo ->
+            for (i in placeableLine.indices) {
+                val placeableMeasureInfo = placeableLine[i]
                 val placeable = placeableMeasureInfo.placeable
                 val alignment = placeableMeasureInfo.alignment
                 val cellSize = if (orientation == LayoutOrientation.Horizontal) {
@@ -429,7 +431,7 @@ private class SequentialGridMeasureHelper(
         val crossAxisCount: Int,
         val mainAxisLayoutSize: Int,
         val crossAxisLayoutSize: Int,
-        val placeableMeasureInfoTable: List<List<PlaceableMeasureInfo>>
+        val placeableMeasureInfoTable: List<Array<PlaceableMeasureInfo>>
     )
 
     /**

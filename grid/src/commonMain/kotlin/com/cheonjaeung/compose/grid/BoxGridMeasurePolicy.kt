@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
 import kotlin.math.roundToInt
 
@@ -58,8 +57,8 @@ private class BoxGridMeasurePolicy(
 
         val measureHelper = BoxGridMeasureHelper(
             measurables = measurables,
-            cellWidthConstraintList = cellWidthConstraintList,
-            cellHeightConstraintList = cellHeightConstraintList,
+            cellWidthConstraintList = cellWidthConstraintList.toIntArray(),
+            cellHeightConstraintList = cellHeightConstraintList.toIntArray(),
             fillCellWidth = fillCellWidth,
             fillCellHeight = fillCellHeight,
             horizontalSpacing = horizontalSpacing,
@@ -80,8 +79,8 @@ private class BoxGridMeasurePolicy(
 
 private class BoxGridMeasureHelper(
     val measurables: List<Measurable>,
-    val cellWidthConstraintList: List<Int>,
-    val cellHeightConstraintList: List<Int>,
+    val cellWidthConstraintList: IntArray,
+    val cellHeightConstraintList: IntArray,
     val fillCellWidth: Boolean,
     val fillCellHeight: Boolean,
     val horizontalSpacing: Dp,
@@ -114,7 +113,7 @@ private class BoxGridMeasureHelper(
         val horizontalSpacingPx = horizontalSpacing.roundToPx()
         val verticalSpacingPx = verticalSpacing.roundToPx()
 
-        val placeableInfos = mutableListOfNulls<PlaceableMeasureInfo>(measurables.size)
+        val placeableInfos = arrayOfNulls<PlaceableMeasureInfo>(measurables.size)
 
         measurables.fastForEachIndexed { index, measurable ->
             val rowPosition = parentDataArray[index].rowOrDefault
@@ -190,7 +189,7 @@ private class BoxGridMeasureHelper(
         measureResult: GridMeasureResult
     ): GridArrangeResult = with(measureScope) {
         val placeableCount = measureResult.placeableMeasureInfos.size
-        val placeablePositionInfos = mutableListOfNulls<PlaceablePositionInfo?>(placeableCount)
+        val placeablePositionInfos = arrayOfNulls<PlaceablePositionInfo?>(placeableCount)
         val rowCount = cellHeightConstraintList.size
         val columnCount = cellWidthConstraintList.size
 
@@ -218,7 +217,8 @@ private class BoxGridMeasureHelper(
             currentY += cellHeightConstraintList[i] + verticalSpacingPx
         }
 
-        measureResult.placeableMeasureInfos.fastForEachIndexed { index, placeableMeasureInfo ->
+        for (index in measureResult.placeableMeasureInfos.indices) {
+            val placeableMeasureInfo = measureResult.placeableMeasureInfos[index]
             if (placeableMeasureInfo != null) {
                 val placeable = placeableMeasureInfo.placeable
                 val alignment = placeableMeasureInfo.alignment
@@ -262,7 +262,7 @@ private class BoxGridMeasureHelper(
         placementScope: Placeable.PlacementScope,
         arrangeResult: GridArrangeResult
     ) = with(placementScope) {
-        arrangeResult.placeablePositionInfos.fastForEach { placeableInfo ->
+        arrangeResult.placeablePositionInfos.forEach { placeableInfo ->
             placeableInfo?.placeable?.place(
                 x = placeableInfo.x,
                 y = placeableInfo.y
@@ -272,7 +272,7 @@ private class BoxGridMeasureHelper(
 
     class GridMeasureResult(
         val layoutSize: Size,
-        val placeableMeasureInfos: List<PlaceableMeasureInfo?>
+        val placeableMeasureInfos: Array<PlaceableMeasureInfo?>
     )
 
     class PlaceableMeasureInfo(
@@ -285,7 +285,7 @@ private class BoxGridMeasureHelper(
     )
 
     class GridArrangeResult(
-        val placeablePositionInfos: List<PlaceablePositionInfo?>
+        val placeablePositionInfos: Array<PlaceablePositionInfo?>
     )
 
     class PlaceablePositionInfo(
