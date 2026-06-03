@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.7.4
+
+### Changed
+
+- Reduce object memory allocation of `HorizontalGrid`, `VerticalGrid` and `BoxGrid`.
+- Skip unnecessary intrinsic size calculation when `Modifier.fillMaxMainAxisSize` is not applied.
+
 ## 2.7.3
 
 _2026.05.15_
