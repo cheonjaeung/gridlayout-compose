@@ -12,7 +12,6 @@ import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalGridApi::class)
 class VerticalGridFillMainAxisSizeTest {
     @get:Rule
     val paparazzi = Paparazzi(
@@ -154,6 +153,50 @@ class VerticalGridFillMainAxisSizeTest {
                     modifier = Modifier
                         .size(75.dp)
                         .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Blue)
+                )
+            }
+        }
+    }
+
+    @Test
+    fun testFillMaxMainAxisSizeWithSpan() {
+        paparazzi.snapshot {
+            VerticalGrid(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                columns = SimpleGridCells.Fixed(3)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Blue)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .span { 2 }
+                        .fillMaxMainAxisSize()
+                        .background(Color.Green)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Yellow)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(75.dp)
+                        .background(Color.Green)
                 )
 
                 Box(
