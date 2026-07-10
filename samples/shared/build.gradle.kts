@@ -33,11 +33,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.ui)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
+                implementation(libs.compose.multiplatform.runtime)
+                implementation(libs.compose.multiplatform.foundation)
+                implementation(libs.compose.multiplatform.ui)
+                implementation(libs.compose.multiplatform.material3)
+                implementation(libs.compose.multiplatform.material.icons.extended)
                 implementation(project(":grid"))
 
                 implementation(libs.kotlinx.immutable.collections)
