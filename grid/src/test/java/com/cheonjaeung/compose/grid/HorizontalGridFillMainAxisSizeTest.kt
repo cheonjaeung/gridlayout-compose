@@ -12,7 +12,6 @@ import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalGridApi::class)
 class HorizontalGridFillMainAxisSizeTest {
     @get:Rule
     val paparazzi = Paparazzi(

@@ -100,9 +100,6 @@ VerticalGrid(
 This modifier makes the item have the same size to the maximum of the main axis sizes in the line.
 It is useful when you want to make all items in the same line have the same size.
 
-!!! example "Experimental"
-    This modifier is currently **experimental**. You should use it with `@ExperimentalGridApi` annotation to opt-in.
-
 ```kotlin
 HorizontalGrid(rows = SimpleGridCells.Fixed(3)) {
     // This item determines the max size of the column.
