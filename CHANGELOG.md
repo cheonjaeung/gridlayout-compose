@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.8.0
+
+### Changed
+
+- `Modifier.fillMaxMainAxisSize` is now stable. It no longer requires `@ExperimentalGridApi` opt-in.
+- Remove iosX64 target.
+
+### Dependencies
+
+Project dependencies are updated.
+
+- Kotlin 2.3.10 -> 2.4.0
+- Compose 1.10.0 -> 1.11.1
+
 ## 2.7.4
 
 ### Changed

@@ -30,6 +30,9 @@ The following table shows which platform is supported.
 | iOS      | ✅ Available (Since 2.0.0)  |
 | Desktop  | ✅ Available (All Versions) |
 
+!!! note
+    The `iosX64` target has been removed since 2.8.0, as Compose Multiplatform no longer supports it.
+
 ## Compose Version Dependency
 
 This library depends on the Compose library.
@@ -37,7 +40,8 @@ The following table shows Compose versions which each library version depends on
 
 | GridLayout Version | Compose Version (Multiplatform) | Compose Version (Android)        |
 |--------------------|---------------------------------|----------------------------------|
-| 2.7.0 ~ current    | Compose Multiplatform 1.10.0    | Depends on Compose Multiplatform |
+| 2.8.0 ~ current    | Compose Multiplatform 1.11.1    | Depends on Compose Multiplatform |
+| 2.7.0 ~ 2.7.4      | Compose Multiplatform 1.10.0    | Depends on Compose Multiplatform |
 | 2.5.0 ~ 2.6.0      | Compose Multiplatform 1.9.0     | Depends on Compose Multiplatform |
 | 2.3.0 ~ 2.4.0      | Compose Multiplatform 1.8.0     | Jetpack Compose 1.8.0            |
 | 2.1.0 ~ 2.2.1      | Compose Multiplatform 1.7.0     | Jetpack Compose 1.7.0            |
