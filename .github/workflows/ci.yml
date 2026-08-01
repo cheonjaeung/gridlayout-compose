@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: "zulu"
-          java-version: '17'
+          java-version: '21'
 
       - name: Setup gradle
         uses: gradle/actions/setup-gradle@v6
@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew apiCheck
 
       - name: Run tests
-        run: ./gradlew :grid:test
+        run: ./gradlew :grid:testAndroid
 
   release:
     name: Release
@@ -50,7 +50,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: "zulu"
-          java-version: '17'
+          java-version: '21'
 
       - name: Setup gradle
         uses: gradle/actions/setup-gradle@v6
