@@ -159,19 +159,19 @@ This project has unit tests and snapshot tests.
 Run following command to run all tests:
 
 ```shell
-./gradlew :grid:test
+./gradlew :grid:testAndroid
 ```
 
 To run only snapshot tests, run following command:
 
 ```shell
-./gradlew :grid:verifyPaparazziDebug
+./gradlew :grid:verifyPaparazziAndroidMain
 ```
 
 If you add or edit snapshot tests, run following command to create new snapshots:
 
 ```shell
-./gradlew :grid:recordPaparazziDebug
+./gradlew :grid:recordPaparazziAndroidMain
 ```
 
 If test is failed, you can check what is wrong from diff images.

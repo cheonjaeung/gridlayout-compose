@@ -62,7 +62,7 @@ kotlin {
 }
 
 afterEvaluate {
-    tasks.named("test").configure {
+    tasks.named("testAndroid").configure {
         dependsOn("verifyPaparazzi")
     }
 }
