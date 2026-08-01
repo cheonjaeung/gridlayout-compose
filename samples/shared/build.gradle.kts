@@ -55,8 +55,6 @@ android {
     namespace = "${project.group}.sample.shared"
     compileSdk = 36
 
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
     defaultConfig {
         minSdk = 23
     }
