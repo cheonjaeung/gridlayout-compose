@@ -2,13 +2,15 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "com.cheonjaeung.compose.grid.benchmark"
-    compileSdk = 36
+
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         minSdk = 23

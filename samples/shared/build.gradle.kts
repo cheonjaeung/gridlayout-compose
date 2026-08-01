@@ -4,12 +4,27 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kmp.library)
     alias(libs.plugins.maven.publish)
 }
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "${project.group}.sample.shared"
+
+        compileSdk {
+            version = release(36)
+        }
+        minSdk = 23
+
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_11)
+                }
+            }
+        }
+    }
 
     listOf(
         iosArm64(),
@@ -48,23 +63,5 @@ kotlin {
                 implementation(libs.androidx.activity.compose)
             }
         }
-    }
-}
-
-android {
-    namespace = "${project.group}.sample.shared"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 23
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 }
