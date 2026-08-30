@@ -35,6 +35,19 @@ There are benefits of this library:
   - **Responsive**: Dynamically switch cell management strategy based on available layout size.
   - **Track**: Define each row or column's size individually using fixed and weighted sizes.
 
+## Used By
+
+- [StreetComplete](https://github.com/streetcomplete/StreetComplete)![stars](https://img.shields.io/github/stars/streetcomplete/StreetComplete
+  )
+- [Prism File Explorer](https://github.com/Raival-e/Prism-File-Explorer)![stars](https://img.shields.io/github/stars/Raival-e/Prism-File-Explorer
+  )
+- [Neko](https://github.com/nekomangaorg/Neko)![stars](https://img.shields.io/github/stars/nekomangaorg/Neko
+  )
+- [Mihon](https://github.com/mihonapp/mihon)![stars](https://img.shields.io/github/stars/mihonapp/mihon)
+- [Komikku](https://github.com/komikku-app/komikku)![stars](https://img.shields.io/github/stars/komikku-app/komikku)
+- [Awery](https://github.com/MrBoomDeveloper/Awery)![stars](https://img.shields.io/github/stars/MrBoomDeveloper/Awery)
+- [Tremotesf](https://github.com/equeim/tremotesf-android)![stars](https://img.shields.io/github/stars/equeim/tremotesf-android)
+
 ## Installation
 
 To download this library, add dependency to your gradle:
