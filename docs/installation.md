@@ -17,7 +17,7 @@ dependencies {
 ```
 
 
-Checkout the latest version in [GitHub Releases](https://github.com/cheonjaeung/gridlayout-compose/releases).
+Checkout the latest version in [changelog](./changelog.md).
 
 ## Platform Supports
 
