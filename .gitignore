@@ -8,6 +8,8 @@
 *.ipr
 *.iws
 
+site/
+
 xcuserdata/
 *.xcodeproj/*
 *.xcscmblueprint
