@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # GridLayout for Compose
 
 ![overview-examples](images/grid-overview-examples.png)
