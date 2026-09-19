@@ -40,7 +40,7 @@ nav:
   - 'Arrangement and Spacing': arrangement-and-spacing.md
   - 'Alignment': alignment.md
   - 'Spanning Cells': span.md
-  - 'Changelog': 'https://github.com/cheonjaeung/gridlayout-compose/blob/main/CHANGELOG.md'
+  - 'Changelog': changelog.md
 
 # Repository Information
 repo_name: 'gridlayout-compose'
