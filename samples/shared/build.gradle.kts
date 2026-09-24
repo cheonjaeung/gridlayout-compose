@@ -52,8 +52,6 @@ kotlin {
                 implementation(libs.compose.multiplatform.material3)
                 implementation(libs.compose.multiplatform.material.icons.extended)
                 implementation(project(":grid"))
-
-                implementation(libs.kotlinx.immutable.collections)
             }
         }
 
