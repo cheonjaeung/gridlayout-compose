@@ -6,6 +6,16 @@
 
 GridLayout for Compose is a library that provides missing non-lazy grid layout composables for Compose Multiplatform.
 
+> [!IMPORTANT]
+> **GridLayout for Compose is in maintenance mode.**
+>
+> Compose 1.11 introduced an official non-lazy grid layout as an experimental API.
+> As a result, this library has entered maintenance mode, and no longer adds new features.
+>
+> But it is not deprecated until the official APIs become stable, and bug fixes and compatibility updates will continue.
+>
+> [Read the full announcement on the blog](https://cheonjaeung.com/posts/gridlayout-compose-is-entering-maintenance-mode/).
+
 ![grid-examples](docs/images/grid-overview-examples.png)
 
 Jetpack Compose doesn't offer non-lazy grid layouts, providing only lazy grids and alternatives (e.g., flow layouts).
