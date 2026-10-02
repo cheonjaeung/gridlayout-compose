@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -28,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cheonjaeung.compose.grid.ExperimentalGridApi
 import com.cheonjaeung.compose.grid.ExtendedGridCells
 import com.cheonjaeung.compose.grid.GridTrack
 import kotlin.random.Random
@@ -38,7 +36,7 @@ private data class LazyStaggeredGridTrackItemData(
     val height: Dp
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalGridApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LazyStaggeredGridTrackSample(onBack: () -> Unit) {
     var gridItemCount by remember { mutableStateOf(24) }

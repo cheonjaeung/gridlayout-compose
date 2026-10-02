@@ -28,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cheonjaeung.compose.grid.ExperimentalGridApi
 import com.cheonjaeung.compose.grid.ExtendedGridCells
 import kotlin.random.Random
 
@@ -37,7 +36,7 @@ private data class LazyStaggeredGridResponsiveItemData(
     val height: Dp
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalGridApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LazyStaggeredGridResponsiveSample(onBack: () -> Unit) {
     var gridItemCount by remember { mutableStateOf(24) }

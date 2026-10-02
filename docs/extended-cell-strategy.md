@@ -4,9 +4,6 @@
 These strategies are available for `BoxGrid`, `VerticalGrid` and `HorizontalGrid`.
 And also available for standard Compose grids like `LazyGrid` and `LazyStaggeredGrid`.
 
-!!! example "Experimental"
-    This cell strategies are currently **experimental**. You should use it with `@ExperimentalGridApi` annotation to opt-in.
-
 ## Responsive
 
 `Responsive` is a cell strategy that switches between other cell strategies based on the available size.

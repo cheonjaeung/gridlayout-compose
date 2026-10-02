@@ -280,7 +280,6 @@ class BoxGridSpanTest {
     }
 
     @Test
-    @OptIn(ExperimentalGridApi::class)
     fun testRowSpanSizeWithTrackRows() {
         paparazzi.snapshot {
             BoxGrid(
@@ -314,7 +313,6 @@ class BoxGridSpanTest {
     }
 
     @Test
-    @OptIn(ExperimentalGridApi::class)
     fun testColumnSpanSizeWithTrackColumns() {
         paparazzi.snapshot {
             BoxGrid(
