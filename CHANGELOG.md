@@ -1,6 +1,26 @@
 # Changelog
 
+## 2.9.0
+
+_2026.10.02_
+
+The library is now switched to maintenance mode after this release.
+[Read the announcement blog post](https://cheonjaeung.com/posts/gridlayout-compose-is-entering-maintenance-mode/).
+
+### Changed
+
+- `ExtendedGridCells` is now stable.
+
+### Dependencies
+
+Project dependencies are updated.
+
+- Gradle 8.14.4 -> 9.5.0
+- Android Gradle Plugin 8.13.2 -> 9.3.1
+
 ## 2.8.0
+
+_2026.07.11_
 
 ### Changed
 
@@ -15,6 +35,8 @@ Project dependencies are updated.
 - Compose 1.10.0 -> 1.11.1
 
 ## 2.7.4
+
+_2026.06.03_
 
 ### Changed
 
