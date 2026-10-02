@@ -26,12 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.cheonjaeung.compose.grid.ExperimentalGridApi
 import com.cheonjaeung.compose.grid.ExtendedGridCells
 import com.cheonjaeung.compose.grid.GridTrack
 import com.cheonjaeung.compose.grid.VerticalGrid
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalGridApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackSample(onBack: () -> Unit) {
     var gridItemCount by remember { mutableStateOf(24) }

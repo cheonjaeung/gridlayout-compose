@@ -257,7 +257,6 @@ class HorizontalGridSpanTest {
     }
 
     @Test
-    @OptIn(ExperimentalGridApi::class)
     fun testSpanSizeWithTrackRows() {
         paparazzi.snapshot {
             HorizontalGrid(

@@ -6,7 +6,6 @@ import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-@OptIn(ExperimentalGridApi::class)
 class SimpleGridCellsTrackTest {
 
     private val testDensity = Density(density = 1f, fontScale = 1f)

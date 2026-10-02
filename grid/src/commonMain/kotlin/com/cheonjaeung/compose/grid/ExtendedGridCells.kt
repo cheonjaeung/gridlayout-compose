@@ -10,13 +10,11 @@ import kotlin.math.roundToInt
  * A class determines the sizes and the number of cells for extended capabilities.
  */
 @Stable
-@ExperimentalGridApi
 interface ExtendedGridCells {
     /**
      * Extended cell management for [com.cheonjaeung.compose.grid.SimpleGridCells].
      */
     @Stable
-    @ExperimentalGridApi
     interface SimpleGridCells : ExtendedGridCells, com.cheonjaeung.compose.grid.SimpleGridCells {
         /**
          * Make grid to have rows or columns with individually defined sizes, allowing a mix of
@@ -30,7 +28,6 @@ interface ExtendedGridCells {
          * @param tracks The list of tracks.
          * @param fill When `true`, item composable fill cell's width or height.
          */
-        @ExperimentalGridApi
         class Track(
             private val tracks: List<GridTrack>,
             private val fill: Boolean = true
@@ -74,7 +71,6 @@ interface ExtendedGridCells {
          * @param factory The factory lambda that determines the cell management strategy based on
          * the available size.
          */
-        @ExperimentalGridApi
         class Responsive(
             private val fill: Boolean = true,
             private val factory: Density.(availableSize: Dp) -> com.cheonjaeung.compose.grid.SimpleGridCells,
@@ -119,7 +115,6 @@ interface ExtendedGridCells {
      * Extended cell management for [androidx.compose.foundation.lazy.grid.GridCells].
      */
     @Stable
-    @ExperimentalGridApi
     interface GridCells : androidx.compose.foundation.lazy.grid.GridCells {
         /**
          * Make grid to have rows or columns with individually defined sizes, allowing a mix of
@@ -132,7 +127,6 @@ interface ExtendedGridCells {
          *
          * @param tracks The list of tracks.
          */
-        @ExperimentalGridApi
         class Track(private val tracks: List<GridTrack>) : GridCells {
             constructor(vararg tracks: GridTrack) : this(tracks.toList())
 
@@ -166,7 +160,6 @@ interface ExtendedGridCells {
          * @param factory The factory lambda that determines the cell management strategy based on
          * the available size.
          */
-        @ExperimentalGridApi
         class Responsive(
             private val factory: Density.(availableSize: Dp) -> androidx.compose.foundation.lazy.grid.GridCells,
         ) : GridCells {
@@ -203,7 +196,6 @@ interface ExtendedGridCells {
     /**
      * Extended cell management for [androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells].
      */
-    @ExperimentalGridApi
     interface StaggeredGridCells : androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells {
         /**
          * Make grid to have rows or columns with individually defined sizes, allowing a mix of
@@ -216,7 +208,6 @@ interface ExtendedGridCells {
          *
          * @param tracks The list of tracks.
          */
-        @ExperimentalGridApi
         class Track(private val tracks: List<GridTrack>) : StaggeredGridCells {
             constructor(vararg tracks: GridTrack) : this(tracks.toList())
 
@@ -250,7 +241,6 @@ interface ExtendedGridCells {
          * @param factory The factory lambda that determines the cell management strategy based on
          * the available size.
          */
-        @ExperimentalGridApi
         class Responsive(
             private val factory: Density.(availableSize: Dp) -> androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells,
         ) : StaggeredGridCells {

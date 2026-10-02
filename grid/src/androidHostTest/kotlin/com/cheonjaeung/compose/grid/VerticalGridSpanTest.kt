@@ -257,7 +257,6 @@ class VerticalGridSpanTest {
     }
 
     @Test
-    @OptIn(ExperimentalGridApi::class)
     fun testSpanSizeWithTrackColumns() {
         paparazzi.snapshot {
             VerticalGrid(
