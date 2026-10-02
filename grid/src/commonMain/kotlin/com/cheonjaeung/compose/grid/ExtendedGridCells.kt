@@ -196,6 +196,7 @@ interface ExtendedGridCells {
     /**
      * Extended cell management for [androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells].
      */
+    @Stable
     interface StaggeredGridCells : androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells {
         /**
          * Make grid to have rows or columns with individually defined sizes, allowing a mix of
